@@ -1,0 +1,22 @@
+name: Check Branch Name
+
+on:
+  pull_request:
+    types: [opened, reopened, synchronize]
+
+jobs:
+  check-branch-name:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check branch name
+        run: |
+          branch_name="${{ github.head_ref }}"
+           echo "브랜치 이름: $branch_name"
+           if [[ ! "$branch_name" =~ ^(feature|bugfix|hotfix|release|docs|refactor|experiment|test)/[a-z0-9._-]+$ ]]; then
+             echo "❌ 브랜치 이름 규칙 위반: $branch_name"
+             echo "브랜치 이름은 'feature/', 'bugfix/', 'hotfix/', 'release/', 'docs/', 'refactor/', 'experiment/', 'test/'로 시작해야 합니다."
+             exit 1
+           else
+             echo "✅ 브랜치 이름이 규칙에 맞습니다."
+           fi
+        shell: bash

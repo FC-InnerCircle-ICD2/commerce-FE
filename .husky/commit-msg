@@ -1,0 +1,49 @@
+
+# 현재 개발 브랜치
+BRANCH=$(git rev-parse --abbrev-ref HEAD)
+
+COMMIT_EDITMSG_FILE_PATH=$1
+# 커밋 메세지 가져오기
+DEFAULT_COMMIT_MSG=$(cat $COMMIT_EDITMSG_FILE_PATH)
+
+# 메시지 맨 앞 글자
+LETTER=$(echo "$DEFAULT_COMMIT_MSG" | sed -n -E 's/^[-]([A-Za-z]{1,2}).*/\1/p')
+
+# 앞글자에 맞춰 형식 TYPE 지정
+case "$LETTER" in
+    "f" ) TYPE="feat:" ;;
+    "fi" ) TYPE="fix:" ;;
+    "d" ) TYPE="docs:" ;;
+    "s" ) TYPE="style:" ;;
+    "r" ) TYPE="refactor:" ;;
+    "t" ) TYPE="test:" ;;
+    "c" ) TYPE="chore:" ;;
+    "") TYPE="empty:";
+    error_msg="[commit error] Tag를 입력해주세요." ;;
+    * ) type="unknown:";
+    error_msg="[commit error] 잘못된 Tag 입니다."''
+esac
+
+# 올바른 정책이 아닐경우 출력을 종료하고 에러문구를 반환하도록 하는 작업
+if [ "$BRANCH" != "main" ] && [ "$BRANCH" != "develop" ] && [ -n "$error_msg" ]; then
+  echo "$error_msg \n"
+  echo "-f \t Feat : 새로운 기능 추가" 
+  echo "-fi \t Fix : 버그 수정" 
+  echo "-d \t Docs : 문서 수정" 
+  echo "-s \t Style : 코드 포맷팅, 세미콜론 누락 수정 (코드 변경이 없는 경우)" 
+  echo "-r \t Refactor : 코드 리펙토링" 
+  echo "-t \t Test : 테스트 코드, 리펙토링 테스트 코드 추가" 
+  echo "-c \t Chore : 빌드 업무 수정, 패키지 매니저 수정 \n"
+  echo "ex) packages의 ui 프로젝트에 새로운 기능을 추가하는 commit message ==> git commit -m '-f_p_u 새로운 기능 추가 완료'"
+  exit 1
+fi
+
+# 공백값일 경우 출력 종료하고 에러문구 반환
+EMPTY=$(echo "$DEFAULT_COMMIT_MSG" | sed -n -E 's/^.{2}(.*)/\1/p')
+if [ "$EMPTY" == "" ]; then
+  echo "공백 값은 입력할 수 없습니다."
+  exit 1
+fi
+
+# 커밋 완료 출력
+sed -i.bak -e "s#-$LETTER#$TYPE#g" "$COMMIT_EDITMSG_FILE_PATH"
