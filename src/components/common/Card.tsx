@@ -1,4 +1,3 @@
-'use client';
 import Star from '../../assets/star.png';
 
 type Props = {
