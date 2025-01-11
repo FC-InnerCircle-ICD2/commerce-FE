@@ -1,4 +1,4 @@
-import Star from '/assets/star.png';
+import Star from '@/assets/star.png';
 
 type Props = {
   /** 이미지 URL (상품 이미지 경로) */
