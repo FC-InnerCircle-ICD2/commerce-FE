@@ -7,7 +7,7 @@ import CategoryForm from './CategoryForm';
 export default function CategoryButton() {
   const [categoryOpen, setCategoryOpen] = useState<boolean>(false);
   return (
-    <div className="relative">
+    <div className="relative hidden tablet:block">
       <button
         className="w-[65] h-[65] rounded-lg flex flex-col items-center justify-center gap-[5] hover:bg-headerMain"
         onClick={() => setCategoryOpen(true)}

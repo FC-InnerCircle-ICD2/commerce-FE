@@ -13,7 +13,7 @@ export default function CategorySearch() {
   const [currentItem, setCurrentItem] = useState<IOptions>(typeOption[0]);
 
   return (
-    <div className="grow max-w-[550] text-sm h-[50] pr-[10] py-1 bg-headerMain rounded-lg hidden items-center mobile:flex">
+    <div className="grow max-w-[550] text-sm h-[50] pr-[10] py-1 bg-headerMain rounded-lg hidden items-center tablet:flex">
       <Selectbox width="140" currentItem={currentItem} items={typeOption} handleChangeSelect={setCurrentItem} />
       <input
         type="text"
