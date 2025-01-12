@@ -1,6 +1,8 @@
 import type { Metadata } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
 import './globals.css';
+import { init } from '@/mock/msw';
+import { MswComponent } from '@/mock/msw.component';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -22,8 +24,13 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  if (process.env.NODE_ENV === 'development') {
+    init();
+  }
+
   return (
     <html lang="en">
+      <MswComponent />
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>{children}</body>
     </html>
   );
