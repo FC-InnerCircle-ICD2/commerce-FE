@@ -1,8 +1,9 @@
 import { CategorySearch } from '../../common';
 import Navbar from '../Navbar';
+import CategoryButton from './CategoryButton';
 import Logo from './Logo';
-import DesktopButtons from './DesktopButtons';
 import MobileButtons from './MobileButtons';
+import ShoppingButton from './ShoppingButton';
 
 export default function Header() {
   return (
@@ -13,7 +14,10 @@ export default function Header() {
           <Logo />
           <CategorySearch />
         </div>
-        <DesktopButtons />
+        <div className="gap-2 hidden tablet:flex">
+          <CategoryButton />
+          <ShoppingButton />
+        </div>
         <MobileButtons />
       </div>
     </header>
