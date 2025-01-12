@@ -9,6 +9,9 @@ export default {
   ],
   theme: {
     extend: {
+      backgroundColor: {
+        headerMain: '#F1F5F9',
+      },
       keyframes: {
         fadeIn: {
           '0%': { opacity: '0' },
