@@ -1,5 +1,4 @@
-'use client';
-
+import useLocalStorage from '@/hooks/common/useLocalStorage';
 import SearchFormButton from './SearchFormButton';
 import SearchFormList from './SearchFormList';
 
@@ -9,17 +8,23 @@ type Props = {
 };
 
 export default function SearchForm({ recommend, handleClose }: Props) {
-  const searchs = localStorage.getItem('searchs');
-  console.log(searchs);
+  const [search, setSearch] = useLocalStorage<string[]>('search', []);
+
+  const handleRemoveSearch = (remove: string) => {
+    setSearch([...search.filter((item) => item !== remove)]);
+  };
+
   return (
     <article className="w-full p-4 flex flex-col gap-[25]">
       <div className="w-full flex justify-between text-sm">
         <span className="text-[#4F4F4F]">최근 검색어</span>
-        <span className="text-[#949494]">전체 삭제</span>
+        <span className="text-[#949494]" onClick={() => setSearch([])}>
+          전체 삭제
+        </span>
       </div>
       <ul className="w-full flex flex-col gap-5">
-        {['나가사키 카스테라', '호날두', '메시'].map((item, i) => {
-          return <SearchFormList key={i} search={item} />;
+        {search.map((item: string, i: number) => {
+          return <SearchFormList key={i} search={item} handleRemoveSearch={handleRemoveSearch} />;
         })}
       </ul>
       <label className="text-sm text-[#4F4F4F]">추천 검색어</label>
