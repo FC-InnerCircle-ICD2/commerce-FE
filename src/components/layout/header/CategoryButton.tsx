@@ -1,5 +1,6 @@
 'use client';
 
+import CategoryModal from '@/components/modals/CategoryModal';
 import Image from 'next/image';
 import { useState } from 'react';
 
@@ -15,7 +16,7 @@ export default function CategoryButton() {
         <Image src="/assets/category.svg" alt="shopping" width={24} height={24} />
         <p className="font-medium text-[12px] text-[#075985]">카테고리</p>
       </button>
-      {/* {categoryOpen && <CategoryForm handleCloseForm={() => setCategoryOpen(false)} />} */}
+      {categoryOpen && <CategoryModal handleClose={() => setCategoryOpen(false)} />}
     </div>
   );
 }

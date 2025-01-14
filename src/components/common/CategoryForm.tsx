@@ -21,7 +21,7 @@ export default function CategoryForm({ categories }: Props) {
         {categories?.map((category, i) => {
           return (
             <li
-              className={`w-full h-10 rounded text-sm flex items-center justify-between p-[10] ${category.productCategoryId === currentCategory?.productCategoryId ? 'font-bold text-[#082F49] bg-[#F1F5F9]' : 'font-normal text-[#4F4F4F] bg-transparent'}`}
+              className={`w-full h-10 rounded text-sm flex items-center justify-between p-[10] cursor-pointer tablet:text-xs ${category.productCategoryId === currentCategory?.productCategoryId ? 'font-bold text-[#082F49] bg-[#F1F5F9]' : 'font-normal text-[#4F4F4F] bg-transparent'}`}
               key={i}
               onClick={() => handleParentCategoryClick(category)}
             >
@@ -33,12 +33,13 @@ export default function CategoryForm({ categories }: Props) {
         })}
       </ul>
       <div className="w-[1] h-full bg-[#EAEAEA]" />
-      <ul className="grow flex flex-col gap-2">
+      <ul className="grow flex flex-col gap-2 overflow-y-auto">
         {currentCategory?.subCategories.map((category, i) => {
           return (
             <li
-              className={`w-full h-10 rounded text-sm flex items-center justify-center font-normal text-[#4F4F4F] bg-transparent hover:(font-bold bg-[#F1F5F9])`}
+              className={`w-full h-10 rounded text-sm flex items-center justify-center font-normal text-[#4F4F4F] bg-transparent tablet:text-xs cursor-pointer hover:font-bold hover:bg-[#F1F5F9]`}
               key={i}
+              // TODO: category 검색 페이지로 전환해야함
               onClick={() => console.log(category)}
             >
               {category.name}
