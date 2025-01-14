@@ -1,3 +1,5 @@
+'use client';
+
 import SearchFormButton from './SearchFormButton';
 import SearchFormList from './SearchFormList';
 
@@ -26,7 +28,7 @@ export default function SearchForm({ recommend, handleClose }: Props) {
           return <SearchFormButton key={i} title={item} />;
         })}
       </div>
-      <div className="w-full border-t border-[#EFEFEF] flex items-end">
+      <div className="w-full border-t border-[#EFEFEF] flex justify-end pt-5">
         <span className="text-sm font-bold text-[#949494]" onClick={handleClose}>
           닫기
         </span>

@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
+import MobileFooterSearch from './MobileFooterSearch';
 
 export default function MobileFooter() {
   return (
@@ -12,10 +13,7 @@ export default function MobileFooter() {
         <Image src="/assets/category.svg" alt="category" width={35} height={35} />
         <p>카테고리</p>
       </Link>
-      <div className="flex flex-col items-center">
-        <Image src="/assets/search.svg" alt="search" width={35} height={35} />
-        <p>검색</p>
-      </div>
+      <MobileFooterSearch />
       <div className="flex flex-col items-center">
         <Image src="/assets/shopping.svg" alt="shopping" width={35} height={35} />
         <p>장바구니</p>
