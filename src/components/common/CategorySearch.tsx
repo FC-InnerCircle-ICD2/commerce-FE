@@ -18,7 +18,7 @@ export default function CategorySearch() {
       <input
         type="text"
         placeholder="찾고 싶은 상품을 검색해 보세요!"
-        className="border-l-2 border-[#CBD5E1] pl-[30] text-[#5B5B5B] grow bg-transparent outline-none"
+        className="border-l-2 border-[#CBD5E1] pl-[15] text-[#3D3D3D] grow bg-transparent outline-none"
       />
       <Image src="/assets/search.svg" alt="search" width={25} height={25} />
     </div>
