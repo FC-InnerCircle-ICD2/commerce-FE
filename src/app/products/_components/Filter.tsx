@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import { mockProducts } from './mockData';
 import { PriceRange, FilterProps } from '../../../types/product';
+import { Slider } from '@/components/ui/slider';
 
 const ALLOWED_FILTERS = ['Color']; // 허용된 필터 옵션
 
@@ -63,6 +64,13 @@ const Filter: React.FC<FilterProps> = ({
       {/* 가격 필터 */}
       <div className="space-y-4 mt-4">
         <h3 className="font-medium">가격</h3>
+        <div className="bg-white p-5 rounded-lg">
+          <Slider defaultValue={[priceRange.min, priceRange.max]} />
+          <div className="flex justify-between text-sm mt-4 text-zinc-300">
+            <span>{priceRange.min}</span>
+            <span>{priceRange.max}</span>
+          </div>
+        </div>
         <div className="flex gap-2 items-center">
           <input
             type="number"
@@ -89,10 +97,8 @@ const Filter: React.FC<FilterProps> = ({
             <Image src="/assets/search.png" alt="검색 아이콘" width={25} height={25} />
           </div>
         </div>
-        <div className="text-sm text-gray-500">
-          {formatPrice(priceRange.min)}원 ~ {formatPrice(priceRange.max)}원
-        </div>
       </div>
+      <hr className="my-8" />
 
       {/* 색상 필터 */}
       {Object.entries(availableOptions).map(([optionName, values]) => (
