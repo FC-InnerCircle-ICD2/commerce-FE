@@ -73,12 +73,7 @@ export default function ProductsPage() {
           </div>
           {/* 필터 영역 */}
           <div className="w-full h-fit bg-slate-50 rounded-xl">
-            <h2 className="text-lg font-bold mb-5">필터</h2>
-            <hr />
-            <div className="p-5">
-              <h3 className="text-sm font-bold mb-3">가격</h3>
-              <Filter />
-            </div>
+            <Filter />
           </div>
         </div>
 

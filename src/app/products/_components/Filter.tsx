@@ -1,123 +1,129 @@
 'use client';
 
-interface PriceRange {
-  min: number;
-  max: number;
-}
+import React, { useState, useEffect } from 'react';
+import Image from 'next/image';
+import { mockProducts } from './mockData';
+import { PriceRange, FilterProps } from '../../../types/product';
 
-interface FilterProps {
-  selectedPrice?: PriceRange;
-  onPriceChange: (range: PriceRange) => void;
-  onRatingChange: (value: boolean) => void;
-  onColorSelect: (color: string) => void;
-  selectedColors: string[];
-}
+const ALLOWED_FILTERS = ['Color']; // 허용된 필터 옵션
 
-import React, { useState } from 'react';
+// 색상 매핑 객체 추가
+const COLOR_MAPPING: Record<string, string> = {
+  'Natural Titanium': '#E3D5C9',
+  'Blue Titanium': '#4B688A',
+  'Phantom Black': '#000000',
+  Cream: '#F5E6D3',
+  'Space Gray': '#4A4A4A',
+  Silver: '#E3E4E5',
+};
 
 const Filter: React.FC<FilterProps> = ({
+  products = mockProducts,
   selectedPrice,
   onPriceChange,
-  onRatingChange,
-  onColorSelect,
-  selectedColors,
+  onOptionSelect,
+  selectedOptions = {},
 }) => {
-  const [priceRange, setPriceRange] = useState<PriceRange>({ min: 500, max: 50000 });
+  const [priceRange, setPriceRange] = useState<PriceRange>(() => {
+    const minPrice = Math.min(...products.map((p) => p.price));
+    const maxPrice = Math.max(...products.map((p) => p.price));
+    return { min: minPrice, max: maxPrice };
+  });
 
-  const priceOptions = [
-    { label: '5,000원 이하', value: 'under-5000' },
-    { label: '5,000원 ~ 5만원', value: '5000-50000' },
-    { label: '5만원 ~ 10만원', value: '50000-100000' },
-    { label: '10만원 이상', value: 'over-100000' },
-  ];
+  const [availableOptions, setAvailableOptions] = useState<Record<string, Set<string>>>({});
 
-  const colorOptions = [
-    { label: '블랙', value: 'black', color: '#000000' },
-    { label: '그레이', value: 'gray', color: '#808080' },
-    { label: '화이트', value: 'white', color: '#FFFFFF' },
-    { label: '레드', value: 'red', color: '#FF0000' },
-    { label: '브라운', value: 'brown', color: '#964B00' },
-    { label: '오렌지', value: 'orange', color: '#FFA500' },
-    { label: '옐로우', value: 'yellow', color: '#FFFF00' },
-    { label: '그린', value: 'green', color: '#008000' },
-    { label: '블루', value: 'blue', color: '#0000FF' },
-    { label: '네이비', value: 'navy', color: '#000080' },
-    { label: '퍼플', value: 'purple', color: '#800080' },
-  ];
+  useEffect(() => {
+    const optionsMap: Record<string, Set<string>> = {};
+
+    products.forEach((product) => {
+      product.options.forEach((option) => {
+        // ALLOWED_FILTERS에 있는 옵션만 필터링
+        if (ALLOWED_FILTERS.includes(option.name)) {
+          if (!optionsMap[option.name]) {
+            optionsMap[option.name] = new Set();
+          }
+          optionsMap[option.name].add(option.value);
+        }
+      });
+    });
+
+    setAvailableOptions(optionsMap);
+  }, [products]);
+
+  // 가격 포맷팅 함수
+  const formatPrice = (price: number) => {
+    return new Intl.NumberFormat('ko-KR').format(price);
+  };
 
   return (
-    <div className="w-full max-w-xs bg-white rounded-lg p-4">
-      <div className="space-y-6">
-        {/* 선택된 옵션 */}
-        <div className="space-y-2">
-          <h3 className="text-lg font-medium">선택된 옵션</h3>
-          <div className="flex gap-2 flex-wrap">
-            {selectedPrice && (
-              <span className="px-3 py-1 bg-gray-100 rounded-full text-sm flex items-center gap-2">
-                {`${selectedPrice.min}원 ~ ${selectedPrice.max}원`}
-                <button className="text-gray-500">&times;</button>
-              </span>
-            )}
-          </div>
-        </div>
+    <div className="w-full max-w-xs rounded-lg p-7">
+      <h2 className="text-lg font-bold mb-5">필터</h2>
+      <hr />
 
-        {/* 공통 */}
-        <div className="space-y-2">
-          <h3 className="font-medium">공통</h3>
-          <label className="flex items-center gap-2">
-            <input type="checkbox" onChange={(e) => onRatingChange(e.target.checked)} className="rounded" />
-            <span>★ 4.5 이상</span>
-          </label>
-        </div>
-
-        {/* 가격 슬라이더 */}
-        <div className="space-y-4">
-          <h3 className="font-medium">가격</h3>
-          {/* <Slider
-            range
-            min={200}
-            max={97000}
-            defaultValue={[priceRange.min, priceRange.max]}
-            onChange={(values: number[]) => {
-              setPriceRange({ min: values[0], max: values[1] });
-              onPriceChange({ min: values[0], max: values[1] });
+      {/* 가격 필터 */}
+      <div className="space-y-4 mt-4">
+        <h3 className="font-medium">가격</h3>
+        <div className="flex gap-2 items-center">
+          <input
+            type="number"
+            value={priceRange.min}
+            className="w-2/5 p-2 border rounded text-sm"
+            onChange={(e) => {
+              const newMin = Number(e.target.value);
+              setPriceRange((prev) => ({ ...prev, min: newMin }));
+              onPriceChange({ ...priceRange, min: newMin });
             }}
-          /> */}
-          <div className="flex gap-2 items-center">
-            <input
-              type="number"
-              value={priceRange.min}
-              className="w-24 p-2 border rounded"
-              onChange={(e) => setPriceRange({ ...priceRange, min: Number(e.target.value) })}
-            />
-            <span>~</span>
-            <input
-              type="number"
-              value={priceRange.max}
-              className="w-24 p-2 border rounded"
-              onChange={(e) => setPriceRange({ ...priceRange, max: Number(e.target.value) })}
-            />
+          />
+          <span>~</span>
+          <input
+            type="number"
+            value={priceRange.max}
+            className="w-2/5 p-2 border rounded text-sm"
+            onChange={(e) => {
+              const newMax = Number(e.target.value);
+              setPriceRange((prev) => ({ ...prev, max: newMax }));
+              onPriceChange({ ...priceRange, max: newMax });
+            }}
+          />
+          <div className="bg-slate-500 rounded-lg w-9 h-9 flex items-center justify-center cursor-pointer">
+            <Image src="/assets/search.png" alt="검색 아이콘" width={25} height={25} />
           </div>
         </div>
+        <div className="text-sm text-gray-500">
+          {formatPrice(priceRange.min)}원 ~ {formatPrice(priceRange.max)}원
+        </div>
+      </div>
 
-        {/* 색상 선택 */}
-        <div className="space-y-2">
-          <h3 className="font-medium">색상</h3>
-          <div className="grid grid-cols-6 gap-2">
-            {colorOptions.map((color) => (
+      {/* 색상 필터 */}
+      {Object.entries(availableOptions).map(([optionName, values]) => (
+        <div key={optionName} className="mt-6">
+          <h3 className="font-medium mb-3">색상</h3>
+          <div className="inline-grid gap-3">
+            {Array.from(values).map((value) => (
               <button
-                key={color.value}
-                onClick={() => onColorSelect(color.value)}
-                className={`w-8 h-8 rounded-lg border ${
-                  selectedColors?.includes(color.value) ? 'ring-2 ring-blue-500' : ''
-                }`}
-                style={{ backgroundColor: color.color }}
-                title={color.label}
-              />
+                key={value}
+                onClick={() => onOptionSelect(optionName, value)}
+                className="flex items-center gap-4"
+                title={value}
+              >
+                <div
+                  className={`w-[20px] h-[20px] rounded-[5px] border cursor-pointer
+                    ${
+                      selectedOptions[optionName]?.includes(value)
+                        ? 'ring-2 ring-blue-500 ring-offset-2'
+                        : 'hover:ring-2 hover:ring-gray-300 hover:ring-offset-2'
+                    }`}
+                  style={{
+                    backgroundColor: COLOR_MAPPING[value] || '#CCCCCC',
+                    borderColor: value.toLowerCase() === 'white' ? '#E5E7EB' : 'transparent',
+                  }}
+                />
+                <span className="text-sm text-gray-600">{value}</span>
+              </button>
             ))}
           </div>
         </div>
-      </div>
+      ))}
     </div>
   );
 };
