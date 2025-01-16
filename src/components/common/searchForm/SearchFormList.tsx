@@ -12,7 +12,14 @@ export default function SearchFormList({ search, handleRemoveSearch }: Props) {
         <Image src="/assets/roundSearch.svg" alt="search" width={20} height={20} />
         <p className="text-[#404040] font-bold overflow-hidden whitespace-nowrap text-ellipsis">{search}</p>
       </div>
-      <Image src="/assets/close.svg" alt="close" width={20} height={20} onClick={() => handleRemoveSearch(search)} />
+      <Image
+        className="cursor-pointer"
+        src="/assets/close.svg"
+        alt="close"
+        width={20}
+        height={20}
+        onClick={() => handleRemoveSearch(search)}
+      />
     </li>
   );
 }
