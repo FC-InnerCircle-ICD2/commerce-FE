@@ -9,7 +9,7 @@ type Props = {
   handleClose: () => void;
 };
 
-export default function SearchModal({ handleClose }: Props) {
+export default function MobileSearchModal({ handleClose }: Props) {
   const [inputValue, setInputValue] = useState<string>('');
   const [search, setSearch] = useLocalStorage<string[]>('search', []);
 

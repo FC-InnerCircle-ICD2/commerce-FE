@@ -1,6 +1,6 @@
 'use client';
 
-import SearchModal from '@/components/modals/SearchModal';
+import MobileSearchModal from '@/components/modals/MobileSearchModal';
 import Image from 'next/image';
 import { useState } from 'react';
 
@@ -12,7 +12,7 @@ export default function MobileFooterSearch() {
         <Image src="/assets/search.svg" alt="search" width={35} height={35} />
         <p>검색</p>
       </div>
-      {isSearch && <SearchModal handleClose={() => setIsSearch(false)} />}
+      {isSearch && <MobileSearchModal handleClose={() => setIsSearch(false)} />}
     </>
   );
 }
