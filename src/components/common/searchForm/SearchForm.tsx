@@ -1,21 +1,42 @@
+'use client';
+
 import useLocalStorage from '@/hooks/common/useLocalStorage';
 import SearchFormButton from './SearchFormButton';
 import SearchFormList from './SearchFormList';
+import { RefObject, useEffect, useRef } from 'react';
 
 type Props = {
+  parentRef: RefObject<HTMLDivElement>;
   recommend: string[];
   handleClose: () => void;
 };
 
-export default function SearchForm({ recommend, handleClose }: Props) {
+export default function SearchForm({ parentRef, recommend, handleClose }: Props) {
+  const searchRef = useRef<HTMLDivElement>(null);
   const [search, setSearch] = useLocalStorage<string[]>('search', []);
+
+  const handleClickOutside = (event: MouseEvent) => {
+    if (parentRef.current && !parentRef.current.contains(event.target as Node)) {
+      handleClose();
+    }
+  };
+
+  useEffect(() => {
+    // 이벤트 리스너 등록
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      // 컴포넌트가 언마운트될 때 리스너 제거
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const handleRemoveSearch = (remove: string) => {
     setSearch([...search.filter((item) => item !== remove)]);
   };
 
   return (
-    <article className="w-full p-4 flex flex-col gap-[25]">
+    <article className="w-full p-4 flex flex-col gap-[25]" ref={searchRef}>
       <div className="w-full flex justify-between text-sm">
         <span className="text-[#4F4F4F]">최근 검색어</span>
         <span className="text-[#949494] cursor-pointer" onClick={() => setSearch([])}>

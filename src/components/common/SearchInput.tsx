@@ -2,12 +2,14 @@
 
 import useLocalStorage from '@/hooks/common/useLocalStorage';
 import { useState } from 'react';
+import { IOptions } from './Selectbox';
 
 type Props = {
+  category?: IOptions;
   classname: string;
 };
 
-export default function SearchInput({ classname }: Props) {
+export default function SearchInput({ category, classname }: Props) {
   const [inputValue, setInputValue] = useState<string>('');
   const [search, setSearch] = useLocalStorage<string[]>('search', []);
 
@@ -20,6 +22,7 @@ export default function SearchInput({ classname }: Props) {
     if (event.nativeEvent.isComposing) return;
     if (event.key === 'Enter' && inputValue.trim() !== '') {
       // TODO: 검색 결과로 이동하는 코드 추가해야함.
+      console.log(category);
       setSearch([...search, inputValue]);
       setInputValue('');
     }
