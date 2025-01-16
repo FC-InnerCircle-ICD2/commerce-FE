@@ -19,6 +19,7 @@ export default function SearchInput({ classname }: Props) {
      */
     if (event.nativeEvent.isComposing) return;
     if (event.key === 'Enter' && inputValue.trim() !== '') {
+      // TODO: 검색 결과로 이동하는 코드 추가해야함.
       setSearch([...search, inputValue]);
       setInputValue('');
     }
