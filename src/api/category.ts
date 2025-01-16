@@ -1,5 +1,5 @@
 import { BASE_URL } from '@/constants/constant';
-import { CategoryApis } from '@/utils/apiUrl';
+import { CategoryApis } from '@/constants/apiUrl';
 
 export interface ICategory {
   productCategoryId: number;
