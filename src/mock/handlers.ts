@@ -2,7 +2,7 @@
 // mocking api handler
 
 import { BASE_URL } from '@/constants/constant';
-import { CategoryApis } from '@/utils/apiUrl';
+import { CategoryApis } from '@/constants/apiUrl';
 import { http, HttpResponse, PathParams } from 'msw';
 
 const allPosts = new Map();

@@ -37,18 +37,18 @@ export default function Selectbox({ width, currentItem, items, handleChangeSelec
 
   return (
     <div ref={selectRef} onClick={() => setOpen(!open)} style={{ width: `${width}px` }} className="relative">
-      <button className=" pl-5 pr-1 flex items-center justify-between w-full">
+      <button className=" pl-5 pr-1 flex items-center justify-between w-full border-none">
         <p>{currentItem.label}</p>
         <img className={`w-[30] h-[30] ${open ? 'rotate-180' : ''}`} src={Vector.src} alt="vector" />
       </button>
       {open && (
         <ul
-          className={`absolute w-full top-[50px] bg-white shadow-[0px_0px_4px_0px_rgba(0,0,0,0.75)] rounded-md overflow-hidden ${open ? 'animate-fadeIn' : 'animate-fadeOut'}`}
+          className={`absolute w-full top-[50px] p-[5] bg-white shadow-[0px_0px_4px_0px_rgba(0,0,0,0.75)] rounded-xl overflow-hidden ${open ? 'animate-fadeIn' : 'animate-fadeOut'}`}
         >
           {items.map((item, i) => {
             return (
               <li
-                className="w-full p-2 border-b border-[#CBD5E1] text-sm cursor-pointer hover:bg-[#f4fbff]"
+                className="w-full h-[30] p-2 text-[#4F4F4F] pl-[15] rounded-md text-xs cursor-pointer hover:bg-[#f3f3f3] hover:font-bold"
                 key={i}
                 onClick={() => handleChangeSelect(item)}
               >
