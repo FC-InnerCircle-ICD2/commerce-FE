@@ -68,11 +68,11 @@ export default function ProductsPage() {
         {/* 왼쪽 사이드바 영역 */}
         <div className="lg:w-1/4">
           {/* 카테고리 영역 */}
-          <div className="w-full h-fit bg-slate-50 rounded-xl hidden tablet:block mb-5">
+          <div className="w-full h-fit bg-slate-50 border border-slate-300 rounded-xl hidden tablet:block mb-5">
             <CategoryList />
           </div>
           {/* 필터 영역 */}
-          <div className="w-full h-fit bg-slate-50 rounded-xl">
+          <div className="w-full h-fit bg-slate-50 border border-slate-300 rounded-xl">
             <Filter />
           </div>
         </div>
