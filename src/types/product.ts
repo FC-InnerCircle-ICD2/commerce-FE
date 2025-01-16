@@ -39,7 +39,4 @@ export interface PriceRange {
 export interface FilterProps {
   products: Product[];
   selectedPrice?: PriceRange;
-  onPriceChange: (range: PriceRange) => void;
-  onOptionSelect: (optionName: string, value: string) => void;
-  selectedOptions: Record<string, string[]>;
 }
