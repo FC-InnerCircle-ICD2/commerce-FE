@@ -17,7 +17,15 @@ export default {
   			lg: 'var(--radius)',
   			md: 'calc(var(--radius) - 2px)',
   			sm: 'calc(var(--radius) - 4px)'
-  		}
+  		},
+			maxWidth: {
+        'custom': '1240px',
+      },
+			screens: {
+				'mobile': '430px',
+				'tablet': '768px',
+				'desktop': '1240px',
+			},
   	}
   },
   plugins: [require("tailwindcss-animate")],
