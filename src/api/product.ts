@@ -1,21 +1,19 @@
 import { buildUrl } from '@/utils/buildUrl';
 import type { ICategory } from './category';
 
+interface IProvider {
+  providerId: number;
+  name: string;
+  description: string;
+}
+
 export interface IProduct {
   productId: number;
   name: string;
   description: string;
-  category: {
-    categoryId: number;
-    name: string;
-    parentCategoryId: number;
-    subCategories: ICategory[];
-  };
-  provider: {
-    providerId: number;
-    name: string;
-    description: string;
-  };
+  price: number;
+  productCategory: ICategory;
+  provider: IProvider;
   options: [
     {
       id: number;
