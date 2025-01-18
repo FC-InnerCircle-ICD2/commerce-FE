@@ -49,7 +49,7 @@ interface IProductAPI {
 
 const PRODUCT_URL = '/api/v1/products';
 
-type ProductsProps = {
+export type ProductsProps = {
   /** 조회할 카테고리 ID */
   productCategoryId?: number;
   /** 검색할 제품 이름 */
