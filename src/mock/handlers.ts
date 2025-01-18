@@ -4,6 +4,7 @@
 import { MOCK_URL } from '@/constants/constant';
 import { BannerApis, CategoryApis } from '@/constants/apiUrl';
 import { http, HttpResponse, PathParams } from 'msw';
+import { PRODUCT_URL } from '@/api/product';
 
 const allPosts = new Map();
 
@@ -150,5 +151,117 @@ export const handlers = [
         },
       },
     ]);
+  }),
+
+  http.get(`${MOCK_URL}${PRODUCT_URL}`, () => {
+    return HttpResponse.json({
+      productes: [
+        {
+          productId: 100,
+          name: '피카츄',
+          description: '피카츄',
+          price: 999,
+          productCategory: {
+            productCategoryId: 2,
+            name: '스마트폰',
+            parentCategoryId: 1,
+            subCategories: [],
+          },
+          provider: {
+            providerId: 10,
+            name: '김지훈',
+            description: '전자제품 전문 업체입니다.',
+          },
+          options: [
+            {
+              id: 1,
+              name: 'Color',
+              value: 'Black',
+              quantity: 50,
+              optionOrder: 1,
+              sellPrice: 1000,
+            },
+          ],
+          images: [
+            {
+              id: 10,
+              url: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/25.png',
+              fileOrder: 1,
+              isRepresentative: true,
+            },
+          ],
+        },
+        {
+          productId: 101,
+          name: '피츄',
+          description: '피츄',
+          price: 50505,
+          productCategory: {
+            productCategoryId: 2,
+            name: '스마트폰',
+            parentCategoryId: 1,
+            subCategories: [],
+          },
+          provider: {
+            providerId: 10,
+            name: '김지훈',
+            description: '전자제품 전문 업체입니다.',
+          },
+          options: [
+            {
+              id: 1,
+              name: 'Color',
+              value: 'Black',
+              quantity: 50,
+              optionOrder: 1,
+              sellPrice: 1000,
+            },
+          ],
+          images: [
+            {
+              id: 10,
+              url: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/172.png',
+              fileOrder: 1,
+              isRepresentative: true,
+            },
+          ],
+        },
+        {
+          productId: 102,
+          name: '에몽가',
+          description: '에몽가',
+          price: 50505,
+          productCategory: {
+            productCategoryId: 2,
+            name: '스마트폰',
+            parentCategoryId: 1,
+            subCategories: [],
+          },
+          provider: {
+            providerId: 10,
+            name: '김지훈',
+            description: '전자제품 전문 업체입니다.',
+          },
+          options: [
+            {
+              id: 1,
+              name: 'Color',
+              value: 'Black',
+              quantity: 50,
+              optionOrder: 1,
+              sellPrice: 1000,
+            },
+          ],
+          images: [
+            {
+              id: 10,
+              url: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/587.png',
+              fileOrder: 1,
+              isRepresentative: true,
+            },
+          ],
+        },
+      ],
+    });
   }),
 ];
