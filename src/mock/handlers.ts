@@ -95,35 +95,60 @@ export const handlers = [
       },
     });
   }),
+
   http.get(`${MOCK_URL}${BannerApis.getBanner}`, () => {
-    return HttpResponse.json({
-      productCategories: [
-        {
-          productCategoryId: 1,
-          name: '전자제품',
-          parentCategoryId: null,
-          subCategories: [
-            {
-              productCategoryId: 2,
-              name: '스마트폰',
-              parentCategoryId: 1,
-              subCategories: [],
-            },
-            {
-              productCategoryId: 3,
-              name: '노트북',
-              parentCategoryId: 1,
-              subCategories: [],
-            },
-          ],
+    return HttpResponse.json([
+      {
+        id: 1,
+        type: 'PRODUCT',
+        title: '설 선물세트 사전예약! 특가',
+        bannerOrder: 1,
+        iconUrl: 'https://your-s3-bucket.s3.amazonaws.com/images/banners/1/icons/new_year.png',
+        productBanner: {
+          id: 1,
+          url: '/products/1',
+          linkType: 'INTERNAL',
+          image: {
+            id: 101,
+            url: 'https://your-s3-bucket.s3.amazonaws.com/images/banners/1/product/photo1.jpg',
+            fileOrder: 1,
+          },
         },
-        {
-          productCategoryId: 4,
-          name: '가전제품',
-          parentCategoryId: null,
-          subCategories: [],
+      },
+      {
+        id: 2,
+        type: 'EVENT',
+        title: '여름맞이 특별 프로모션',
+        bannerOrder: 2,
+        iconUrl: 'https://your-s3-bucket.s3.amazonaws.com/images/banners/2/icons/summer_promo.png',
+        productBanner: {
+          id: 2,
+          url: 'https://external-site.com/event/2',
+          linkType: 'EXTERNAL',
+          image: {
+            id: 102,
+            url: 'https://your-s3-bucket.s3.amazonaws.com/images/banners/2/product/photo2.jpg',
+            fileOrder: 1,
+          },
         },
-      ],
-    });
+      },
+      {
+        id: 3,
+        type: 'PRODUCT',
+        title: '봄 신상품 할인전',
+        bannerOrder: 3,
+        iconUrl: 'https://your-s3-bucket.s3.amazonaws.com/images/banners/3/icons/spring_sale.png',
+        productBanner: {
+          id: 3,
+          url: '/products/3',
+          linkType: 'INTERNAL',
+          image: {
+            id: 103,
+            url: 'https://your-s3-bucket.s3.amazonaws.com/images/banners/3/product/photo3.jpg',
+            fileOrder: 2,
+          },
+        },
+      },
+    ]);
   }),
 ];

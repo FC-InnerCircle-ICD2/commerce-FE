@@ -1,4 +1,4 @@
-import { BASE_URL, MOCK_URL } from '@/constants/constant';
+import { MOCK_URL } from '@/constants/constant';
 import { CategoryApis } from '@/constants/apiUrl';
 
 export interface ICategory {
