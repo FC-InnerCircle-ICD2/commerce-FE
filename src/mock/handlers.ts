@@ -1,8 +1,8 @@
 // src/mocks/handlers.js
 // mocking api handler
 
-import { BASE_URL } from '@/constants/constant';
-import { CategoryApis } from '@/constants/apiUrl';
+import { MOCK_URL } from '@/constants/constant';
+import { BannerApis, CategoryApis } from '@/constants/apiUrl';
 import { http, HttpResponse, PathParams } from 'msw';
 
 const allPosts = new Map();
@@ -58,7 +58,44 @@ export const handlers = [
     return HttpResponse.json(deletedPost);
   }),
 
-  http.get(`${BASE_URL}${CategoryApis.getCategory}`, () => {
+  http.get(`${MOCK_URL}${CategoryApis.getCategory}`, () => {
+    return HttpResponse.json({
+      contents: [
+        {
+          categoryId: 1,
+          name: '전자제품',
+          parentCategoryId: null,
+          subCategories: [
+            {
+              categoryId: 2,
+              name: '스마트폰',
+              parentCategoryId: 1,
+              subCategories: [],
+            },
+            {
+              categoryId: 3,
+              name: '노트북',
+              parentCategoryId: 1,
+              subCategories: [],
+            },
+            {
+              categoryId: 4,
+              name: '가전제품',
+              parentCategoryId: null,
+              subCategories: [],
+            },
+          ],
+        },
+      ],
+      page: {
+        size: 10,
+        number: 0,
+        totalElements: 0,
+        totalPages: 0,
+      },
+    });
+  }),
+  http.get(`${MOCK_URL}${BannerApis.getBanner}`, () => {
     return HttpResponse.json({
       productCategories: [
         {
