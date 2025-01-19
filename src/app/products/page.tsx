@@ -80,7 +80,7 @@ export default function ProductsPage() {
         {/* 상품 목록 영역 */}
         <main className="lg:w-3/4">
           <h1 className="text-3xl font-bold mb-8">상품 breadcrumb 컴포넌트 추가</h1>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5 bg-slate-50 border border-slate-300 rounded-xl p-7">
             {products.map((product) => (
               <Card
                 key={product.productId}
