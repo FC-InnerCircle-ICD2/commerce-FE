@@ -104,14 +104,15 @@ export const handlers = [
         type: 'PRODUCT',
         title: '설 선물세트 사전예약! 특가',
         bannerOrder: 1,
-        iconUrl: 'https://your-s3-bucket.s3.amazonaws.com/images/banners/1/icons/new_year.png',
+        iconUrl:
+          'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/10.png',
         productBanner: {
           id: 1,
           url: '/products/1',
           linkType: 'INTERNAL',
           image: {
             id: 101,
-            url: 'https://your-s3-bucket.s3.amazonaws.com/images/banners/1/product/photo1.jpg',
+            url: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/24.png',
             fileOrder: 1,
           },
         },
@@ -121,14 +122,15 @@ export const handlers = [
         type: 'EVENT',
         title: '여름맞이 특별 프로모션',
         bannerOrder: 2,
-        iconUrl: 'https://your-s3-bucket.s3.amazonaws.com/images/banners/2/icons/summer_promo.png',
+        iconUrl:
+          'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/11.png',
         productBanner: {
           id: 2,
           url: 'https://external-site.com/event/2',
           linkType: 'EXTERNAL',
           image: {
             id: 102,
-            url: 'https://your-s3-bucket.s3.amazonaws.com/images/banners/2/product/photo2.jpg',
+            url: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/28.png',
             fileOrder: 1,
           },
         },
@@ -138,14 +140,15 @@ export const handlers = [
         type: 'PRODUCT',
         title: '봄 신상품 할인전',
         bannerOrder: 3,
-        iconUrl: 'https://your-s3-bucket.s3.amazonaws.com/images/banners/3/icons/spring_sale.png',
+        iconUrl:
+          'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/12.png',
         productBanner: {
           id: 3,
           url: '/products/3',
           linkType: 'INTERNAL',
           image: {
             id: 103,
-            url: 'https://your-s3-bucket.s3.amazonaws.com/images/banners/3/product/photo3.jpg',
+            url: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/31.png',
             fileOrder: 2,
           },
         },
