@@ -1,7 +1,8 @@
 import React from 'react';
 import Card from '@/components/common/Card';
 import CategoryList from './_components/CategoryList';
-import Filter from '@/app/products/_components/Filter';
+import Filter from '@/app/products/_components/filter/Filter';
+import { mockProducts } from '@/app/products/_components/mockData';
 
 export default function ProductsPage() {
   // 임시 상품 데이터
@@ -73,7 +74,7 @@ export default function ProductsPage() {
           </div>
           {/* 필터 영역 */}
           <div className="w-full h-fit bg-slate-50 border border-slate-300 rounded-xl">
-            <Filter />
+            <Filter products={mockProducts} />
           </div>
         </div>
 
