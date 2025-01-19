@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
+import { ShoppingCartIcon } from '@heroicons/react/24/outline';
 
 export default function CategoryHeader() {
   return (
@@ -15,7 +16,7 @@ export default function CategoryHeader() {
           <Image src="/assets/search.svg" width={30} height={30} alt="search" />
         </div>
         <div className="w-10 h-10 rounded-lg flex items-center justify-center bg-[#F6F8FB]">
-          <Image src="/assets/shopping.svg" width={30} height={30} alt="shopping" />
+          <ShoppingCartIcon className="w-[30px] h-[30px] text-[#075985]" />
         </div>
       </div>
     </header>
