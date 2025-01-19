@@ -1,5 +1,6 @@
 import { IProduct } from '@/api/product';
 import { Card } from '../common';
+import NoneCard from '../common/NoneCard';
 
 type Props = {
   products: IProduct[];
@@ -21,6 +22,10 @@ export default function ProductList({ products }: Props) {
             />
           );
         })}
+        {products.length < 8 &&
+          Array.from({ length: 8 - products.length }).map((_, i) => {
+            return <NoneCard key={i} />;
+          })}
       </div>
     </div>
   );
