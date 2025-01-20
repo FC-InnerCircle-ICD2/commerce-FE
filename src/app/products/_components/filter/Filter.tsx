@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 
 import { PriceRange, FilterProps } from '../../../../types/product';
 import { useFilterOptions } from '@/hooks/useFilterOptions';
@@ -10,13 +10,18 @@ import { PriceFilter } from '@/app/products/_components/filter/PriceFilter';
 import { ColorFilter } from '@/app/products/_components/filter/ColorFilter';
 
 const Filter: React.FC<FilterProps> = ({ products }) => {
-  const [priceRange, setPriceRange] = useState<PriceRange>(() => ({
-    min: Math.min(...products.map((p) => p.price)),
-    max: Math.max(...products.map((p) => p.price)),
-  }));
+  const priceRangeValues = useMemo(() => {
+    const prices = products.map((p) => p.price);
+    return {
+      min: Math.min(...prices),
+      max: Math.max(...prices),
+    };
+  }, [products]);
+
+  const [priceRange, setPriceRange] = useState<PriceRange>(() => priceRangeValues);
   const [selectedPriceRange, setSelectedPriceRange] = useState<PriceRange | undefined>(undefined);
   const availableOptions = useFilterOptions(products);
-  const [sliderValue, setSliderValue] = useState([priceRange.min, priceRange.max]);
+  const [sliderValue, setSliderValue] = useState([priceRangeValues.min, priceRangeValues.max]);
   const [selectedColors, setSelectedColors] = useState<string[]>([]);
 
   const handlePriceSearch = () => setSelectedPriceRange(priceRange);
@@ -48,7 +53,7 @@ const Filter: React.FC<FilterProps> = ({ products }) => {
       <PriceFilter
         priceRange={priceRange}
         sliderValue={sliderValue}
-        products={products}
+        priceRangeValues={priceRangeValues}
         onSliderChange={handleSliderChange}
         onInputChange={handleInputChange}
         onSearch={handlePriceSearch}

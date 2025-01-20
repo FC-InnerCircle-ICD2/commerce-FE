@@ -5,7 +5,7 @@ import { PriceRange } from '@/types/product';
 interface PriceFilterProps {
   priceRange: PriceRange;
   sliderValue: number[];
-  products: { price: number }[];
+  priceRangeValues: { min: number; max: number };
   onSliderChange: (value: number[]) => void;
   onInputChange: (type: 'min' | 'max', value: number) => void;
   onSearch: () => void;
@@ -14,7 +14,7 @@ interface PriceFilterProps {
 export const PriceFilter: React.FC<PriceFilterProps> = ({
   priceRange,
   sliderValue,
-  products,
+  priceRangeValues,
   onSliderChange,
   onInputChange,
   onSearch,
@@ -27,8 +27,8 @@ export const PriceFilter: React.FC<PriceFilterProps> = ({
           defaultValue={[priceRange.min, priceRange.max]}
           value={sliderValue}
           onValueChange={onSliderChange}
-          min={Math.min(...products.map((p) => p.price))}
-          max={Math.max(...products.map((p) => p.price))}
+          min={priceRangeValues.min}
+          max={priceRangeValues.max}
           step={1000}
         />
         <div className="flex justify-between text-sm mt-4 text-zinc-300">
