@@ -1,18 +1,12 @@
 import { MOCK_URL } from '@/constants/constant';
 import { CategoryApis } from '@/constants/apiUrl';
+import { IPaging } from '@/interface';
 
 export interface ICategory {
   productCategoryId: number;
   name: string;
   parentCategoryId: number | null;
   subCategories: Array<ICategory>;
-}
-
-export interface IPaging {
-  number: number;
-  size: number;
-  totalElement: number;
-  totalPages: number;
 }
 
 interface ICategoryAPI {
