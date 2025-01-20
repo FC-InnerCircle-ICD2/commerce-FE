@@ -6,6 +6,8 @@ type Props = {
   products: IProduct[];
 };
 
+const MIN_LENGTH = 8;
+
 export default function ProductList({ products }: Props) {
   return (
     <div className="w-full flex flex-col gap-10 px-3 py-5 tablet:py-10 tablet:px-[100] ">
@@ -22,8 +24,8 @@ export default function ProductList({ products }: Props) {
             />
           );
         })}
-        {products.length < 8 &&
-          Array.from({ length: 8 - products.length }).map((_, i) => {
+        {products.length < MIN_LENGTH &&
+          Array.from({ length: MIN_LENGTH - products.length }).map((_, i) => {
             return <NoneCard key={i} />;
           })}
       </div>
