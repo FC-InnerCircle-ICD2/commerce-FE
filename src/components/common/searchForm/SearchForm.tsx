@@ -3,16 +3,15 @@
 import useLocalStorage from '@/hooks/common/useLocalStorage';
 import SearchFormButton from './SearchFormButton';
 import SearchFormList from './SearchFormList';
-import { RefObject, useEffect, useRef } from 'react';
+import { RefObject, useEffect } from 'react';
 
 type Props = {
-  parentRef: RefObject<HTMLDivElement>;
+  parentRef: RefObject<HTMLDivElement | null>;
   recommend: string[];
   handleClose: () => void;
 };
 
 export default function SearchForm({ parentRef, recommend, handleClose }: Props) {
-  const searchRef = useRef<HTMLDivElement>(null);
   const [search, setSearch] = useLocalStorage<string[]>('search', []);
 
   const handleClickOutside = (event: MouseEvent) => {
@@ -36,7 +35,7 @@ export default function SearchForm({ parentRef, recommend, handleClose }: Props)
   };
 
   return (
-    <article className="w-full p-4 flex flex-col gap-[25]" ref={searchRef}>
+    <article className="w-full p-4 flex flex-col gap-[25]">
       <div className="w-full flex justify-between text-sm">
         <span className="text-[#4F4F4F]">최근 검색어</span>
         <span className="text-[#949494] cursor-pointer" onClick={() => setSearch([])}>

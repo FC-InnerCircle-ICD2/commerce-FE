@@ -1,7 +1,7 @@
 'use client';
 
 import Image from 'next/image';
-import Selectbox, { IOptions } from './Selectbox';
+import Selectbox, { type IOptions } from './Selectbox';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import SearchForm from './searchForm/SearchForm';
 import SearchInput from './SearchInput';

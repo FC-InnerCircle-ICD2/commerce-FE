@@ -1,6 +1,6 @@
 'use client';
 
-import { ICategory } from '@/api/category';
+import type { ICategory } from '@/api/category';
 import Image from 'next/image';
 import { useState } from 'react';
 
