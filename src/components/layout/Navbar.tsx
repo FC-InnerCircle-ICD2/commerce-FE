@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import Image from 'next/image';
+import { UserCircleIcon } from '@heroicons/react/24/outline';
 
 const Navbar = () => {
   return (
@@ -18,7 +19,7 @@ const Navbar = () => {
           </div>
           <div className="text-xs flex items-center gap-4">
             <span className="flex items-center gap-2">
-              <Image src="/assets/profile.svg" alt="프로필 이미지" width={12} height={12} />
+              <UserCircleIcon className="w-3 h-3 text-[#5F6368]" />
               <span>홍길동 님</span>
             </span>
             <Link href="" className="border rounded-xl border-zinc-300 text-xs text-black px-2 py-1">
