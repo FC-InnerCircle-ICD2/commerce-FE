@@ -11,7 +11,7 @@ export default async function Home() {
     const products = await getProducts({ sort: 'registration' });
 
     return (
-      <div className="flex flex-col h-screen">
+      <div className="flex flex-col h-screen overflow-x-hidden">
         <Header />
         <div className="grow flex flex-col gap-[20]">
           <Carousel banners={banners} />
