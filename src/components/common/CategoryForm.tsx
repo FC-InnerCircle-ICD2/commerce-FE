@@ -18,7 +18,7 @@ export default function CategoryForm({ categories }: Props) {
   return (
     <article className="w-full h-full flex gap-[10]">
       <ul className="w-[160] flex flex-col gap-2">
-        {categories?.map((category, i) => {
+        {categories.map((category, i) => {
           return (
             <li
               className={`w-full h-10 rounded text-sm flex items-center justify-between p-[10] cursor-pointer tablet:text-xs ${category.productCategoryId === currentCategory?.productCategoryId ? 'font-bold text-[#082F49] bg-[#F1F5F9]' : 'font-normal text-[#4F4F4F] bg-transparent'}`}
