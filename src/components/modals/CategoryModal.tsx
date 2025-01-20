@@ -28,7 +28,10 @@ export default function CategoryModal({ handleClose }: Props) {
   }, []);
 
   return (
-    <div ref={modalRef} className="w-[310] h-[500] absolute right-0 top-[75] z-50 p-[15] bg-white shadow-lg rounded-lg">
+    <div
+      ref={modalRef}
+      className="w-[310] h-[500] absolute right-0 top-[75] z-[200] p-[15] bg-white shadow-lg rounded-lg"
+    >
       {categories && <CategoryForm categories={categories} />}
     </div>
   );
