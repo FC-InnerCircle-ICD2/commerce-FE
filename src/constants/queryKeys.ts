@@ -1,5 +1,6 @@
 export const CategoryQueryKeys = {
   category: 'category',
+  banner: 'banner',
 } as const;
 
 export const ProductsQueryKeys = {
