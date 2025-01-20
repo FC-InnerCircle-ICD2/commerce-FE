@@ -1,8 +1,8 @@
 'use client';
 
 import MobileSearchModal from '@/components/modals/MobileSearchModal';
-import Image from 'next/image';
 import { useState } from 'react';
+import { MagnifyingGlassIcon } from '@heroicons/react/24/outline';
 
 export default function SearchButton() {
   const [isSearch, setIsSearch] = useState<boolean>(false);
@@ -13,7 +13,7 @@ export default function SearchButton() {
         onClick={() => setIsSearch(true)}
       >
         <p className="grow text-xs text-[#5B5B5B]">찾고 싶은 상품을 검색해 보세요!</p>
-        <Image src="/assets/search.svg" alt="search" width={24} height={24} className="p-1 rounded-lg bg-headerMain" />
+        <MagnifyingGlassIcon className="w-6 h-6 text-[#075985] p-1 rounded-lg bg-headerMain" />
       </div>
       {isSearch && <MobileSearchModal handleClose={() => setIsSearch(false)} />}
     </>

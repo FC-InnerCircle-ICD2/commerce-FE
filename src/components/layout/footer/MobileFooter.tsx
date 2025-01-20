@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import MobileFooterSearch from './MobileFooterSearch';
+import { ShoppingCartIcon } from '@heroicons/react/24/outline';
 
 export default function MobileFooter() {
   return (
@@ -15,7 +16,7 @@ export default function MobileFooter() {
       </Link>
       <MobileFooterSearch />
       <div className="flex flex-col items-center">
-        <Image src="/assets/shopping.svg" alt="shopping" width={35} height={35} />
+        <ShoppingCartIcon className="w-[35px] h-[35px] text-[#075985]" />
         <p>장바구니</p>
       </div>
       <div className="flex flex-col items-center">
