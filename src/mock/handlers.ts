@@ -2,7 +2,7 @@
 // mocking api handler
 
 import { BASE_URL } from '@/constants/constant';
-import { CategoryApis } from '@/constants/apiUrl';
+import { CategoryApis, ProductApis } from '@/constants/apiUrl';
 import { http, HttpResponse, PathParams } from 'msw';
 
 const allPosts = new Map();
@@ -87,6 +87,110 @@ export const handlers = [
           subCategories: [],
         },
       ],
+    });
+  }),
+
+  // 상품 목록 API
+  http.get(`${BASE_URL}${ProductApis.getProducts}`, () => {
+    return HttpResponse.json({
+      products: [
+        {
+          productId: 1,
+          name: '상품 1',
+          price: 29000,
+          description: '상품 설명 1',
+          imageUrl: '/images/product-1.jpg',
+          discount: 10,
+          review: 5,
+          productCategory: {
+            productCategoryId: 1,
+            name: '전자제품',
+            parentCategoryId: null,
+            subCategories: []
+          },
+          provider: {
+            providerId: 1,
+            name: '공급업체 1',
+            description: '공급업체 설명 1'
+          },
+          options: [
+            {
+              id: 1,
+              name: 'color',
+              value: 'red'
+            },
+            {
+              id: 2,
+              name: 'size',
+              value: 'large'
+            }
+          ]
+        },
+        {
+          productId: 2,
+          name: '상품 2',
+          price: 39000,
+          description: '상품 설명 2',
+          imageUrl: '/images/product-2.jpg',
+          discount: 20,
+          review: 4,
+          productCategory: {
+            productCategoryId: 2,
+            name: '스마트폰',
+            parentCategoryId: 1,
+            subCategories: []
+          },
+          provider: {
+            providerId: 2,
+            name: '공급업체 2',
+            description: '공급업체 설명 2'
+          },
+          options: [
+            {
+              id: 3,
+              name: 'color',
+              value: 'blue'
+            },
+            {
+              id: 4,
+              name: 'size',
+              value: 'medium'
+            }
+          ]
+        },
+        {
+          productId: 3,
+          name: '상품 3',
+          price: 49000,
+          description: '상품 설명 3',
+          imageUrl: '/images/product-3.jpg',
+          discount: 20,
+          review: 3,
+          productCategory: {
+            productCategoryId: 3,
+            name: '노트북',
+            parentCategoryId: 1,
+            subCategories: []
+          },
+          provider: {
+            providerId: 3,
+            name: '공급업체 3',
+            description: '공급업체 설명 3'
+          },
+          options: [
+            {
+              id: 5,
+              name: 'color',
+              value: 'black'
+            },
+            {
+              id: 6,
+              name: 'size',
+              value: 'small'
+            }
+          ]
+        }
+      ]
     });
   }),
 ];

@@ -2,66 +2,26 @@ import React from 'react';
 import Card from '@/components/common/Card';
 import CategoryList from './_components/CategoryList';
 import Filter from '@/app/products/_components/filter/Filter';
-import { mockProducts } from '@/app/products/_components/mockData';
+import { BASE_URL } from '@/constants/constant';
+import { ProductApis } from '@/constants/apiUrl';
 
-export default function ProductsPage() {
-  // 임시 상품 데이터
-  const products = [
-    {
-      productId: 1,
-      name: '상품 1',
-      price: 29000,
-      description: '상품 설명 1',
-      imageUrl: '/images/product-1.jpg',
-      discount: 10,
-      review: 5,
-    },
-    {
-      productId: 2,
-      name: '상품 2',
-      price: 39000,
-      description: '상품 설명 2',
-      imageUrl: '/images/product-2.jpg',
-      discount: 20,
-      review: 4,
-    },
-    {
-      productId: 3,
-      name: '상품 3',
-      price: 49000,
-      description: '상품 설명 3',
-      imageUrl: '/images/product-3.jpg',
-      discount: 20,
-      review: 3,
-    },
-    {
-      productId: 4,
-      name: '상품 1',
-      price: 29000,
-      description: '상품 설명 1',
-      imageUrl: '/images/product-1.jpg',
-      discount: 10,
-      review: 5,
-    },
-    {
-      productId: 5,
-      name: '상품 2',
-      price: 39000,
-      description: '상품 설명 2',
-      imageUrl: '/images/product-2.jpg',
-      discount: 20,
-      review: 4,
-    },
-    {
-      productId: 6,
-      name: '상품 3',
-      price: 49000,
-      description: '상품 설명 3',
-      imageUrl: '/images/product-3.jpg',
-      discount: 20,
-      review: 3,
-    },
-  ];
+interface Product {
+  productId: number;
+  imageUrl: string;
+  name: string;
+  price: number;
+  discount: number;
+  review: number;
+}
+
+async function getProducts() {
+  const response = await fetch(`${BASE_URL}${ProductApis.getProducts}`);
+  const data = await response.json();
+  return data.products;
+}
+
+export default async function ProductsPage() {
+  const products = await getProducts();
 
   return (
     <div className="max-w-custom mx-auto px-4 py-8">
@@ -74,7 +34,7 @@ export default function ProductsPage() {
           </div>
           {/* 필터 영역 */}
           <div className="w-full h-fit bg-slate-50 border border-slate-300 rounded-xl">
-            <Filter products={mockProducts} />
+            <Filter products={products} />
           </div>
         </div>
 
@@ -82,7 +42,7 @@ export default function ProductsPage() {
         <main className="lg:w-3/4">
           <h1 className="text-3xl font-bold mb-8">상품 breadcrumb 컴포넌트 추가</h1>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5 bg-slate-50 border border-slate-300 rounded-xl p-7">
-            {products.map((product) => (
+            {products.map((product:Product) => (
               <Card
                 key={product.productId}
                 imgUrl={product.imageUrl}
