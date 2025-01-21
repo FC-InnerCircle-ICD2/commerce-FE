@@ -83,7 +83,7 @@ export default function ProductsPage() {
   ];
 
   return (
-    <div className="max-w-custom mx-auto px-4 py-8">
+    <div className="max-w-custom mx-auto py-8">
       <div className="flex flex-col lg:flex-row gap-5">
         {/* 왼쪽 사이드바 영역 */}
         <div className="lg:w-1/4">
@@ -92,7 +92,7 @@ export default function ProductsPage() {
             <CategoryList />
           </div>
           {/* 필터 영역 */}
-          <div className="w-full h-fit bg-slate-50 border border-slate-300 rounded-xl">
+          <div className="w-full h-fit bg-slate-50 border border-slate-300 rounded-xl hidden tablet:block">
             <Filter products={mockProducts} />
           </div>
         </div>
@@ -100,17 +100,19 @@ export default function ProductsPage() {
         {/* 상품 목록 영역 */}
         <main className="lg:w-3/4">
           <div className='mb-8'><Breadcrumbs /></div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 bg-slate-50 border border-slate-300 rounded-xl p-7">
-            {products.map((product) => (
-              <Card
-                key={product.productId}
-                imgUrl={product.imageUrl}
-                title={product.name}
-                price={product.price}
-                discount={product.discount}
-                review={product.review}
-              />
-            ))}
+          <div className="tablet:px-0 px-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 bg-slate-50 border border-slate-300 rounded-xl p-7">
+              {products.map((product) => (
+                <Card
+                  key={product.productId}
+                  imgUrl={product.imageUrl}
+                  title={product.name}
+                  price={product.price}
+                  discount={product.discount}
+                  review={product.review}
+                />
+              ))}
+            </div>
           </div>
         </main>
       </div>

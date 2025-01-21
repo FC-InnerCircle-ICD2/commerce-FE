@@ -52,21 +52,21 @@ export default function Breadcrumbs() {
   const sortItems = ['높은 가격순', '판매 많은순', '등록순'];
 
   return (
-    <div className="flex items-center justify-between px-7 py-4 bg-slate-50 border border-slate-300 rounded-xl">
+    <div className="flex items-center justify-between tablet:px-7 tablet:py-4 px-3 py-2 bg-slate-50 tablet:border border-slate-300 tablet:rounded-xl">
       <Breadcrumb className="flex items-center gap-2 list-none">
-        <BreadcrumbItem className="border border-slate-300 rounded-full bg-white px-3 py-2">
+        <BreadcrumbItem className="border border-slate-300 rounded-full bg-white px-3 py-2 text-sm">
           <BreadcrumbLink href="/">홈</BreadcrumbLink>
         </BreadcrumbItem>
         <BreadcrumbSeparator>
           <ChevronRightIcon className="w-6 h-6" />
         </BreadcrumbSeparator>
-        <BreadcrumbItem className="border border-slate-300 rounded-full bg-white px-1 py-2">
+        <BreadcrumbItem className="border border-slate-300 rounded-full bg-white px-1 py-2 text-sm">
           <BreadcrumbDropdown label={selectedCategory} items={categoryItems.clothing} onSelect={setSelectedCategory} />
         </BreadcrumbItem>
         <BreadcrumbSeparator>
           <ChevronRightIcon className="w-6 h-6" />
         </BreadcrumbSeparator>
-        <BreadcrumbItem className="border border-slate-300 rounded-full bg-white px-1 py-2">
+        <BreadcrumbItem className="border border-slate-300 rounded-full bg-white px-1 py-2 text-sm">
           <BreadcrumbDropdown label={selectedOuter} items={categoryItems.outer} onSelect={setSelectedOuter} />
         </BreadcrumbItem>
       </Breadcrumb>

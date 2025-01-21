@@ -15,7 +15,7 @@ interface SortDropdownProps {
 export default function SortDropdown({ label, items, onSelect }: SortDropdownProps) {
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger asChild className="flex items-center gap-1 outline-none">
+      <DropdownMenuTrigger asChild className="flex items-center gap-1 outline-none text-sm">
         <button className="px-3">
           {label}
           <ChevronDownIcon className="w-4 h-4" />

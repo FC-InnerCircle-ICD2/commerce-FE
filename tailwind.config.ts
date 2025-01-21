@@ -40,7 +40,7 @@ export default {
       },
       screens: {
         mobile: '430px',
-        tablet: '768px',
+        tablet: '1024px',
         desktop: '1240px',
       },
     },
