@@ -1,11 +1,11 @@
 'use client';
 
-import Image from 'next/image';
 import Selectbox, { type IOptions } from './Selectbox';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import SearchOverview from './searchOverview/SearchOverview';
 import SearchForm from './SearchForm';
 import { useCategory } from '@/hooks/queries/useCategory';
+import { MagnifyingGlassIcon } from '@heroicons/react/24/outline';
 
 export default function CategorySearch() {
   const [isFocus, setIsFocus] = useState<boolean>(false);
@@ -36,7 +36,7 @@ export default function CategorySearch() {
           category={currentItem}
           classname="grow border-l-2 border-[#CBD5E1] pl-[15] text-[#3D3D3D] bg-transparent outline-none"
         />
-        <Image src="/assets/search.svg" alt="search" width={25} height={25} />
+        <MagnifyingGlassIcon className="w-[25px] h-[25px] text-[#075985]" />
         {isFocus && (
           <article className="absolute z-50 left-0 top-[50] w-full bg-white rounded-md shadow-md">
             <SearchOverview parentRef={parentRef} recommend={['추천']} handleClose={() => setIsFocus(false)} />

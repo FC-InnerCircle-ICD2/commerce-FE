@@ -3,6 +3,7 @@
 import type { ICategory } from '@/api/category';
 import Image from 'next/image';
 import { useState } from 'react';
+import { MagnifyingGlassIcon } from '@heroicons/react/24/outline';
 
 type Props = {
   categories: ICategory[];
@@ -28,7 +29,7 @@ export default function CategoryForm({ categories }: Props) {
                 className="w-full outline-none border-none flex items-center justify-between"
                 onClick={() => handleParentCategoryClick(category)}
               >
-                <Image src="/assets/search.svg" alt="icon" width={24} height={24} />
+                <MagnifyingGlassIcon className="w-4 h-4 text-[#075985]" />
                 <div>{category.name}</div>
                 <Image src="/assets/categoryMove.svg" alt="categoryMove" width={20} height={20} />
               </button>
