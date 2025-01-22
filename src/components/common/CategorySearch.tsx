@@ -4,7 +4,7 @@ import Image from 'next/image';
 import Selectbox, { type IOptions } from './Selectbox';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import SearchOverview from './searchOverview/SearchOverview';
-import SearchInput from './SearchInput';
+import SearchForm from './SearchForm';
 import { useCategory } from '@/hooks/queries/useCategory';
 
 export default function CategorySearch() {
@@ -32,7 +32,7 @@ export default function CategorySearch() {
     >
       <Selectbox width="120" currentItem={currentItem} items={categoryOptions} handleChangeSelect={setCurrentItem} />
       <div className="relative flex grow pr-[10]" onFocus={() => setIsFocus(true)}>
-        <SearchInput
+        <SearchForm
           category={currentItem}
           classname="grow border-l-2 border-[#CBD5E1] pl-[15] text-[#3D3D3D] bg-transparent outline-none"
         />
