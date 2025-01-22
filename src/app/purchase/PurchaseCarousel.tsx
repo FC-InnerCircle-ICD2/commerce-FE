@@ -34,7 +34,7 @@ export default function PurchaseCarousel(props: Props) {
       {accounts.map((account, index) => (
         <div
           key={index}
-          className="w-[200px] h-[80px] bg-white rounded-[10px] flex items-center border border-neutral-300 px-4"
+          className="h-[80px] bg-white rounded-[10px] box-border flex items-center border border-neutral-300 px-4"
         >
           <div className="w-10 h-10 rounded-full bg-neutral-300"></div>
           <div className="flex flex-col ml-3">
