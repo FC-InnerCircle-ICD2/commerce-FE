@@ -11,10 +11,15 @@ import { ColorFilter } from '@/app/products/_components/filter/ColorFilter';
 
 const Filter: React.FC<FilterProps> = ({ products }) => {
   const priceRangeValues = useMemo(() => {
-    const prices = products.map((p) => p.price);
+    const price = products.map((p) => p.price).filter((price): price is number => price !== undefined && !isNaN(price));
+
+    if (price.length === 0) {
+      return { min: 0, max: 0 };
+    }
+
     return {
-      min: Math.min(...prices),
-      max: Math.max(...prices),
+      min: Math.min(...price),
+      max: Math.max(...price),
     };
   }, [products]);
 

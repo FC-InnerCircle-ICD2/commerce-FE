@@ -93,104 +93,83 @@ export const handlers = [
   // 상품 목록 API
   http.get(`${BASE_URL}${ProductApis.getProducts}`, () => {
     return HttpResponse.json({
-      products: [
+      contents: [
         {
-          productId: 1,
-          name: '상품 1',
-          price: 29000,
-          description: '상품 설명 1',
-          imageUrl: '/images/product-1.jpg',
-          discount: 10,
-          review: 5,
-          productCategory: {
-            productCategoryId: 1,
-            name: '전자제품',
-            parentCategoryId: null,
-            subCategories: []
+          productId: 100,
+          name: '스마트폰',
+          description: '최신 모델의 스마트폰입니다.',
+          price: 10000,
+          category: {
+            categoryId: 2,
+            name: '스마트폰',
+            parentCategoryId: 1,
+            subCategories: [],
           },
           provider: {
-            providerId: 1,
-            name: '공급업체 1',
-            description: '공급업체 설명 1'
+            providerId: 10,
+            name: 'ABC 전자',
+            description: '전자제품 전문 업체입니다.',
           },
           options: [
             {
               id: 1,
-              name: 'color',
-              value: 'red'
+              name: 'Color',
+              value: 'Black',
+              quantity: 50,
+              optionOrder: 1,
+              sellPrice: 1000,
             },
+          ],
+          images: [
             {
-              id: 2,
-              name: 'size',
-              value: 'large'
-            }
-          ]
+              id: 10,
+              url: 'https://your-s3-bucket.s3.amazonaws.com/images/products/100/photo1.jpg',
+              fileOrder: 1,
+              isRepresentative: true,
+            },
+          ],
         },
         {
-          productId: 2,
-          name: '상품 2',
-          price: 39000,
-          description: '상품 설명 2',
-          imageUrl: '/images/product-2.jpg',
-          discount: 20,
-          review: 4,
-          productCategory: {
-            productCategoryId: 2,
-            name: '스마트폰',
-            parentCategoryId: 1,
-            subCategories: []
-          },
-          provider: {
-            providerId: 2,
-            name: '공급업체 2',
-            description: '공급업체 설명 2'
-          },
-          options: [
-            {
-              id: 3,
-              name: 'color',
-              value: 'blue'
-            },
-            {
-              id: 4,
-              name: 'size',
-              value: 'medium'
-            }
-          ]
-        },
-        {
-          productId: 3,
-          name: '상품 3',
-          price: 49000,
-          description: '상품 설명 3',
-          imageUrl: '/images/product-3.jpg',
-          discount: 20,
-          review: 3,
-          productCategory: {
-            productCategoryId: 3,
+          productId: 101,
+          name: '노트북',
+          description: '고성능 노트북입니다.',
+          category: {
+            categoryId: 3,
             name: '노트북',
             parentCategoryId: 1,
-            subCategories: []
+            subCategories: [],
           },
           provider: {
-            providerId: 3,
-            name: '공급업체 3',
-            description: '공급업체 설명 3'
+            providerId: 10,
+            name: 'ABC 전자',
+            description: '전자제품 전문 업체입니다.',
           },
           options: [
             {
-              id: 5,
-              name: 'color',
-              value: 'black'
+              id: 2,
+              name: 'Storage',
+              value: '256GB',
+              quantity: 30,
+              optionOrder: 2,
+              sellPrice: 1500,
             },
+          ],
+          images: [
             {
-              id: 6,
-              name: 'size',
-              value: 'small'
-            }
-          ]
-        }
-      ]
+              id: 11,
+              url: 'https://your-s3-bucket.s3.amazonaws.com/images/products/101/photo1.jpg',
+              fileOrder: 1,
+              isRepresentative: true,
+            },
+          ],
+        },
+      ],
+      page: {
+        size: 10,
+        number: 0,
+        totalElements: 0,
+        totalPages: 0,
+      },
     });
   }),
 ];

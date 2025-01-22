@@ -1,7 +1,7 @@
-export const ALLOWED_FILTERS = ['color'];
+export const ALLOWED_FILTERS = ['Color'];
 
 export const COLOR_MAPPING: Record<string, string> = {
-  'red': 'red',
-  'blue': 'blue',
-  'black': 'black',
+  'Black': 'black',
+  'White': 'white',
+  'Gray': 'gray',
 };

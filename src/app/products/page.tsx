@@ -4,20 +4,20 @@ import CategoryList from './_components/CategoryList';
 import Filter from '@/app/products/_components/filter/Filter';
 import { BASE_URL } from '@/constants/constant';
 import { ProductApis } from '@/constants/apiUrl';
-
-interface Product {
-  productId: number;
-  imageUrl: string;
-  name: string;
-  price: number;
-  discount: number;
-  review: number;
-}
+import { IProduct } from '@/api/product';
 
 async function getProducts() {
-  const response = await fetch(`${BASE_URL}${ProductApis.getProducts}`);
-  const data = await response.json();
-  return data.products;
+  try {
+    const response = await fetch(`${BASE_URL}${ProductApis.getProducts}`);
+    if (!response.ok) {
+      throw new Error('Failed to fetch products');
+    }
+    const data = await response.json();
+    return data.contents || [];
+  } catch (error) {
+    console.error('Error fetching products:', error);
+    return [];
+  }
 }
 
 export default async function ProductsPage() {
@@ -42,16 +42,19 @@ export default async function ProductsPage() {
         <main className="lg:w-3/4">
           <h1 className="text-3xl font-bold mb-8">상품 breadcrumb 컴포넌트 추가</h1>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5 bg-slate-50 border border-slate-300 rounded-xl p-7">
-            {products.map((product:Product) => (
-              <Card
-                key={product.productId}
-                imgUrl={product.imageUrl}
-                title={product.name}
-                price={product.price}
-                discount={product.discount}
-                review={product.review}
-              />
-            ))}
+            {products && products.length > 0 ? (
+              products.map((product: IProduct) => (
+                <Card
+                  key={product.productId}
+                  imgUrl={product.images[0].url}
+                  title={product.name}
+                  price={product.price}
+                  review={3}
+                />
+              ))
+            ) : (
+              <div className="col-span-full text-center py-8 text-gray-500">상품이 없습니다.</div>
+            )}
           </div>
         </main>
       </div>
