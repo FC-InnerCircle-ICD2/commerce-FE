@@ -88,11 +88,11 @@ export default function ProductsPage() {
         {/* 왼쪽 사이드바 영역 */}
         <div className="lg:w-1/4">
           {/* 카테고리 영역 */}
-          <div className="w-full h-fit bg-slate-50 border border-slate-300 rounded-xl hidden tablet:block mb-5">
+          <div className="w-full h-fit bg-slate-50 border border-slate-300 rounded-xl hidden lg:block mb-5">
             <CategoryList />
           </div>
           {/* 필터 영역 */}
-          <div className="w-full h-fit bg-slate-50 border border-slate-300 rounded-xl hidden tablet:block">
+          <div className="w-full h-fit bg-slate-50 border border-slate-300 rounded-xl hidden lg:block">
             <Filter products={mockProducts} />
           </div>
         </div>
@@ -100,7 +100,7 @@ export default function ProductsPage() {
         {/* 상품 목록 영역 */}
         <main className="lg:w-3/4">
           <div className='mb-8'><Breadcrumbs /></div>
-          <div className="tablet:px-0 px-4">
+          <div className="lg:px-0 px-4">
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 bg-slate-50 border border-slate-300 rounded-xl p-7">
               {products.map((product) => (
                 <Card
