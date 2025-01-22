@@ -3,7 +3,7 @@
 import Image from 'next/image';
 import Selectbox, { type IOptions } from './Selectbox';
 import { useEffect, useMemo, useRef, useState } from 'react';
-import SearchForm from './searchForm/SearchForm';
+import SearchOverview from './searchOverview/SearchOverview';
 import SearchInput from './SearchInput';
 import { useCategory } from '@/hooks/queries/useCategory';
 
@@ -39,7 +39,7 @@ export default function CategorySearch() {
         <Image src="/assets/search.svg" alt="search" width={25} height={25} />
         {isFocus && (
           <article className="absolute z-50 left-0 top-[50] w-full bg-white rounded-md shadow-md">
-            <SearchForm parentRef={parentRef} recommend={['추천']} handleClose={() => setIsFocus(false)} />
+            <SearchOverview parentRef={parentRef} recommend={['추천']} handleClose={() => setIsFocus(false)} />
           </article>
         )}
       </div>

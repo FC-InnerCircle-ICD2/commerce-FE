@@ -1,8 +1,8 @@
 'use client';
 
 import useLocalStorage from '@/hooks/common/useLocalStorage';
-import SearchFormButton from './SearchFormButton';
-import SearchFormList from './SearchFormList';
+import SearchOverviewButton from './SearchOverviewButton';
+import SearchOverviewList from './SearchOverviewList';
 import { RefObject, useEffect } from 'react';
 
 type Props = {
@@ -11,7 +11,7 @@ type Props = {
   handleClose: () => void;
 };
 
-export default function SearchForm({ parentRef, recommend, handleClose }: Props) {
+export default function SearchOverview({ parentRef, recommend, handleClose }: Props) {
   const [search, setSearch] = useLocalStorage<string[]>('search', []);
 
   const handleClickOutside = (event: MouseEvent) => {
@@ -47,13 +47,13 @@ export default function SearchForm({ parentRef, recommend, handleClose }: Props)
           <div className="w-full text-center text-[#404040] font-bold">검색 결과가 없습니다.</div>
         )}
         {search.map((item: string, i: number) => {
-          return <SearchFormList key={i} search={item} handleRemoveSearch={handleRemoveSearch} />;
+          return <SearchOverviewList key={i} search={item} handleRemoveSearch={handleRemoveSearch} />;
         })}
       </ul>
       <label className="text-sm text-[#4F4F4F]">추천 검색어</label>
       <div className="w-full flex flex-wrap">
         {recommend.map((item, i) => {
-          return <SearchFormButton key={i} title={item} />;
+          return <SearchOverviewButton key={i} title={item} />;
         })}
       </div>
       <div className="w-full border-t border-[#EFEFEF] flex justify-end pt-5">

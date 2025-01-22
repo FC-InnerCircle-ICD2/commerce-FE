@@ -1,7 +1,7 @@
 'use client';
 
 import Image from 'next/image';
-import { SearchForm, SearchInput } from '../common';
+import { SearchOverview, SearchInput } from '../common';
 import React, { useRef } from 'react';
 
 type Props = {
@@ -19,7 +19,7 @@ export default function MobileSearchModal({ handleClose }: Props) {
           <SearchInput classname="ml-5 text-sm grow placeholder:text-[#5B5B5B] outline-none" />
           <Image src="/assets/search.svg" alt="back" width={24} height={24} />
         </div>
-        <SearchForm parentRef={parentRef} recommend={['추천']} handleClose={handleClose} />
+        <SearchOverview parentRef={parentRef} recommend={['추천']} handleClose={handleClose} />
       </div>
     </article>
   );
