@@ -23,7 +23,7 @@ export default function WideSelectBox(props: Props) {
   };
 
   return (
-    <div className="relative w-1/2">
+    <div className="relative w-full xl:w-1/2">
       <div className="w-full h-12 border border-slate-300 rounded-[10px] bg-white text-sm text-neutral-400 flex justify-between items-center p-5">
         <span className={`${selectedOption && 'text-neutral-800 font-normal'}`}>{selectedOption || placeholder}</span>
         <button onClick={() => openSelectOption()}>
