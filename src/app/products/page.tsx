@@ -2,26 +2,22 @@ import React from 'react';
 import Card from '@/components/common/Card';
 import CategoryList from './_components/CategoryList';
 import Filter from '@/app/products/_components/filter/Filter';
-import { BASE_URL } from '@/constants/constant';
-import { ProductApis } from '@/constants/apiUrl';
 import { IProduct } from '@/api/product';
+import { getProducts } from '@/api/product';
 
-async function getProducts() {
-  try {
-    const response = await fetch(`${BASE_URL}${ProductApis.getProducts}`);
-    if (!response.ok) {
-      throw new Error('Failed to fetch products');
-    }
-    const data = await response.json();
-    return data.contents || [];
-  } catch (error) {
-    console.error('Error fetching products:', error);
-    return [];
+export default async function ProductsPage({ searchParams }: { searchParams: { [key: string]: string | undefined } }) {
+  const { category, name, rating, sort } = searchParams;
+
+  const products = await getProducts({
+    productCategoryId: category ? parseInt(category) : undefined,
+    name,
+    rating: rating ? parseInt(rating) : undefined,
+    sort: sort as 'registration' | 'sales' | 'priceAsc' | 'priceDesc',
+  }).catch(() => null); // 실패 시 null 반환
+
+  if (!products) {
+    return <div>상품을 불러오는데 실패했습니다. 잠시 후 다시 시도해주세요.</div>;
   }
-}
-
-export default async function ProductsPage() {
-  const products = await getProducts();
 
   return (
     <div className="max-w-custom mx-auto px-4 py-8">
