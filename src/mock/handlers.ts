@@ -1,8 +1,8 @@
 // src/mocks/handlers.js
 // mocking api handler
 
-import { BASE_URL } from '@/constants/constant';
-import { CategoryApis, ProductApis } from '@/constants/apiUrl';
+import { BASE_URL, MOCK_URL } from '@/constants/constant';
+import { CategoryApis, ProductApis, BannerApis } from '@/constants/apiUrl';
 import { http, HttpResponse, PathParams } from 'msw';
 import { PRODUCT_URL } from '@/api/product';
 
