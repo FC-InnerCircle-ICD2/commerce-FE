@@ -20,12 +20,12 @@ export default async function ProductsPage({ searchParams }: { searchParams: { [
   }
 
   return (
-    <div className="max-w-custom mx-auto px-4 py-8">
+    <div className="max-w-custom mx-auto py-8">
       <div className="flex flex-col lg:flex-row gap-5">
         {/* 왼쪽 사이드바 영역 */}
         <div className="lg:w-1/4">
           {/* 카테고리 영역 */}
-          <div className="w-full h-fit bg-slate-50 border border-slate-300 rounded-xl hidden tablet:block mb-5">
+          <div className="w-full h-fit bg-slate-50 border border-slate-300 rounded-xl hidden lg:block mb-5">
             <CategoryList />
           </div>
           {/* 필터 영역 */}
@@ -37,9 +37,9 @@ export default async function ProductsPage({ searchParams }: { searchParams: { [
         {/* 상품 목록 영역 */}
         <main className="lg:w-3/4">
           <h1 className="text-3xl font-bold mb-8">상품 breadcrumb 컴포넌트 추가</h1>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5 bg-slate-50 border border-slate-300 rounded-xl p-7">
-            {products && products.length > 0 ? (
-              products.map((product: IProduct) => (
+          <div className="lg:px-0 px-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5 bg-slate-50 border border-slate-300 rounded-xl p-7">
+              {products.map((product) => (
                 <Card
                   key={product.productId}
                   imgUrl={product.images[0].url}
@@ -47,10 +47,8 @@ export default async function ProductsPage({ searchParams }: { searchParams: { [
                   price={product.price}
                   review={3}
                 />
-              ))
-            ) : (
-              <div className="col-span-full text-center py-8 text-gray-500">상품이 없습니다.</div>
-            )}
+              ))}
+            </div>
           </div>
         </main>
       </div>
