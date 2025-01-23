@@ -2,6 +2,7 @@ import React from 'react';
 import Card from '@/components/common/Card';
 import CategoryList from './_components/CategoryList';
 import Filter from '@/app/products/_components/filter/Filter';
+import { Breadcrumbs } from '@/components/common';
 import { IProduct } from '@/api/product';
 import { getProducts } from '@/api/product';
 
@@ -36,18 +37,22 @@ export default async function ProductsPage({ searchParams }: { searchParams: { [
 
         {/* 상품 목록 영역 */}
         <main className="lg:w-3/4">
-          <h1 className="text-3xl font-bold mb-8">상품 breadcrumb 컴포넌트 추가</h1>
+          <div className="mb-8">
+            <Breadcrumbs />
+          </div>
           <div className="lg:px-0 px-4">
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5 bg-slate-50 border border-slate-300 rounded-xl p-7">
-              {products.map((product) => (
-                <Card
-                  key={product.productId}
-                  imgUrl={product.images[0].url}
-                  title={product.name}
-                  price={product.price}
-                  review={3}
-                />
-              ))}
+            <div className="lg:px-0 px-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 bg-slate-50 border border-slate-300 rounded-xl p-7">
+                {products.map((product) => (
+                  <Card
+                    key={product.productId}
+                    imgUrl={product.images[0].url}
+                    title={product.name}
+                    price={product.price}
+                    review={3}
+                  />
+                ))}
+              </div>
             </div>
           </div>
         </main>
