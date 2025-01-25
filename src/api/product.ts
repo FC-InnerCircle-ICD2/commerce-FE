@@ -1,5 +1,6 @@
 import { buildUrl } from '@/utils/buildUrl';
 import type { ICategory } from './category';
+import { MOCK_URL } from '@/constants/constant';
 
 interface IProvider {
   providerId: number;
@@ -45,7 +46,7 @@ interface IProductAPI {
   };
 }
 
-const PRODUCT_URL = '/api/v1/product';
+export const PRODUCT_URL = '/api/v1/product';
 
 export type ProductsProps = {
   /** 조회할 카테고리 ID */
@@ -63,13 +64,12 @@ export type ProductsProps = {
 };
 
 export const getProducts = async ({ productCategoryId, name, rating, sort }: ProductsProps): Promise<IProduct[]> => {
-  const url = buildUrl(`https://virtserver.swaggerhub.com/STAM0325/Ecommerce-MVP/1.0${PRODUCT_URL}`, {
+  const url = buildUrl(`${MOCK_URL}${PRODUCT_URL}`, {
     productCategoryId,
     sort,
     rating,
     name,
   });
-  console.log(url);
 
   const response = await fetch(url);
 
@@ -78,6 +78,5 @@ export const getProducts = async ({ productCategoryId, name, rating, sort }: Pro
   }
 
   const data: IProductAPI = await response.json();
-  console.log(data);
   return data.productes;
 };

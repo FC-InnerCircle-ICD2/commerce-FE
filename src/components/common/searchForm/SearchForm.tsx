@@ -6,7 +6,7 @@ import SearchFormList from './SearchFormList';
 import { RefObject, useEffect, useRef } from 'react';
 
 type Props = {
-  parentRef: RefObject<HTMLDivElement>;
+  parentRef: RefObject<HTMLDivElement | null>;
   recommend: string[];
   handleClose: () => void;
 };
