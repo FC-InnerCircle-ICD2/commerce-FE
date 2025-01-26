@@ -11,7 +11,7 @@ export default function CategorySearch() {
   const [isFocus, setIsFocus] = useState<boolean>(false);
   const parentRef = useRef<HTMLDivElement>(null);
   const [currentItem, setCurrentItem] = useState<IOptions>({ label: '', value: '' });
-  const { categories } = useCategory();
+  const { categories, categoryLoading } = useCategory();
   const categoryOptions: IOptions[] = useMemo(() => {
     if (!categories) return [];
     return categories.map((item) => {
@@ -30,7 +30,11 @@ export default function CategorySearch() {
       ref={parentRef}
       className="grow max-w-[550] text-sm h-[50] py-1 gap-[10] bg-headerMain rounded-lg hidden items-center tablet:flex tablet:relative"
     >
-      <Selectbox width="120" currentItem={currentItem} items={categoryOptions} handleChangeSelect={setCurrentItem} />
+      {categoryLoading ? (
+        <div className="w-[120px] flex items-center justify-center">로딩</div>
+      ) : (
+        <Selectbox width="120" currentItem={currentItem} items={categoryOptions} handleChangeSelect={setCurrentItem} />
+      )}
       <div className="relative flex grow pr-[10]" onFocus={() => setIsFocus(true)}>
         <SearchForm
           category={currentItem}
