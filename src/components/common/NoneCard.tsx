@@ -2,7 +2,7 @@ import PREPARING from '@/assets/preparing.png';
 
 export default function NoneCard() {
   return (
-    <div className="w-full flex flex-col gap-5">
+    <div className="w-full flex flex-col gap-5 h-[271px]">
       <div className="w-full h-auto aspect-square max-w-full border-[3px] border-neutral-300 flex items-center justify-center flex-col gap-3 rounded-2xl">
         <img src={PREPARING.src} alt="preparing" className="w-20 h-20" />
         <div className="text-xs text-neutral-300">상품 준비중</div>

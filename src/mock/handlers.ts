@@ -1,8 +1,8 @@
 // src/mocks/handlers.js
 // mocking api handler
 
-import { MOCK_URL } from '@/constants/constant';
-import { BannerApis, CategoryApis } from '@/constants/apiUrl';
+import { BASE_URL, MOCK_URL } from '@/constants/constant';
+import { CategoryApis, ProductApis, BannerApis } from '@/constants/apiUrl';
 import { http, HttpResponse, PathParams } from 'msw';
 import { PRODUCT_URL } from '@/api/product';
 
@@ -265,6 +265,89 @@ export const handlers = [
           ],
         },
       ],
+    });
+  }),
+
+  // 상품 목록 API
+  http.get(`${BASE_URL}${ProductApis.getProducts}`, () => {
+    return HttpResponse.json({
+      contents: [
+        {
+          productId: 100,
+          name: '스마트폰',
+          description: '최신 모델의 스마트폰입니다.',
+          price: 10000,
+          category: {
+            categoryId: 2,
+            name: '스마트폰',
+            parentCategoryId: 1,
+            subCategories: [],
+          },
+          provider: {
+            providerId: 10,
+            name: 'ABC 전자',
+            description: '전자제품 전문 업체입니다.',
+          },
+          options: [
+            {
+              id: 1,
+              name: 'Color',
+              value: 'Black',
+              quantity: 50,
+              optionOrder: 1,
+              sellPrice: 1000,
+            },
+          ],
+          images: [
+            {
+              id: 10,
+              url: 'https://your-s3-bucket.s3.amazonaws.com/images/products/100/photo1.jpg',
+              fileOrder: 1,
+              isRepresentative: true,
+            },
+          ],
+        },
+        {
+          productId: 101,
+          name: '노트북',
+          description: '고성능 노트북입니다.',
+          category: {
+            categoryId: 3,
+            name: '노트북',
+            parentCategoryId: 1,
+            subCategories: [],
+          },
+          provider: {
+            providerId: 10,
+            name: 'ABC 전자',
+            description: '전자제품 전문 업체입니다.',
+          },
+          options: [
+            {
+              id: 2,
+              name: 'Storage',
+              value: '256GB',
+              quantity: 30,
+              optionOrder: 2,
+              sellPrice: 1500,
+            },
+          ],
+          images: [
+            {
+              id: 11,
+              url: 'https://your-s3-bucket.s3.amazonaws.com/images/products/101/photo1.jpg',
+              fileOrder: 1,
+              isRepresentative: true,
+            },
+          ],
+        },
+      ],
+      page: {
+        size: 10,
+        number: 0,
+        totalElements: 0,
+        totalPages: 0,
+      },
     });
   }),
 ];

@@ -1,8 +1,8 @@
 import { useMemo } from 'react';
 import { ALLOWED_FILTERS } from '@/app/products/_components/filter/constants';
-import { Product } from '@/types/product';
+import { IProduct } from '@/api/product';
 
-export const useFilterOptions = (products: Product[]) => {
+export const useFilterOptions = (products: IProduct[]) => {
   const availableOptions = useMemo(() => {
     const optionsMap: Record<string, Set<string>> = {};
 

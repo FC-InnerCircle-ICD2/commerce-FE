@@ -43,7 +43,7 @@ export default function Selectbox({ width, currentItem, items, handleChangeSelec
       </button>
       {open && (
         <ul
-          className={`absolute w-full top-[50px] p-[5] bg-white shadow-[0px_0px_4px_0px_rgba(0,0,0,0.75)] rounded-xl overflow-hidden ${open ? 'animate-fadeIn' : 'animate-fadeOut'}`}
+          className={`absolute w-full top-[50px] p-[5] bg-white shadow-md rounded-xl overflow-hidden ${open ? 'animate-fadeIn' : 'animate-fadeOut'}`}
         >
           {items.map((item, i) => {
             return (
