@@ -44,7 +44,7 @@ export default function SearchOverview({ parentRef, recommend, handleClose }: Pr
       </div>
       <ul className="w-full flex flex-col gap-5">
         {search.length === 0 && (
-          <div className="w-full text-center text-[#404040] font-bold">검색 결과가 없습니다.</div>
+          <div className="w-full text-center text-[#404040] font-bold">최근 검색 결과가 없습니다.</div>
         )}
         {search.map((item: string, i: number) => {
           return <SearchOverviewList key={i} search={item} handleRemoveSearch={handleRemoveSearch} />;

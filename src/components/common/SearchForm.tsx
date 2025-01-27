@@ -24,6 +24,9 @@ export default function SearchForm({ category, classname }: Props) {
     if (inputValue.trim() !== '') {
       // TODO: 검색 결과로 이동하는 코드 추가해야함.
       console.log(category);
+      if (search.length >= 5) {
+        search.shift();
+      }
       setSearch([...search, inputValue]);
       setInputValue('');
     }
