@@ -3,7 +3,7 @@
 
 import { BASE_URL, MOCK_URL } from '@/constants/constant';
 import { CategoryApis, ProductApis, BannerApis } from '@/constants/apiUrl';
-import { http, HttpResponse, PathParams } from 'msw';
+import { delay, http, HttpResponse, PathParams } from 'msw';
 import { PRODUCT_URL } from '@/api/product';
 
 const allPosts = new Map();
@@ -59,7 +59,8 @@ export const handlers = [
     return HttpResponse.json(deletedPost);
   }),
 
-  http.get(`${MOCK_URL}${CategoryApis.getCategory}`, () => {
+  http.get(`${MOCK_URL}${CategoryApis.getCategory}`, async () => {
+    await delay(2000);
     return HttpResponse.json({
       contents: [
         {
@@ -97,7 +98,8 @@ export const handlers = [
     });
   }),
 
-  http.get(`${MOCK_URL}${BannerApis.getBanner}`, () => {
+  http.get(`${MOCK_URL}${BannerApis.getBanner}`, async () => {
+    await delay(2000);
     return HttpResponse.json([
       {
         id: 1,
@@ -156,7 +158,8 @@ export const handlers = [
     ]);
   }),
 
-  http.get(`${MOCK_URL}${PRODUCT_URL}`, () => {
+  http.get(`${MOCK_URL}${PRODUCT_URL}`, async () => {
+    await delay(2000);
     return HttpResponse.json({
       productes: [
         {
