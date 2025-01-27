@@ -1,5 +1,6 @@
 import { getProducts } from '@/api/product';
-import MobileFooter from '@/components/layout/footer/MobileFooter';
+import { Header } from '@/components/layout';
+import CartContainer from './_components/CartContainer';
 
 export default async function Cart() {
   try {
@@ -7,8 +8,8 @@ export default async function Cart() {
 
     return (
       <div className="flex flex-col h-screen overflow-x-hidden">
-        cart
-        <MobileFooter />
+        <Header />
+        <CartContainer products={products} />
       </div>
     );
   } catch {
