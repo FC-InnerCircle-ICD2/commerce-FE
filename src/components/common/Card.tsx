@@ -1,4 +1,5 @@
 import Star from '@/assets/star.png';
+import { numberFormatting } from '@/utils/numberFormatting';
 
 type Props = {
   /** 이미지 URL (상품 이미지 경로) */
@@ -32,21 +33,19 @@ export default function Card({ imgUrl, title, price, discount, review }: Props) 
     <div className="w-full cursor-pointer">
       <img src={imgUrl} className="w-full h-auto aspect-square max-w-full block rounded-2xl" />
       <div className="p-2">
-        <p className="text-sm sm:text-base font-medium">{title}</p>
+        <p className="text-sm sm:text-base font-medium mb-[25px]">{title}</p>
         {discount && (
           <p className="text-xs sm:text-sm text-[#989898] font-light line-through mt-2">{price.toLocaleString()}원</p>
         )}
-        <div className="flex gap-1 items-end flex-wrap">
-          {discount && <p className="font-bold text-[#FF5F5F] text-sm sm:text-lg">{discount}%</p>}
-          <p className="font-bold sm:text-xl">{discount ? price / discount : price}원</p>
-        </div>
-        <div className="flex items-center mt-1">
-          <img src={Star.src} alt="star" className="w-[12] h-[12] sm:w-[25] sm:h-[25]" />
-          <img src={Star.src} alt="star" className="w-[12] h-[12] sm:w-[25] sm:h-[25]" />
-          <img src={Star.src} alt="star" className="w-[12] h-[12] sm:w-[25] sm:h-[25]" />
-          <img src={Star.src} alt="star" className="w-[12] h-[12] sm:w-[25] sm:h-[25]" />
-          <img src={Star.src} alt="star" className="w-[12] h-[12] sm:w-[25] sm:h-[25]" />
-          <p className="text-[#5A5A5A] text-sm sm:text-base ml-1">({review.toLocaleString()})</p>
+        <div className="flex justify-between">
+          <div className="flex gap-1">
+            {discount && <p className="font-bold text-[#FF5F5F] text-sm sm:text-lg">{discount}%</p>}
+            <p className="font-bold sm:text-xl">{numberFormatting(discount ? price / discount : price)}원</p>
+          </div>
+          <div className="flex items-center gap-[5px]">
+            <img src={Star.src} alt="star" className="w-[25px] h-[25px] sm:w-[18px] sm:h-[18px]" />
+            <p className="text-[#5A5A5A] text-sm sm:text-base ml-1">{review.toLocaleString()}</p>
+          </div>
         </div>
       </div>
     </div>
