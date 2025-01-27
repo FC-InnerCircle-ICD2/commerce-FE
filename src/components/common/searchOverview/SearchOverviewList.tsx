@@ -5,7 +5,7 @@ type Props = {
   handleRemoveSearch: (remove: string) => void;
 };
 
-export default function SearchFormList({ search, handleRemoveSearch }: Props) {
+export default function SearchOverviewList({ search, handleRemoveSearch }: Props) {
   return (
     <li className="w-full flex items-center justify-between text-base">
       <div className="flex gap-[10]">

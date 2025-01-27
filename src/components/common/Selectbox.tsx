@@ -48,11 +48,15 @@ export default function Selectbox({ width, currentItem, items, handleChangeSelec
           {items.map((item, i) => {
             return (
               <li
-                className="w-full h-[30] p-2 text-[#4F4F4F] pl-[15] rounded-md text-xs cursor-pointer hover:bg-[#f3f3f3] hover:font-bold"
+                className="w-full h-[30] p-2 text-[#4F4F4F] pl-[15] rounded-md text-xs hover:bg-[#f3f3f3] hover:font-bold"
                 key={i}
-                onClick={() => handleChangeSelect(item)}
               >
-                {item.label}
+                <button
+                  className="w-full h-full flex items-start cursor-pointer"
+                  onClick={() => handleChangeSelect(item)}
+                >
+                  {item.label}
+                </button>
               </li>
             );
           })}

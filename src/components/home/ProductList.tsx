@@ -1,4 +1,4 @@
-import { IProduct } from '@/api/product';
+import type { IProduct } from '@/api/product';
 import { Card } from '../common';
 import NoneCard from '../common/NoneCard';
 

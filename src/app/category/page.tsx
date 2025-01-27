@@ -1,7 +1,7 @@
 import { getCategory } from '@/api/category';
-import CategoryHeader from '@/components/categoryPage/CategoryHeader';
 import CategoryForm from '@/components/common/CategoryForm';
 import MobileFooter from '@/components/layout/footer/MobileFooter';
+import CategoryHeader from './_components/CategoryHeader';
 
 export default async function Category() {
   try {

@@ -1,9 +1,9 @@
 'use client';
 
 import useLocalStorage from '@/hooks/common/useLocalStorage';
-import SearchFormButton from './SearchFormButton';
-import SearchFormList from './SearchFormList';
-import { RefObject, useEffect, useRef } from 'react';
+import SearchOverviewButton from './SearchOverviewButton';
+import SearchOverviewList from './SearchOverviewList';
+import { RefObject, useEffect } from 'react';
 
 type Props = {
   parentRef: RefObject<HTMLDivElement | null>;
@@ -11,8 +11,7 @@ type Props = {
   handleClose: () => void;
 };
 
-export default function SearchForm({ parentRef, recommend, handleClose }: Props) {
-  const searchRef = useRef<HTMLDivElement>(null);
+export default function SearchOverview({ parentRef, recommend, handleClose }: Props) {
   const [search, setSearch] = useLocalStorage<string[]>('search', []);
 
   const handleClickOutside = (event: MouseEvent) => {
@@ -36,7 +35,7 @@ export default function SearchForm({ parentRef, recommend, handleClose }: Props)
   };
 
   return (
-    <article className="w-full p-4 flex flex-col gap-[25]" ref={searchRef}>
+    <article className="w-full p-4 flex flex-col gap-[25]">
       <div className="w-full flex justify-between text-sm">
         <span className="text-[#4F4F4F]">최근 검색어</span>
         <span className="text-[#949494] cursor-pointer" onClick={() => setSearch([])}>
@@ -45,16 +44,16 @@ export default function SearchForm({ parentRef, recommend, handleClose }: Props)
       </div>
       <ul className="w-full flex flex-col gap-5">
         {search.length === 0 && (
-          <div className="w-full text-center text-[#404040] font-bold">검색 결과가 없습니다.</div>
+          <div className="w-full text-center text-[#404040] font-bold">최근 검색 결과가 없습니다.</div>
         )}
         {search.map((item: string, i: number) => {
-          return <SearchFormList key={i} search={item} handleRemoveSearch={handleRemoveSearch} />;
+          return <SearchOverviewList key={i} search={item} handleRemoveSearch={handleRemoveSearch} />;
         })}
       </ul>
       <label className="text-sm text-[#4F4F4F]">추천 검색어</label>
       <div className="w-full flex flex-wrap">
         {recommend.map((item, i) => {
-          return <SearchFormButton key={i} title={item} />;
+          return <SearchOverviewButton key={i} title={item} />;
         })}
       </div>
       <div className="w-full border-t border-[#EFEFEF] flex justify-end pt-5">
