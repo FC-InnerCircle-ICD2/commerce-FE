@@ -74,7 +74,7 @@ export const MobileFilter: React.FC<FilterProps> = ({ products }) => {
             <DrawerTitle>필터</DrawerTitle>
           </DrawerHeader>
 
-          <div className="px-4 relative z-10">
+          <div className="px-4 z-10">
             <PriceFilter
               priceRange={priceRange}
               sliderValue={sliderValue}
@@ -86,26 +86,22 @@ export const MobileFilter: React.FC<FilterProps> = ({ products }) => {
 
             <div className="my-8 border-t" />
 
-            <div className={`${selectedColors.length > 0 || selectedPriceRange ? 'mb-24' : ''}`}>
-              {Object.entries(availableOptions).map(([optionName, values]) => (
-                <ColorFilter
-                  key={optionName}
-                  values={values}
-                  selectedColors={selectedColors}
-                  onColorSelect={handleColorSelect}
-                />
-              ))}
-            </div>
-
-            <div className="absolute left-1/2 -translate-x-1/2 w-screen top-72">
-              <MobileSelectedOptionTag
-                priceRange={selectedPriceRange}
-                onPriceRangeRemove={() => setSelectedPriceRange(undefined)}
+            {Object.entries(availableOptions).map(([optionName, values]) => (
+              <ColorFilter
+                key={optionName}
+                values={values}
                 selectedColors={selectedColors}
-                onColorRemove={(color) => setSelectedColors((prev) => prev.filter((c) => c !== color))}
+                onColorSelect={handleColorSelect}
               />
-            </div>
+            ))}
           </div>
+
+          <MobileSelectedOptionTag
+            priceRange={selectedPriceRange}
+            onPriceRangeRemove={() => setSelectedPriceRange(undefined)}
+            selectedColors={selectedColors}
+            onColorRemove={(color) => setSelectedColors((prev) => prev.filter((c) => c !== color))}
+          />
 
           <DrawerFooter className="flex gap-2">
             <button onClick={handleReset} className="font-semibold flex-1 text-sm border border-zinc-300 rounded-xl">
