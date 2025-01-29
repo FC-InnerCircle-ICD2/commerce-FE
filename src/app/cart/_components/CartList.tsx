@@ -1,4 +1,7 @@
 import { IProduct } from '@/api/product';
+import CartListItemInfo from './CartListItemInfo';
+import CartListOptions from './CartListOptions';
+import CartListPrice from './CartListPrice';
 
 type Props = {
   product: IProduct;
@@ -6,9 +9,16 @@ type Props = {
 };
 
 export default function CartList({ product, handleChangeCheckList }: Props) {
+  console.log(product);
   return (
-    <div className="w-full bg-pink-200 py-[10px] rounded-lg shadow-md" onClick={() => handleChangeCheckList(product)}>
-      {product.name}
+    <div className="w-full bg-white p-[20px] rounded-lg shadow-md flex flex-col">
+      <nav className="w-full pb-[10px] border-b-2 border-black text-xl font-bold">{product.provider.name}</nav>
+      <div className="w-full flex items-center gap-[8px] border-b border-slate-300">
+        <div className="w-[18px] h-[18px] bg-blue-300" onClick={() => handleChangeCheckList(product)}></div>
+        <CartListItemInfo product={product} />
+        <CartListOptions product={product} />
+        <CartListPrice product={product} />
+      </div>
     </div>
   );
 }

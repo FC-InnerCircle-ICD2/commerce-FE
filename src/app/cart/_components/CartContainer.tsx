@@ -26,17 +26,17 @@ export default function CartContainer({ products }: Props) {
   }
 
   return (
-    <div className="w-full h-screen flex flex-col">
+    <article className="w-full h-screen flex flex-col">
       <CartCheckComponent
         handleAllCheckList={() => setCheckList(products)}
         handleDeleteCheckList={handleDeleteCheckList}
       />
-      <div className="w-full grow bg-gray-100 flex flex-col gap-[10px] py-4 px-3 tablet:py-[20px] tablet:px-[100]">
+      <div className="w-full grow bg-gray-100 flex flex-col gap-[10px] py-4 px-3 pb-[80px] tablet:py-[20px] tablet:px-[100px] tablet:pb-[100px]">
         {products.map((product) => {
           return <CartList key={product.productId} product={product} handleChangeCheckList={handleChangeCheckList} />;
         })}
       </div>
       <CartFooter checkList={checkList} />
-    </div>
+    </article>
   );
 }

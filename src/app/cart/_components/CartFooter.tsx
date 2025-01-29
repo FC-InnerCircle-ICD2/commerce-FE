@@ -6,7 +6,7 @@ type Props = {
 
 export default function CartFooter({ checkList }: Props) {
   return (
-    <footer className="w-full p-[10px] sticky bg-black flex justify-end">
+    <footer className="w-full p-[10px] bottom-0 fixed bg-black flex justify-end">
       <div className="text-white w-[100px] py-2 bg-blue-200">
         {checkList.reduce((a, b) => a + b.price, 0)}원 구매하기
       </div>
