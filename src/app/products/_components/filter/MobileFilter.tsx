@@ -53,6 +53,13 @@ export const MobileFilter: React.FC<FilterProps> = ({ products }) => {
   const handleColorSelect = (color: string) => {
     setSelectedColors((prev) => (prev.includes(color) ? prev.filter((c) => c !== color) : [...prev, color]));
   };
+  const handleReset = () => {
+    setPriceRange(priceRangeValues);
+    setSelectedPriceRange(undefined);
+    setSliderValue([priceRangeValues.min, priceRangeValues.max]);
+
+    setSelectedColors([]);
+  };
 
   return (
     <Drawer>
@@ -100,9 +107,14 @@ export const MobileFilter: React.FC<FilterProps> = ({ products }) => {
             </div>
           </div>
 
-          <DrawerFooter>
-            <DrawerClose asChild>
-              <button>적용하기</button>
+          <DrawerFooter className="flex gap-2">
+            <button onClick={handleReset} className="font-semibold flex-1 text-sm border border-zinc-300 rounded-xl">
+              초기화
+            </button>
+            <DrawerClose asChild className="flex-[4]">
+              <button className="font-semibold w-full text-sm bg-slate-300 py-4 border border-zinc-300 rounded-xl">
+                선택된 조건의 상품보기
+              </button>
             </DrawerClose>
           </DrawerFooter>
         </div>
