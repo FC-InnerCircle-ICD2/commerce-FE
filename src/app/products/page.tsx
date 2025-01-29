@@ -3,8 +3,8 @@ import Card from '@/components/common/Card';
 import CategoryList from './_components/CategoryList';
 import Filter from '@/app/products/_components/filter/Filter';
 import { Breadcrumbs } from '@/components/common';
-import { IProduct } from '@/api/product';
 import { getProducts } from '@/api/product';
+import { MobileFilter } from '@/app/products/_components/filter/MobileFilter';
 
 export default async function ProductsPage({ searchParams }: { searchParams: { [key: string]: string | undefined } }) {
   const { category, name, rating, sort } = searchParams;
@@ -30,7 +30,7 @@ export default async function ProductsPage({ searchParams }: { searchParams: { [
             <CategoryList />
           </div>
           {/* 필터 영역 */}
-          <div className="w-full h-fit bg-slate-50 border border-slate-300 rounded-xl">
+          <div className="w-full h-fit bg-slate-50 border border-slate-300 rounded-xl hidden lg:block mb-5">
             <Filter products={products} />
           </div>
         </div>
@@ -39,6 +39,9 @@ export default async function ProductsPage({ searchParams }: { searchParams: { [
         <main className="lg:w-3/4">
           <div className="mb-8">
             <Breadcrumbs />
+          </div>
+          <div className="mb-8 px-3 py-2 bg-slate-50 border-slate-300">
+            <MobileFilter products={products} />
           </div>
           <div className="lg:px-0 px-4">
             <div className="lg:px-0 px-4">

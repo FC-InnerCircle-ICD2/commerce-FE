@@ -8,12 +8,12 @@ interface SelectedOptionTagProps {
   onColorRemove?: (color: string) => void;
 }
 
-export const SelectedOptionTag: React.FC<SelectedOptionTagProps> = ({
+export const SelectedOptionTag = ({
   priceRange,
   onPriceRangeRemove,
   selectedColors,
   onColorRemove,
-}) => {
+}: SelectedOptionTagProps) => {
   const hasSelectedOptions = priceRange || (selectedColors && selectedColors.length > 0);
 
   if (!hasSelectedOptions) return null;
@@ -49,5 +49,43 @@ export const SelectedOptionTag: React.FC<SelectedOptionTagProps> = ({
       </div>
       <hr className="my-8" />
     </>
+  );
+};
+
+export const MobileSelectedOptionTag = ({
+  priceRange,
+  onPriceRangeRemove,
+  selectedColors,
+  onColorRemove,
+}: SelectedOptionTagProps) => {
+  const hasSelectedOptions = priceRange || (selectedColors && selectedColors.length > 0);
+
+  if (!hasSelectedOptions) return null;
+
+  return (
+    <div className="flex flex-wrap gap-2 bg-gray-100 p-4 mt-10 w-full">
+      {priceRange && (
+        <span className="flex items-center gap-4 w-fit bg-white py-2 px-3 rounded-full">
+          <span className="text-sm font-bold">
+            {priceRange.min}원 ~ {priceRange.max}원
+          </span>
+          <button onClick={onPriceRangeRemove} className="text-md">
+            ✕
+          </button>
+        </span>
+      )}
+      {selectedColors?.map((color) => (
+        <span key={color} className="flex items-center gap-4 w-fit bg-white py-2 px-3 rounded-full">
+          <div
+            className="w-[15px] h-[15px] rounded-[3px]"
+            style={{ backgroundColor: COLOR_MAPPING[color] || '#CCCCCC' }}
+          />
+          <span className="text-sm text-gray-600 font-semibold">{color}</span>
+          <button onClick={() => onColorRemove?.(color)} className="text-xs text-gray-400 hover:text-gray-600">
+            ✕
+          </button>
+        </span>
+      ))}
+    </div>
   );
 };
