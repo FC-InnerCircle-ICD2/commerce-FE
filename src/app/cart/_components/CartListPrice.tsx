@@ -6,8 +6,8 @@ type Props = {
 
 export default function CartListPrice({ product }: Props) {
   return (
-    <div className="grow h-full flex items-center justify-between flex-col p-[20px]">
-      <div className="flex flex-col gap-[3px]">
+    <div className="grow flex items-end gap-[20px] justify-between flex-col p-[20px] border-l tablet:h-full tablet:items-center tablet:border-l-0">
+      <div className="flex gap-[3px] w-full justify-between tablet:flex-col tablet:items-center">
         <h1 className="text-xs font-bold">상품금액</h1>
         <p className="text-sm font-bold">{product.price}원</p>
       </div>

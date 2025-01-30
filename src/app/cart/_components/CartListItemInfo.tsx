@@ -6,7 +6,7 @@ type Props = {
 
 export default function CardListItemInfo({ product }: Props) {
   return (
-    <div className="w-[50%] border-r border-gray-300 p-[20px] flex gap-[4px]">
+    <div className="w-full border-b border-gray-300 p-[20px] flex gap-[4px] tablet:w-1/2 tablet:border-b-0 tablet:border-r">
       <img src={product.images[0].url} alt={product.name} width={80} height={80} />
       <div className="flex flex-col justify-between gap-[3px]">
         <div className="flex flex-col gap-[2px]">
