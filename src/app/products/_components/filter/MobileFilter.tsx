@@ -69,9 +69,9 @@ export const MobileFilter: React.FC<FilterProps> = ({ products }) => {
         </button>
       </DrawerTrigger>
       <DrawerContent>
-        <div className="mx-auto w-full max-w-sm">
+        <div className="mx-auto w-full">
           <DrawerHeader>
-            <DrawerTitle>필터</DrawerTitle>
+            <DrawerTitle></DrawerTitle>
           </DrawerHeader>
 
           <div className="px-4 z-10">
@@ -108,7 +108,7 @@ export const MobileFilter: React.FC<FilterProps> = ({ products }) => {
               초기화
             </button>
             <DrawerClose asChild className="flex-[4]">
-              <button className="font-semibold w-full text-sm bg-slate-300 py-4 border border-zinc-300 rounded-xl">
+              <button className="!font-semibold w-full text-sm bg-slate-300 py-4 border border-zinc-300 rounded-xl">
                 선택된 조건의 상품보기
               </button>
             </DrawerClose>

@@ -66,7 +66,7 @@ export const MobileSelectedOptionTag = ({
     <div className="flex flex-wrap gap-2 bg-gray-100 p-4 mt-10 w-full">
       {priceRange && (
         <span className="flex items-center gap-4 w-fit bg-white py-2 px-3 rounded-full">
-          <span className="text-sm font-bold">
+          <span className="text-sm font-semibold">
             {priceRange.min}원 ~ {priceRange.max}원
           </span>
           <button onClick={onPriceRangeRemove} className="text-md">
@@ -80,7 +80,7 @@ export const MobileSelectedOptionTag = ({
             className="w-[15px] h-[15px] rounded-[3px]"
             style={{ backgroundColor: COLOR_MAPPING[color] || '#CCCCCC' }}
           />
-          <span className="text-sm text-gray-600 font-semibold">{color}</span>
+          <span className="text-sm font-semibold">{color}</span>
           <button onClick={() => onColorRemove?.(color)} className="text-xs text-gray-400 hover:text-gray-600">
             ✕
           </button>

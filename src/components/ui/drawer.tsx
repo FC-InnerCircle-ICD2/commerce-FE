@@ -38,7 +38,10 @@ const DrawerContent = React.forwardRef<
       )}
       {...props}
     >
-      <div className="mx-auto mt-4 h-2 w-[100px] rounded-full bg-slate-100 dark:bg-slate-800" />
+      <div className="flex justify-between items-center p-4">
+        <div className="mx-auto mt-4 h-2 w-[100px] rounded-full bg-slate-100 dark:bg-slate-800" />
+        <DrawerClose className="text-md">✕</DrawerClose>
+      </div>
       {children}
     </DrawerPrimitive.Content>
   </DrawerPortal>
@@ -46,7 +49,7 @@ const DrawerContent = React.forwardRef<
 DrawerContent.displayName = 'DrawerContent';
 
 const DrawerHeader = ({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) => (
-  <div className={cn('grid gap-1.5 p-4 text-center sm:text-left', className)} {...props} />
+  <div className={cn('grid gap-1.5 text-center sm:text-left', className)} {...props} />
 );
 DrawerHeader.displayName = 'DrawerHeader';
 
