@@ -72,7 +72,7 @@ export const MobileSelectedOptionTag = ({
             <span className="text-sm font-semibold text-white">
               {priceRange.min}원 ~ {priceRange.max}원
             </span>
-            <button onClick={onPriceRangeRemove} className="text-md">
+            <button onClick={onPriceRangeRemove} className="text-md text-white">
               ✕
             </button>
           </span>
@@ -84,7 +84,7 @@ export const MobileSelectedOptionTag = ({
               style={{ backgroundColor: COLOR_MAPPING[color] || '#CCCCCC' }}
             />
             <span className="text-sm font-semibold text-white">{color}</span>
-            <button onClick={() => onColorRemove?.(color)} className="text-md">
+            <button onClick={() => onColorRemove?.(color)} className="text-md text-white">
               ✕
             </button>
           </span>
