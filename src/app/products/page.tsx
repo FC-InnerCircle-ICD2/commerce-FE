@@ -37,7 +37,7 @@ export default async function ProductsPage({ searchParams }: { searchParams: { [
 
         {/* 상품 목록 영역 */}
         <main className="lg:w-3/4">
-          <div className="mb-1 lg:mb-8">
+          <div className="mb-1 lg:mb-5">
             <Breadcrumbs />
           </div>
           <div className="lg:hidden block mb-8 px-3 py-2 bg-slate-50 border-slate-300 border">
