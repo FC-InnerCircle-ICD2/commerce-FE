@@ -63,11 +63,20 @@ export const MobileFilter: React.FC<FilterProps> = ({ products }) => {
 
   return (
     <Drawer>
-      <DrawerTrigger asChild>
-        <button className="lg:hidden border border-slate-300 rounded-full bg-white px-2 py-2">
-          <AdjustmentsHorizontalIcon className="h-5 w-5" />
-        </button>
-      </DrawerTrigger>
+      <div className="flex items-center gap-3">
+        <DrawerTrigger asChild>
+          <button className="lg:hidden border border-slate-300 rounded-full bg-white px-2 py-2">
+            <AdjustmentsHorizontalIcon className="h-6 w-6" />
+          </button>
+        </DrawerTrigger>
+        <MobileSelectedOptionTag
+          priceRange={selectedPriceRange}
+          onPriceRangeRemove={() => setSelectedPriceRange(undefined)}
+          selectedColors={selectedColors}
+          onColorRemove={handleColorSelect}
+          global
+        />
+      </div>
       <DrawerContent>
         <div className="mx-auto w-full">
           <DrawerHeader>
