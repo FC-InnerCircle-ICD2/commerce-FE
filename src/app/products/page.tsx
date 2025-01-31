@@ -44,18 +44,16 @@ export default async function ProductsPage({ searchParams }: { searchParams: { [
             <MobileFilter products={products} />
           </div>
           <div className="lg:px-0 px-4">
-            <div className="lg:px-0 px-4">
-              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 bg-slate-50 border border-slate-300 rounded-xl p-7">
-                {products.map((product) => (
-                  <Card
-                    key={product.productId}
-                    imgUrl={product.images[0].url}
-                    title={product.name}
-                    price={product.price}
-                    review={3}
-                  />
-                ))}
-              </div>
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 lg:bg-slate-50 lg:border lg:border-slate-300 rounded-xl lg:p-7">
+              {products.map((product) => (
+                <Card
+                  key={product.productId}
+                  imgUrl={product.images[0].url}
+                  title={product.name}
+                  price={product.price}
+                  review={3}
+                />
+              ))}
             </div>
           </div>
         </main>
