@@ -9,7 +9,9 @@ export function MswComponent() {
       async function enableApiMocking() {
         if (typeof window !== 'undefined') {
           const { worker } = await import('@/mock/browser');
-          await worker.start();
+          await worker.start({
+            onUnhandledRequest: 'bypass',
+          });
         }
       }
       enableApiMocking();

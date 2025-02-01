@@ -1,9 +1,10 @@
 // src/mocks/handlers.js
 // mocking api handler
 
-import { BASE_URL } from '@/constants/constant';
-import { CategoryApis } from '@/constants/apiUrl';
+import { BASE_URL, MOCK_URL } from '@/constants/constant';
+import { CategoryApis, ProductApis, BannerApis } from '@/constants/apiUrl';
 import { http, HttpResponse, PathParams } from 'msw';
+import { PRODUCT_URL } from '@/api/product';
 
 const allPosts = new Map();
 
@@ -58,35 +59,295 @@ export const handlers = [
     return HttpResponse.json(deletedPost);
   }),
 
-  http.get(`${BASE_URL}${CategoryApis.getCategory}`, () => {
+  http.get(`${MOCK_URL}${CategoryApis.getCategory}`, () => {
     return HttpResponse.json({
-      productCategories: [
+      contents: [
         {
-          productCategoryId: 1,
+          categoryId: 1,
           name: '전자제품',
           parentCategoryId: null,
           subCategories: [
             {
-              productCategoryId: 2,
+              categoryId: 2,
               name: '스마트폰',
               parentCategoryId: 1,
               subCategories: [],
             },
             {
-              productCategoryId: 3,
+              categoryId: 3,
               name: '노트북',
               parentCategoryId: 1,
               subCategories: [],
             },
+            {
+              categoryId: 4,
+              name: '가전제품',
+              parentCategoryId: null,
+              subCategories: [],
+            },
+          ],
+        },
+      ],
+      page: {
+        size: 10,
+        number: 0,
+        totalElements: 0,
+        totalPages: 0,
+      },
+    });
+  }),
+
+  http.get(`${MOCK_URL}${BannerApis.getBanner}`, () => {
+    return HttpResponse.json([
+      {
+        id: 1,
+        type: 'PRODUCT',
+        title: '설 선물세트 사전예약! 특가',
+        bannerOrder: 1,
+        iconUrl:
+          'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/10.png',
+        productBanner: {
+          id: 1,
+          url: '/products/1',
+          linkType: 'INTERNAL',
+          image: {
+            id: 101,
+            url: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/24.png',
+            fileOrder: 1,
+          },
+        },
+      },
+      {
+        id: 2,
+        type: 'EVENT',
+        title: '여름맞이 특별 프로모션',
+        bannerOrder: 2,
+        iconUrl:
+          'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/11.png',
+        productBanner: {
+          id: 2,
+          url: 'https://external-site.com/event/2',
+          linkType: 'EXTERNAL',
+          image: {
+            id: 102,
+            url: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/28.png',
+            fileOrder: 1,
+          },
+        },
+      },
+      {
+        id: 3,
+        type: 'PRODUCT',
+        title: '봄 신상품 할인전',
+        bannerOrder: 3,
+        iconUrl:
+          'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/12.png',
+        productBanner: {
+          id: 3,
+          url: '/products/3',
+          linkType: 'INTERNAL',
+          image: {
+            id: 103,
+            url: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/31.png',
+            fileOrder: 2,
+          },
+        },
+      },
+    ]);
+  }),
+
+  http.get(`${MOCK_URL}${PRODUCT_URL}`, () => {
+    return HttpResponse.json({
+      productes: [
+        {
+          productId: 100,
+          name: '피카츄',
+          description: '피카츄',
+          price: 999,
+          productCategory: {
+            productCategoryId: 2,
+            name: '스마트폰',
+            parentCategoryId: 1,
+            subCategories: [],
+          },
+          provider: {
+            providerId: 10,
+            name: '김지훈',
+            description: '전자제품 전문 업체입니다.',
+          },
+          options: [
+            {
+              id: 1,
+              name: 'Color',
+              value: 'Black',
+              quantity: 50,
+              optionOrder: 1,
+              sellPrice: 1000,
+            },
+          ],
+          images: [
+            {
+              id: 10,
+              url: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/25.png',
+              fileOrder: 1,
+              isRepresentative: true,
+            },
           ],
         },
         {
-          productCategoryId: 4,
-          name: '가전제품',
-          parentCategoryId: null,
-          subCategories: [],
+          productId: 101,
+          name: '피츄',
+          description: '피츄',
+          price: 50505,
+          productCategory: {
+            productCategoryId: 2,
+            name: '스마트폰',
+            parentCategoryId: 1,
+            subCategories: [],
+          },
+          provider: {
+            providerId: 10,
+            name: '김지훈',
+            description: '전자제품 전문 업체입니다.',
+          },
+          options: [
+            {
+              id: 1,
+              name: 'Color',
+              value: 'Black',
+              quantity: 50,
+              optionOrder: 1,
+              sellPrice: 1000,
+            },
+          ],
+          images: [
+            {
+              id: 10,
+              url: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/172.png',
+              fileOrder: 1,
+              isRepresentative: true,
+            },
+          ],
+        },
+        {
+          productId: 102,
+          name: '에몽가',
+          description: '에몽가',
+          price: 50505,
+          productCategory: {
+            productCategoryId: 2,
+            name: '스마트폰',
+            parentCategoryId: 1,
+            subCategories: [],
+          },
+          provider: {
+            providerId: 10,
+            name: '김지훈',
+            description: '전자제품 전문 업체입니다.',
+          },
+          options: [
+            {
+              id: 1,
+              name: 'Color',
+              value: 'Black',
+              quantity: 50,
+              optionOrder: 1,
+              sellPrice: 1000,
+            },
+          ],
+          images: [
+            {
+              id: 10,
+              url: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/587.png',
+              fileOrder: 1,
+              isRepresentative: true,
+            },
+          ],
         },
       ],
+    });
+  }),
+
+  // 상품 목록 API
+  http.get(`${BASE_URL}${ProductApis.getProducts}`, () => {
+    return HttpResponse.json({
+      contents: [
+        {
+          productId: 100,
+          name: '스마트폰',
+          description: '최신 모델의 스마트폰입니다.',
+          price: 10000,
+          category: {
+            categoryId: 2,
+            name: '스마트폰',
+            parentCategoryId: 1,
+            subCategories: [],
+          },
+          provider: {
+            providerId: 10,
+            name: 'ABC 전자',
+            description: '전자제품 전문 업체입니다.',
+          },
+          options: [
+            {
+              id: 1,
+              name: 'Color',
+              value: 'Black',
+              quantity: 50,
+              optionOrder: 1,
+              sellPrice: 1000,
+            },
+          ],
+          images: [
+            {
+              id: 10,
+              url: 'https://your-s3-bucket.s3.amazonaws.com/images/products/100/photo1.jpg',
+              fileOrder: 1,
+              isRepresentative: true,
+            },
+          ],
+        },
+        {
+          productId: 101,
+          name: '노트북',
+          description: '고성능 노트북입니다.',
+          category: {
+            categoryId: 3,
+            name: '노트북',
+            parentCategoryId: 1,
+            subCategories: [],
+          },
+          provider: {
+            providerId: 10,
+            name: 'ABC 전자',
+            description: '전자제품 전문 업체입니다.',
+          },
+          options: [
+            {
+              id: 2,
+              name: 'Storage',
+              value: '256GB',
+              quantity: 30,
+              optionOrder: 2,
+              sellPrice: 1500,
+            },
+          ],
+          images: [
+            {
+              id: 11,
+              url: 'https://your-s3-bucket.s3.amazonaws.com/images/products/101/photo1.jpg',
+              fileOrder: 1,
+              isRepresentative: true,
+            },
+          ],
+        },
+      ],
+      page: {
+        size: 10,
+        number: 0,
+        totalElements: 0,
+        totalPages: 0,
+      },
     });
   }),
 ];

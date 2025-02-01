@@ -29,8 +29,8 @@ type Props = {
  */
 export default function Card({ imgUrl, title, price, discount, review }: Props) {
   return (
-    <div className="w-full">
-      <img src={imgUrl} className="w-full h-auto aspect-square max-w-full block rounded-2xl bg-yellow-200" />
+    <div className="w-full cursor-pointer">
+      <img src={imgUrl} className="w-full h-auto aspect-square max-w-full block rounded-2xl" />
       <div className="p-2">
         <p className="text-sm sm:text-base font-medium">{title}</p>
         {discount && (
