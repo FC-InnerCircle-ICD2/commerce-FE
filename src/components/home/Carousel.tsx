@@ -1,6 +1,6 @@
 'use client';
 
-import { IBanner } from '@/api/banner';
+import type { IBanner } from '@/api/banner';
 import { BannerCarousel } from 'ji-react-carousel';
 
 type Props = {
