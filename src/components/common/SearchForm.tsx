@@ -33,7 +33,7 @@ export default function SearchInput({ category, classname, onSearch }: Props) {
       params.append('name', inputValue.trim());
 
       router.push(`/products?${params.toString()}`);
-      setSearch([...search, inputValue]);
+      setSearch([inputValue, ...search]);
       onSearch?.();
     }
   };
@@ -47,6 +47,9 @@ export default function SearchInput({ category, classname, onSearch }: Props) {
     event.preventDefault(); // 기본 제출 동작 방지
 
     if (inputValue.trim() !== '') {
+      if (search.length >= 5) {
+        search.pop();
+      }
       handleSearch();
     }
   };
