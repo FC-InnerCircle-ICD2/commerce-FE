@@ -24,7 +24,7 @@ export default async function ProductsPage({ searchParams }: { searchParams: { [
   return (
     <>
       <Header />
-      <div className="max-w-custom mx-auto py-8">
+      <div className="max-w-custom mx-auto pb-8">
         <div className="flex flex-col lg:flex-row lg:gap-5">
           {/* 왼쪽 사이드바 영역 */}
           <div className="lg:w-1/4">
@@ -40,7 +40,7 @@ export default async function ProductsPage({ searchParams }: { searchParams: { [
 
           {/* 상품 목록 영역 */}
           <main className="lg:w-3/4">
-            <div className="mb-8">
+            <div className="lg:mb-8 mb-1">
               <Breadcrumbs />
             </div>
             <div className="lg:hidden block mb-8 px-3 py-2 bg-slate-50 border-slate-300 border">
