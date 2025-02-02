@@ -22,7 +22,7 @@ export default function CategoryForm({ categories }: Props) {
         {categories?.map((category, i) => {
           return (
             <li
-              className={`w-full h-10 rounded text-sm flex items-center justify-between p-[10] cursor-pointer tablet:text-xs ${category.productCategoryId === currentCategory?.productCategoryId ? 'font-bold text-[#082F49] bg-[#F1F5F9]' : 'font-normal text-[#4F4F4F] bg-transparent'}`}
+              className={`w-full h-10 rounded text-sm flex items-center justify-between p-[10] cursor-pointer tablet:text-xs ${category.id === currentCategory?.id ? 'font-bold text-[#082F49] bg-[#F1F5F9]' : 'font-normal text-[#4F4F4F] bg-transparent'}`}
               key={i}
               onClick={() => handleParentCategoryClick(category)}
             >

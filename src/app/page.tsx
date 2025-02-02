@@ -8,7 +8,7 @@ import MobileFooter from '@/components/layout/footer/MobileFooter';
 export default async function Home() {
   try {
     const banners = await getBanners();
-    const products = await getProducts({ sort: 'registration' });
+    const products = await getProducts({ sortOption: 'CREATE_DESC' });
 
     return (
       <div className="flex flex-col h-screen overflow-x-hidden">
