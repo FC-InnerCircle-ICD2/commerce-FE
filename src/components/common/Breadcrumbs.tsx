@@ -10,6 +10,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
+import { SORT_OPTIONS } from '@/api/product';
 
 import SortDropdown from './SortDropdown';
 
@@ -18,6 +19,23 @@ interface BreadcrumbDropdownProps {
   items: string[];
   onSelect: (item: string) => void;
 }
+
+interface SortOption {
+  value: SORT_OPTIONS;
+  label: string;
+}
+
+const categoryItems = {
+  clothing: ['상의', '하의', '아우터'],
+  outer: ['코트', '자켓', '패딩'],
+};
+
+const SORT_OPTIONS_CONFIG: SortOption[] = [
+  { value: 'PRICE_ASC', label: '낮은가격순' },
+  { value: 'PRICE_DESC', label: '높은가격순' },
+  { value: 'SALES_DESC', label: '판매량순' },
+  { value: 'CREATE_DESC', label: '등록순' },
+];
 
 function BreadcrumbDropdown({ label, items, onSelect }: BreadcrumbDropdownProps) {
   return (
@@ -42,14 +60,15 @@ function BreadcrumbDropdown({ label, items, onSelect }: BreadcrumbDropdownProps)
 export default function Breadcrumbs() {
   const [selectedCategory, setSelectedCategory] = useState<string>('남성의류');
   const [selectedOuter, setSelectedOuter] = useState<string>('아우터');
-  const [selectedSort, setSelectedSort] = useState<string>('낮은 가격순');
+  const [selectedSort, setSelectedSort] = useState<SORT_OPTIONS>('PRICE_ASC');
 
-  const categoryItems = {
-    clothing: ['상의', '하의', '아우터'],
-    outer: ['코트', '자켓', '패딩'],
+  const getCurrentSortLabel = (value: SORT_OPTIONS): string => {
+    return SORT_OPTIONS_CONFIG.find((option) => option.value === value)?.label ?? '';
   };
 
-  const sortItems = ['높은 가격순', '판매 많은순', '등록순'];
+  const getSortValueByLabel = (label: string): SORT_OPTIONS => {
+    return SORT_OPTIONS_CONFIG.find((option) => option.label === label)?.value ?? 'CREATE_DESC';
+  };
 
   return (
     <div className="flex items-center justify-between lg:px-7 lg:py-4 px-3 py-2 bg-slate-50 lg:border border-slate-300 lg:rounded-xl">
@@ -70,7 +89,19 @@ export default function Breadcrumbs() {
           <BreadcrumbDropdown label={selectedOuter} items={categoryItems.outer} onSelect={setSelectedOuter} />
         </BreadcrumbItem>
       </Breadcrumb>
-      <SortDropdown label={selectedSort} items={sortItems} onSelect={setSelectedSort} />
+      <SortDropdown
+        label={getCurrentSortLabel(selectedSort)}
+        items={SORT_OPTIONS_CONFIG.map((option) => option.label)}
+        onSelect={(label: string) => {
+          const sortValue = getSortValueByLabel(label);
+          setSelectedSort(sortValue);
+          
+          // URL 업데이트
+          const searchParams = new URLSearchParams(window.location.search);
+          searchParams.set('sortOption', sortValue);
+          window.location.search = searchParams.toString();
+        }}
+      />
     </div>
   );
 }

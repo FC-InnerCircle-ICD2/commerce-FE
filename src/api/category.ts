@@ -2,7 +2,7 @@ import { MOCK_URL } from '@/constants/constant';
 import { CategoryApis } from '@/constants/apiUrl';
 
 export interface ICategory {
-  productCategoryId: number;
+  id: number;
   name: string;
   parentCategoryId: number | null;
   subCategories: Array<ICategory>;
