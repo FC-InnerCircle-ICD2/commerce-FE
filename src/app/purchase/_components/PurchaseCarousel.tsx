@@ -3,18 +3,30 @@
 import { Carousel } from 'ji-react-carousel';
 import CarouselLeft from '@/assets/purchase/carouselLeft.png';
 import CarouselRight from '@/assets/purchase/carouselRight.png';
+import AccountBlock from './AccountBlock';
+import { Card } from '@/components/common';
+import CardBlock from './CardBlock';
 
 interface Account {
   bank: string;
   accountNumber: string;
+  accountImg?: string;
+}
+
+interface Card {
+  cardName: string;
+  cardNumber: string;
+  cardImg: string;
 }
 
 interface Props {
-  accounts: Account[];
+  accounts?: Account[];
+  cards?: Card[];
+  carouselType: 'account' | 'card';
 }
 
 export default function PurchaseCarousel(props: Props) {
-  const { accounts } = props;
+  const { accounts = [], cards = [], carouselType } = props;
 
   return (
     <Carousel
@@ -31,18 +43,18 @@ export default function PurchaseCarousel(props: Props) {
         </button>
       }
     >
-      {accounts.map((account, index) => (
-        <div
-          key={index}
-          className="h-[80px] bg-white rounded-[10px] box-border flex items-center border border-neutral-300 px-4"
-        >
-          <div className="w-10 h-10 rounded-full bg-neutral-300"></div>
-          <div className="flex flex-col ml-3">
-            <span className="font-medium text-sm">{account.bank}</span>
-            <span className="font-light text-xs text-neutral-600">{account.accountNumber}</span>
-          </div>
-        </div>
-      ))}
+      {carouselType === 'account'
+        ? accounts.map((account, index) => (
+            <AccountBlock
+              key={index}
+              bank={account.bank}
+              accountNumber={account.accountNumber}
+              accountImg={account.accountImg}
+            />
+          ))
+        : cards.map((card, index) => (
+            <CardBlock key={index} cardName={card.cardName} cardNumber={card.cardNumber} cardImg={card.cardImg} />
+          ))}
     </Carousel>
   );
 }

@@ -24,10 +24,10 @@ export default function TitleBoxContainer(props: Props) {
     <div className={`w-full ${margin ? margin : 'mb-14'}`}>
       {title && (
         <div className="flex justify-between items-center mb-5">
-          <h3 className="font-bold text-2xl">{title}</h3>
+          <h3 className="font-bold text-xl lg:text-2xl">{title}</h3>
           {toggle && (
             <div className="flex items-center gap-2">
-              <span className="text-lg font-bold">{toggleTitle}</span>
+              <span className="text-base lg:text-lg font-bold">{toggleTitle}</span>
               <button onClick={() => handleToggle()}>
                 {isToggle ? (
                   <img src={ExpandMore.src} alt="Collapse payment method list" className="w-8 h-8" />
