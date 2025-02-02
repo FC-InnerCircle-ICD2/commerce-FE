@@ -54,19 +54,19 @@ export default function Breadcrumbs() {
   return (
     <div className="flex items-center justify-between lg:px-7 lg:py-4 px-3 py-2 bg-slate-50 lg:border border-slate-300 lg:rounded-xl">
       <Breadcrumb className="flex items-center gap-2 list-none">
-        <BreadcrumbItem className="border border-slate-300 rounded-full bg-white px-3 py-2 text-sm">
+        <BreadcrumbItem className="border border-slate-300 rounded-full bg-white px-3 py-2 text-sm text-nowrap">
           <BreadcrumbLink href="/">홈</BreadcrumbLink>
         </BreadcrumbItem>
         <BreadcrumbSeparator>
           <ChevronRightIcon className="w-6 h-6" />
         </BreadcrumbSeparator>
-        <BreadcrumbItem className="border border-slate-300 rounded-full bg-white px-1 py-2 text-sm">
+        <BreadcrumbItem className="border border-slate-300 rounded-full bg-white px-1 py-2 text-sm text-nowrap">
           <BreadcrumbDropdown label={selectedCategory} items={categoryItems.clothing} onSelect={setSelectedCategory} />
         </BreadcrumbItem>
         <BreadcrumbSeparator>
           <ChevronRightIcon className="w-6 h-6" />
         </BreadcrumbSeparator>
-        <BreadcrumbItem className="border border-slate-300 rounded-full bg-white px-1 py-2 text-sm">
+        <BreadcrumbItem className="border border-slate-300 rounded-full bg-white px-1 py-2 text-sm text-nowrap">
           <BreadcrumbDropdown label={selectedOuter} items={categoryItems.outer} onSelect={setSelectedOuter} />
         </BreadcrumbItem>
       </Breadcrumb>
