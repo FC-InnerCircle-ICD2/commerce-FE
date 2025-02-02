@@ -24,7 +24,7 @@ export default async function ProductsPage({ searchParams }: { searchParams: { [
   return (
     <>
       <Header />
-      <div className="max-w-custom mx-auto pb-8">
+      <div className="max-w-custom mx-auto lg:pt-8 pb-8">
         <div className="flex flex-col lg:flex-row lg:gap-5">
           {/* 왼쪽 사이드바 영역 */}
           <div className="lg:w-1/4">
