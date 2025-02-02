@@ -3,17 +3,20 @@ import Card from '@/components/common/Card';
 import CategoryList from './_components/CategoryList';
 import Filter from '@/app/products/_components/filter/Filter';
 import { Breadcrumbs } from '@/components/common';
-import { IProduct } from '@/api/product';
 import { getProducts } from '@/api/product';
 
 export default async function ProductsPage({ searchParams }: { searchParams: { [key: string]: string | undefined } }) {
-  const { category, name, rating, sort } = searchParams;
+  const { keyword, priceMin, priceMax, rating, pageNumber, pageSize } = searchParams;
 
   const products = await getProducts({
-    productCategoryId: category ? parseInt(category) : undefined,
-    name,
-    rating: rating ? parseInt(rating) : undefined,
-    sort: sort as 'registration' | 'sales' | 'priceAsc' | 'priceDesc',
+    keyword,
+    priceMin: priceMin ? Number(priceMin) : undefined,
+    priceMax: priceMax ? Number(priceMax) : undefined,
+    rating: rating ? Number(rating) : undefined,
+    pageNumber: pageNumber ? Number(pageNumber) : undefined,
+    pageSize: pageSize ? Number(pageSize) : undefined,
+    productId: undefined,
+    categoryId: undefined,
   }).catch(() => null); // 실패 시 null 반환
 
   if (!products) {
@@ -46,7 +49,7 @@ export default async function ProductsPage({ searchParams }: { searchParams: { [
                 {products.map((product) => (
                   <Card
                     key={product.productId}
-                    imgUrl={product.images[0].url}
+                    imgUrl={product.options[0].optionDetails[0].url}
                     title={product.name}
                     price={product.price}
                     review={3}
