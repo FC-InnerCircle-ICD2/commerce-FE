@@ -158,111 +158,152 @@ export const handlers = [
 
   http.get(`${MOCK_URL}${PRODUCT_URL}`, async () => {
     return HttpResponse.json({
-      productes: [
+      content: [
         {
-          productId: 100,
-          name: '피카츄',
-          description: '피카츄',
-          price: 999,
-          productCategory: {
-            productCategoryId: 2,
-            name: '스마트폰',
-            parentCategoryId: 1,
-            subCategories: [],
+          productId: 7,
+          name: '여성티셔츠',
+          description: '겨울 티셔츠',
+          price: 3000,
+          category: {
+            productCategoryId: 8,
+            name: '여성 의류',
+            parentProductCategoryId: 2,
+            subProductCategories: [],
           },
           provider: {
-            providerId: 10,
-            name: '김지훈',
-            description: '전자제품 전문 업체입니다.',
+            providerId: 2,
+            name: 'FashionWorld',
+            description: '모든 사람을 위한 스타일리시한 의류',
           },
           options: [
             {
               id: 1,
-              name: 'Color',
-              value: 'Black',
-              quantity: 50,
-              optionOrder: 1,
-              sellPrice: 1000,
+              name: '색상',
+              optionDetails: [
+                {
+                  value: '검정',
+                  quantity: 50,
+                  additionalPrice: 0,
+                  fileOrder: 1,
+                  url: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/9.png',
+                },
+                {
+                  value: '은색',
+                  quantity: 30,
+                  additionalPrice: 10000,
+                  fileOrder: 2,
+                  url: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/8.png',
+                },
+              ],
             },
           ],
-          images: [
-            {
-              id: 10,
-              url: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/25.png',
-              fileOrder: 1,
-              isRepresentative: true,
-            },
-          ],
+          rating: 4.8,
         },
         {
-          productId: 101,
-          name: '피츄',
-          description: '피츄',
-          price: 50505,
-          productCategory: {
+          productId: 3,
+          name: '러닝화',
+          description: '가볍고 편안한 러닝화',
+          price: 25000,
+          category: {
             productCategoryId: 2,
-            name: '스마트폰',
-            parentCategoryId: 1,
-            subCategories: [],
+            name: '패션',
+            parentProductCategoryId: null,
+            subProductCategories: [
+              {
+                productCategoryId: 7,
+                name: '남성 의류',
+                parentProductCategoryId: 2,
+                subProductCategories: [],
+              },
+              {
+                productCategoryId: 8,
+                name: '여성 의류',
+                parentProductCategoryId: 2,
+                subProductCategories: [],
+              },
+            ],
           },
           provider: {
-            providerId: 10,
-            name: '김지훈',
-            description: '전자제품 전문 업체입니다.',
+            providerId: 2,
+            name: 'FashionWorld',
+            description: '모든 사람을 위한 스타일리시한 의류',
           },
           options: [
             {
               id: 1,
-              name: 'Color',
-              value: 'Black',
-              quantity: 50,
-              optionOrder: 1,
-              sellPrice: 1000,
+              name: '색상',
+              optionDetails: [
+                {
+                  value: '검정',
+                  quantity: 50,
+                  additionalPrice: 0,
+                  fileOrder: 1,
+                  url: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/37.png',
+                },
+                {
+                  value: '은색',
+                  quantity: 30,
+                  additionalPrice: 10000,
+                  fileOrder: 2,
+                  url: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/38.png',
+                },
+              ],
             },
           ],
-          images: [
-            {
-              id: 10,
-              url: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/172.png',
-              fileOrder: 1,
-              isRepresentative: true,
-            },
-          ],
+          rating: 4.9,
         },
         {
-          productId: 102,
-          name: '에몽가',
-          description: '에몽가',
-          price: 50505,
-          productCategory: {
+          productId: 6,
+          name: '스타일리시한 티셔츠',
+          description: '트렌디하고 편안한 티셔츠',
+          price: 25000,
+          category: {
             productCategoryId: 2,
-            name: '스마트폰',
-            parentCategoryId: 1,
-            subCategories: [],
+            name: '패션',
+            parentProductCategoryId: null,
+            subProductCategories: [
+              {
+                productCategoryId: 7,
+                name: '남성 의류',
+                parentProductCategoryId: 2,
+                subProductCategories: [],
+              },
+              {
+                productCategoryId: 8,
+                name: '여성 의류',
+                parentProductCategoryId: 2,
+                subProductCategories: [],
+              },
+            ],
           },
           provider: {
-            providerId: 10,
-            name: '김지훈',
-            description: '전자제품 전문 업체입니다.',
+            providerId: 2,
+            name: 'FashionWorld',
+            description: '모든 사람을 위한 스타일리시한 의류',
           },
           options: [
             {
               id: 1,
-              name: 'Color',
-              value: 'Black',
-              quantity: 50,
-              optionOrder: 1,
-              sellPrice: 1000,
+              name: '색상',
+              optionDetails: [
+                {
+                  value: '검정',
+                  quantity: 50,
+                  additionalPrice: 0,
+                  fileOrder: 1,
+                  url: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/108.png',
+                },
+                {
+                  value: '은색',
+                  quantity: 30,
+                  additionalPrice: 10000,
+                  fileOrder: 2,
+                  url: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/109.png',
+                },
+              ],
             },
           ],
-          images: [
-            {
-              id: 10,
-              url: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/587.png',
-              fileOrder: 1,
-              isRepresentative: true,
-            },
-          ],
+          rating: 4.2,
         },
       ],
     });
@@ -271,75 +312,152 @@ export const handlers = [
   // 상품 목록 API
   http.get(`${BASE_URL}${ProductApis.getProducts}`, () => {
     return HttpResponse.json({
-      contents: [
+      content: [
         {
-          productId: 100,
-          name: '스마트폰',
-          description: '최신 모델의 스마트폰입니다.',
-          price: 10000,
+          productId: 7,
+          name: '여성티셔츠',
+          description: '겨울 티셔츠',
+          price: 3000,
           category: {
-            categoryId: 2,
-            name: '스마트폰',
-            parentCategoryId: 1,
-            subCategories: [],
+            productCategoryId: 8,
+            name: '여성 의류',
+            parentProductCategoryId: 2,
+            subProductCategories: [],
           },
           provider: {
-            providerId: 10,
-            name: 'ABC 전자',
-            description: '전자제품 전문 업체입니다.',
+            providerId: 2,
+            name: 'FashionWorld',
+            description: '모든 사람을 위한 스타일리시한 의류',
           },
           options: [
             {
               id: 1,
-              name: 'Color',
-              value: 'Black',
-              quantity: 50,
-              optionOrder: 1,
-              sellPrice: 1000,
+              name: '색상',
+              optionDetails: [
+                {
+                  value: '검정',
+                  quantity: 50,
+                  additionalPrice: 0,
+                  fileOrder: 1,
+                  url: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/9.png',
+                },
+                {
+                  value: '은색',
+                  quantity: 30,
+                  additionalPrice: 10000,
+                  fileOrder: 2,
+                  url: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/8.png',
+                },
+              ],
             },
           ],
-          images: [
-            {
-              id: 10,
-              url: 'https://your-s3-bucket.s3.amazonaws.com/images/products/100/photo1.jpg',
-              fileOrder: 1,
-              isRepresentative: true,
-            },
-          ],
+          rating: 4.8,
         },
         {
-          productId: 101,
-          name: '노트북',
-          description: '고성능 노트북입니다.',
+          productId: 3,
+          name: '러닝화',
+          description: '가볍고 편안한 러닝화',
+          price: 25000,
           category: {
-            categoryId: 3,
-            name: '노트북',
-            parentCategoryId: 1,
-            subCategories: [],
+            productCategoryId: 2,
+            name: '패션',
+            parentProductCategoryId: null,
+            subProductCategories: [
+              {
+                productCategoryId: 7,
+                name: '남성 의류',
+                parentProductCategoryId: 2,
+                subProductCategories: [],
+              },
+              {
+                productCategoryId: 8,
+                name: '여성 의류',
+                parentProductCategoryId: 2,
+                subProductCategories: [],
+              },
+            ],
           },
           provider: {
-            providerId: 10,
-            name: 'ABC 전자',
-            description: '전자제품 전문 업체입니다.',
+            providerId: 2,
+            name: 'FashionWorld',
+            description: '모든 사람을 위한 스타일리시한 의류',
           },
           options: [
             {
-              id: 2,
-              name: 'Storage',
-              value: '256GB',
-              quantity: 30,
-              optionOrder: 2,
-              sellPrice: 1500,
+              id: 1,
+              name: '색상',
+              optionDetails: [
+                {
+                  value: '검정',
+                  quantity: 50,
+                  additionalPrice: 0,
+                  fileOrder: 1,
+                  url: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/37.png',
+                },
+                {
+                  value: '은색',
+                  quantity: 30,
+                  additionalPrice: 10000,
+                  fileOrder: 2,
+                  url: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/38.png',
+                },
+              ],
             },
           ],
-          images: [
+          rating: 4.9,
+        },
+        {
+          productId: 6,
+          name: '스타일리시한 티셔츠',
+          description: '트렌디하고 편안한 티셔츠',
+          price: 25000,
+          category: {
+            productCategoryId: 2,
+            name: '패션',
+            parentProductCategoryId: null,
+            subProductCategories: [
+              {
+                productCategoryId: 7,
+                name: '남성 의류',
+                parentProductCategoryId: 2,
+                subProductCategories: [],
+              },
+              {
+                productCategoryId: 8,
+                name: '여성 의류',
+                parentProductCategoryId: 2,
+                subProductCategories: [],
+              },
+            ],
+          },
+          provider: {
+            providerId: 2,
+            name: 'FashionWorld',
+            description: '모든 사람을 위한 스타일리시한 의류',
+          },
+          options: [
             {
-              id: 11,
-              url: 'https://your-s3-bucket.s3.amazonaws.com/images/products/101/photo1.jpg',
-              fileOrder: 1,
-              isRepresentative: true,
+              id: 1,
+              name: '색상',
+              optionDetails: [
+                {
+                  value: '검정',
+                  quantity: 50,
+                  additionalPrice: 0,
+                  fileOrder: 1,
+                  url: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/108.png',
+                },
+                {
+                  value: '은색',
+                  quantity: 30,
+                  additionalPrice: 10000,
+                  fileOrder: 2,
+                  url: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/109.png',
+                },
+              ],
             },
           ],
+          rating: 4.2,
         },
       ],
       page: {

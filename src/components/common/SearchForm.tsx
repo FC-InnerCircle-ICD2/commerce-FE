@@ -1,17 +1,42 @@
 'use client';
 
 import useLocalStorage from '@/hooks/common/useLocalStorage';
-import { useState } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { useState, useEffect } from 'react';
 import { IOptions } from './Selectbox';
 
 type Props = {
   category?: IOptions;
   classname: string;
+  onSearch?: () => void;
 };
 
-export default function SearchForm({ category, classname }: Props) {
-  const [inputValue, setInputValue] = useState<string>('');
+export default function SearchInput({ category, classname, onSearch }: Props) {
+  const router = useRouter();
+  const searchParams = useSearchParams();
   const [search, setSearch] = useLocalStorage<string[]>('search', []);
+  const [inputValue, setInputValue] = useState<string>('');
+
+  useEffect(() => {
+    const nameParam = searchParams.get('name');
+    if (nameParam) {
+      setInputValue(nameParam);
+    }
+  }, [searchParams]);
+
+  const handleSearch = () => {
+    if (inputValue.trim() !== '') {
+      const params = new URLSearchParams();
+      if (category?.value) {
+        params.append('category', category.value);
+      }
+      params.append('name', inputValue.trim());
+
+      router.push(`/products?${params.toString()}`);
+      setSearch([...search, inputValue]);
+      onSearch?.();
+    }
+  };
 
   const handleSubmit = (event: React.FormEvent) => {
     /**
@@ -22,13 +47,7 @@ export default function SearchForm({ category, classname }: Props) {
     event.preventDefault(); // 기본 제출 동작 방지
 
     if (inputValue.trim() !== '') {
-      // TODO: 검색 결과로 이동하는 코드 추가해야함.
-      console.log(category);
-      if (search.length >= 5) {
-        search.shift();
-      }
-      setSearch([...search, inputValue]);
-      setInputValue('');
+      handleSearch();
     }
   };
 

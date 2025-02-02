@@ -15,7 +15,7 @@ export default function CategorySearch() {
   const categoryOptions: IOptions[] = useMemo(() => {
     if (!categories) return [];
     return categories.map((item) => {
-      return { label: item.name, value: String(item.productCategoryId) };
+      return { label: item.name, value: String(item.id) };
     });
   }, [categories]);
 

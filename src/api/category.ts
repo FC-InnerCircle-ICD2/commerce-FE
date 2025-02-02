@@ -3,7 +3,7 @@ import { CategoryApis } from '@/constants/apiUrl';
 import { IPaging } from '@/interface';
 
 export interface ICategory {
-  productCategoryId: number;
+  id: number;
   name: string;
   parentCategoryId: number | null;
   subCategories: Array<ICategory>;
