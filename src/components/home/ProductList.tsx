@@ -17,7 +17,7 @@ export default function ProductList({ products }: Props) {
           return (
             <Card
               key={product.productId}
-              imgUrl={product.images[0].url}
+              imgUrl={product.options[0].optionDetails[0].url}
               title={product.name}
               price={product.price}
               review={3}
