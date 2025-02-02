@@ -268,6 +268,91 @@ export const handlers = [
     });
   }),
 
+  http.get(`${MOCK_URL}/v1/products/:productId`, ({ params }) => {
+    const { productId } = params;
+    
+    // 여기서는 예시로 productId가 '100'일 때의 응답이 작성됨
+    if (productId === '100') {
+      return HttpResponse.json({
+        options: [
+          {
+            optionDetails: [
+              {
+                images: [
+                  {
+                    id: 10,
+                    fileOrder: 1,
+                    url: "https://housing.seoul.go.kr/design/theme/housing/images/sub/rnw_corner_bg03.png",
+                    representative: true
+                  }
+                ],
+                id: 1,
+                value: "256GB",
+                quantity: 20,
+                order: 1,
+                additionalPrice: 10000
+              },
+              {
+                images: [
+                  {
+                    id: 10,
+                    fileOrder: 1,
+                    url: "https://housing.seoul.go.kr/design/theme/housing/images/sub/rnw_corner_bg03.png",
+                    representative: true
+                  }
+                ],
+                id: 2,
+                value: "512GB",
+                quantity: 10,
+                order: 2,
+                additionalPrice: 20000
+              }
+            ],
+            id: 1,
+            name: "저장용량"
+          }
+        ],
+        id: 100,
+        name: "노트북 X1",
+        description: "고성능 노트북입니다.",
+        price: 1599000,
+        category: {
+          id: 1,
+          name: "전자제품",
+          parentCategoryId: null,
+          subCategories: [
+            {
+              id: 2,
+              name: "스마트폰",
+              parentCategoryId: 1,
+              subCategories: []
+            },
+            {
+              id: 3,
+              name: "노트북",
+              parentCategoryId: 1,
+              subCategories: []
+            }
+          ]
+        },
+        provider: {
+          id: 10,
+          name: "ABC 전자",
+          description: "전자제품 전문 업체입니다."
+        }
+      });
+    } else {
+      // productId가 '100'이 아닌 경우 404 에러 반환
+      return HttpResponse.json(
+        {
+          errorCode: "PRODUCT-0006",
+          errorMessage: "해당 상품을 찾을 수 없습니다."
+        },
+        { status: 404 }
+      );
+    }
+  }),
+
   // 상품 목록 API
   http.get(`${BASE_URL}${ProductApis.getProducts}`, () => {
     return HttpResponse.json({
