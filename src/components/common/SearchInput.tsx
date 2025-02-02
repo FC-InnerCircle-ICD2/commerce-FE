@@ -1,17 +1,42 @@
 'use client';
 
 import useLocalStorage from '@/hooks/common/useLocalStorage';
-import { useState } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { useState, useEffect } from 'react';
 import { IOptions } from './Selectbox';
 
 type Props = {
   category?: IOptions;
   classname: string;
+  onSearch?: () => void;
 };
 
-export default function SearchInput({ category, classname }: Props) {
-  const [inputValue, setInputValue] = useState<string>('');
+export default function SearchInput({ category, classname, onSearch }: Props) {
+  const router = useRouter();
+  const searchParams = useSearchParams();
   const [search, setSearch] = useLocalStorage<string[]>('search', []);
+  const [inputValue, setInputValue] = useState<string>('');
+
+  useEffect(() => {
+    const nameParam = searchParams.get('name');
+    if (nameParam) {
+      setInputValue(nameParam);
+    }
+  }, [searchParams]);
+
+  const handleSearch = () => {
+    if (inputValue.trim() !== '') {
+      const params = new URLSearchParams();
+      if (category?.value) {
+        params.append('category', category.value);
+      }
+      params.append('name', inputValue.trim());
+
+      router.push(`/products?${params.toString()}`);
+      setSearch([...search, inputValue]);
+      onSearch?.();
+    }
+  };
 
   const handleEnter = (event: React.KeyboardEvent) => {
     /**
@@ -20,11 +45,8 @@ export default function SearchInput({ category, classname }: Props) {
      * => keydown에 한글 입력시 2번 호출되는 이슈 방지하기 위한 isComposing 추가
      */
     if (event.nativeEvent.isComposing) return;
-    if (event.key === 'Enter' && inputValue.trim() !== '') {
-      // TODO: 검색 결과로 이동하는 코드 추가해야함.
-      console.log(category);
-      setSearch([...search, inputValue]);
-      setInputValue('');
+    if (event.key === 'Enter') {
+      handleSearch();
     }
   };
 
