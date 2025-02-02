@@ -1,7 +1,7 @@
 'use client';
 
 import Image from 'next/image';
-import { SearchForm, SearchInput } from '../common';
+import { SearchOverview, SearchForm } from '../common';
 import React, { useRef } from 'react';
 import { MagnifyingGlassIcon } from '@heroicons/react/24/outline';
 
@@ -17,10 +17,10 @@ export default function MobileSearchModal({ handleClose }: Props) {
       <div ref={parentRef} className="w-full bg-white">
         <div className="w-full px-4 py-[15] flex items-center">
           <Image src="/assets/arrow.svg" alt="back" width={24} height={24} onClick={handleClose} />
-          <SearchInput classname="ml-5 text-sm grow placeholder:text-[#5B5B5B] outline-none" />
+          <SearchForm classname="ml-5 text-sm grow placeholder:text-[#5B5B5B] outline-none" />
           <MagnifyingGlassIcon className="w-6 h-6 text-[#075985]" />
         </div>
-        <SearchForm parentRef={parentRef} recommend={['추천']} handleClose={handleClose} />
+        <SearchOverview parentRef={parentRef} recommend={['추천']} handleClose={handleClose} />
       </div>
     </article>
   );
