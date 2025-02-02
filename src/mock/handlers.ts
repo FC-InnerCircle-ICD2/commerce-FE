@@ -63,24 +63,24 @@ export const handlers = [
     return HttpResponse.json({
       contents: [
         {
-          categoryId: 1,
+          id: 1,
           name: '전자제품',
           parentCategoryId: null,
           subCategories: [
             {
-              categoryId: 2,
+              id: 2,
               name: '스마트폰',
               parentCategoryId: 1,
               subCategories: [],
             },
             {
-              categoryId: 3,
+              id: 3,
               name: '노트북',
               parentCategoryId: 1,
               subCategories: [],
             },
             {
-              categoryId: 4,
+              id: 4,
               name: '가전제품',
               parentCategoryId: null,
               subCategories: [],
