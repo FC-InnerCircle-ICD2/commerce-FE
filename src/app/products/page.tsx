@@ -8,7 +8,7 @@ import { MobileFilter } from '@/app/products/_components/filter/MobileFilter';
 import { Header } from '@/components/layout';
 
 export default async function ProductsPage({ searchParams }: { searchParams: { [key: string]: string | undefined } }) {
-  const { keyword, priceMin, priceMax, rating, pageNumber, pageSize } = searchParams;
+  const { keyword, priceMin, priceMax, rating, pageNumber, pageSize } = await searchParams;
 
   const products = await getProducts({
     keyword,
