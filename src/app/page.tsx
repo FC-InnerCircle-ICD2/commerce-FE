@@ -3,7 +3,6 @@ import { getProducts } from '@/api/product';
 import Carousel from '@/components/home/Carousel';
 import ProductList from '@/components/home/ProductList';
 import { Header } from '@/components/layout';
-import MobileFooter from '@/components/layout/footer/MobileFooter';
 
 export default async function Home() {
   try {
@@ -17,7 +16,6 @@ export default async function Home() {
           <Carousel banners={banners} />
           <ProductList products={products} />
         </div>
-        <MobileFooter />
       </div>
     );
   } catch {
