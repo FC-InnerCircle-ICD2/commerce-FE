@@ -4,16 +4,25 @@ import type { ICategory } from '@/api/category';
 import Image from 'next/image';
 import { useState } from 'react';
 import { MagnifyingGlassIcon } from '@heroicons/react/24/outline';
+import { useRouter } from 'next/navigation';
 
 type Props = {
   categories: ICategory[];
 };
 
 export default function CategoryForm({ categories }: Props) {
+  const router = useRouter();
   const [currentCategory, setCurrentCategory] = useState<ICategory | null>(null);
 
   const handleParentCategoryClick = (category: ICategory) => {
     setCurrentCategory(category);
+  };
+
+  const handleCategoryItemClick = (category: ICategory) => {
+    const params = new URLSearchParams();
+    params.append('category', String(category.id));
+
+    router.push(`/products?${params.toString()}`);
   };
 
   return (
@@ -46,7 +55,7 @@ export default function CategoryForm({ categories }: Props) {
               key={i}
             >
               {/* TODO: category 검색 페이지로 전환해야함 */}
-              <button className="w-full h-full" onClick={() => console.log(category)}>
+              <button className="w-full h-full" onClick={() => handleCategoryItemClick(category)}>
                 {category.name}
               </button>
             </li>

@@ -3,7 +3,6 @@ import Carousel from '@/components/home/Carousel';
 import ProductList from '@/components/home/ProductList';
 import ProductSkeletons from '@/components/home/ProductSkeleton';
 import { Header } from '@/components/layout';
-import MobileFooter from '@/components/layout/footer/MobileFooter';
 import { Suspense } from 'react';
 
 export default async function Home() {
@@ -19,7 +18,6 @@ export default async function Home() {
             <ProductList />
           </Suspense>
         </div>
-        <MobileFooter />
       </div>
     );
   } catch {
