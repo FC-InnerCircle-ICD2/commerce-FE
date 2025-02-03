@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 
 import { PriceRange, FilterProps } from '../../../../types/product';
 import { useFilterOptions } from '@/hooks/useFilterOptions';
@@ -8,6 +8,7 @@ import { useFilterOptions } from '@/hooks/useFilterOptions';
 import { SelectedOptionTag } from '@/app/products/_components/filter/SelectedOptionTag';
 import { PriceFilter } from '@/app/products/_components/filter/PriceFilter';
 import { ColorFilter } from '@/app/products/_components/filter/ColorFilter';
+import LoadingSpinner from '@/components/common/LoadingSpinner';
 
 const Filter: React.FC<FilterProps> = ({ products }) => {
   const priceRangeValues = useMemo(() => {
@@ -25,9 +26,16 @@ const Filter: React.FC<FilterProps> = ({ products }) => {
 
   const [priceRange, setPriceRange] = useState<PriceRange>(() => priceRangeValues);
   const [selectedPriceRange, setSelectedPriceRange] = useState<PriceRange | undefined>(undefined);
+  const [isLoading, setIsLoading] = useState(true);
   const availableOptions = useFilterOptions(products);
   const [sliderValue, setSliderValue] = useState([priceRangeValues.min, priceRangeValues.max]);
   const [selectedColors, setSelectedColors] = useState<string[]>([]);
+
+  useEffect(() => {
+    if (products) {
+      setIsLoading(false);
+    }
+  }, [products]);
 
   const handlePriceSearch = () => setSelectedPriceRange(priceRange);
   const handleSliderChange = (value: number[]) => {
@@ -48,32 +56,40 @@ const Filter: React.FC<FilterProps> = ({ products }) => {
       <h2 className="text-lg font-bold mb-5">필터</h2>
       <hr />
 
-      <SelectedOptionTag
-        priceRange={selectedPriceRange}
-        onPriceRangeRemove={() => setSelectedPriceRange(undefined)}
-        selectedColors={selectedColors}
-        onColorRemove={handleColorSelect}
-      />
+      {isLoading ? (
+        <div className="flex justify-center items-center h-40">
+          <LoadingSpinner size={30} />
+        </div>
+      ) : (
+        <>
+          <SelectedOptionTag
+            priceRange={selectedPriceRange}
+            onPriceRangeRemove={() => setSelectedPriceRange(undefined)}
+            selectedColors={selectedColors}
+            onColorRemove={handleColorSelect}
+          />
 
-      <PriceFilter
-        priceRange={priceRange}
-        sliderValue={sliderValue}
-        priceRangeValues={priceRangeValues}
-        onSliderChange={handleSliderChange}
-        onInputChange={handleInputChange}
-        onSearch={handlePriceSearch}
-      />
+          <PriceFilter
+            priceRange={priceRange}
+            sliderValue={sliderValue}
+            priceRangeValues={priceRangeValues}
+            onSliderChange={handleSliderChange}
+            onInputChange={handleInputChange}
+            onSearch={handlePriceSearch}
+          />
 
-      <hr className="my-8" />
+          <hr className="my-8" />
 
-      {Object.entries(availableOptions).map(([optionName, values]) => (
-        <ColorFilter
-          key={optionName}
-          values={values}
-          selectedColors={selectedColors}
-          onColorSelect={handleColorSelect}
-        />
-      ))}
+          {Object.entries(availableOptions).map(([optionName, values]) => (
+            <ColorFilter
+              key={optionName}
+              values={values}
+              selectedColors={selectedColors}
+              onColorSelect={handleColorSelect}
+            />
+          ))}
+        </>
+      )}
     </div>
   );
 };
