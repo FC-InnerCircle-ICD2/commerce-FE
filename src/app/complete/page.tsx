@@ -4,24 +4,30 @@ import React, { useEffect, useState } from "react";
 import dynamic from 'next/dynamic';
 import { Card } from "@/components/common";
 
-export default function PaymentCompletion() {
+export default function Complete() {
   const Carousel = dynamic(() => import('ji-react-carousel').then((mod) => mod.Carousel), {
     ssr: false
   });
-  const [isMobile, setIsMobile] = useState(false);
+  const [deviceType, setDeviceType] = useState('desktop');
   const [currentIndex, setCurrentIndex] = useState(0);
   const totalSlides = 5; 
 
   useEffect(() => {
     const handleResize = () => {
-      setIsMobile(window.innerWidth <= 430); // 430px 이하일 때 모바일로 간주
+      if (window.innerWidth <= 430) {
+        setDeviceType('mobile');
+      } else if (window.innerWidth <= 895) {
+        setDeviceType('tablet');
+      } else {
+        setDeviceType('desktop');
+      }
     };
 
-    handleResize(); // 컴포넌트 마운트 시 한번 실행
-    window.addEventListener("resize", handleResize); // 창 크기 변경 시 이벤트 리스너 추가
+    handleResize();
+    window.addEventListener("resize", handleResize);
 
     return () => {
-      window.removeEventListener("resize", handleResize); // 컴포넌트 언마운트 시 이벤트 리스너 제거
+      window.removeEventListener("resize", handleResize);
     };
   }, []);
 
@@ -116,8 +122,14 @@ export default function PaymentCompletion() {
           <h3 className="text-left ml-10 max-sm:ml-0 text-sm md:text-base font-medium mb-4">
             이런 상품 어떠신가요?
           </h3>
-          {isMobile ? (
+          {deviceType === 'mobile' ? (
             <div className="grid grid-cols-2 gap-4">
+              {cardData.map((card, i) => (
+                <Card key={i} {...card} />
+              ))}
+            </div>
+          ) : deviceType === 'tablet' ? (
+            <div className="grid grid-cols-3 gap-4">
               {cardData.map((card, i) => (
                 <Card key={i} {...card} />
               ))}
