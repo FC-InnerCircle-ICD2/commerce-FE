@@ -1,7 +1,7 @@
-'use client'
+'use client';
 
-import { useState } from "react";
-import { Card } from "@/components/common";
+import { useState } from 'react';
+import ProductDegtailCards from '../_components/detail/ProductDetailCards';
 
 interface ProductDetailClientProps {
   product: {
@@ -38,30 +38,26 @@ interface ProductDetailClientProps {
       }>;
     }>;
   };
-  cardData: Array<{ imgUrl: string; title: string; price: number; review: number }>;
 }
 
-const ProductDetailClient: React.FC<ProductDetailClientProps> = ({ product, cardData }) => {
-  const [selectedTab, setSelectedTab] = useState("상세정보");
+const ProductDetailClient: React.FC<ProductDetailClientProps> = ({ product }) => {
+  const [selectedTab, setSelectedTab] = useState('상세정보');
 
   // 대표 이미지 URL 찾기
-  const representativeImageUrl = product.options
-    .flatMap(option => option.optionDetails)
-    .flatMap(detail => detail.images)
-    .find(image => image.representative)?.url || '/placeholder-image.jpg';
+  const representativeImageUrl =
+    product.options
+      .flatMap((option) => option.optionDetails)
+      .flatMap((detail) => detail.images)
+      .find((image) => image.representative)?.url || '/placeholder-image.jpg';
 
   return (
     <div className="container mx-auto flex px-4 py-8 flex-col gap-">
       <div className="container mx-auto flex flex-col lg:flex-row gap-8">
         {/* 상품 이미지 */}
         <div className="w-full lg:w-1/2 flex-shrink-0">
-          <img 
-            src={representativeImageUrl} 
-            alt={product.name} 
-            className="w-full h-96 lg:h-[500px] object-cover" 
-          />
+          <img src={representativeImageUrl} alt={product.name} className="w-full h-96 lg:h-[500px] object-cover" />
         </div>
-        
+
         <div className="w-full flex flex-col items-center lg:w-1/2 ">
           {/* 상품 정보 */}
           <div className="w-full flex-grow bg-[#F8FAFC] border border-[#CBD5E1] rounded-lg py-[40px] px-[30px]">
@@ -74,7 +70,7 @@ const ProductDetailClient: React.FC<ProductDetailClientProps> = ({ product, card
             </div>
             <p className="text-2xl font-bold mt-4">{product.price.toLocaleString()}원</p>
 
-            <div className="border-t my-[30px] border-[#646464]"/>
+            <div className="border-t my-[30px] border-[#646464]" />
 
             {/* 옵션 선택 */}
             {product.options.map((option) => (
@@ -89,8 +85,8 @@ const ProductDetailClient: React.FC<ProductDetailClientProps> = ({ product, card
                 </div>
               </div>
             ))}
-            
-            <div className="border-t my-[30px] border-[#646464]"/>
+
+            <div className="border-t my-[30px] border-[#646464]" />
 
             {/* 선택된 옵션 */}
             <div className="border rounded-lg p-4 bg-[#FFFFFF]">
@@ -108,8 +104,8 @@ const ProductDetailClient: React.FC<ProductDetailClientProps> = ({ product, card
               </div>
             </div>
 
-            <div className="border-t my-[30px] border-[#646464]"/>
-            
+            <div className="border-t my-[30px] border-[#646464]" />
+
             {/* 총 가격 */}
             <div className="flex justify-between">
               <span>총 상품 금액</span>
@@ -122,13 +118,11 @@ const ProductDetailClient: React.FC<ProductDetailClientProps> = ({ product, card
           </div>
 
           {/* 구매 버튼 */}
-          <button className="mt-6 px-6 py-3 bg-[#CBD5E1] text-[#082F49] font-bold rounded-lg w-full">
-            구매하기
-          </button>
+          <button className="mt-6 px-6 py-3 bg-[#CBD5E1] text-[#082F49] font-bold rounded-lg w-full">구매하기</button>
         </div>
       </div>
 
-      <div className="border-t border-[#D9D9D9] mt-[40px] mb-[50px]"/>
+      <div className="border-t border-[#D9D9D9] mt-[40px] mb-[50px]" />
 
       {/* 상세정보, 리뷰, QnA */}
       <div className="flex justify-center text-lg font-semibold w-full border border-[#D9D9D9] rounded-lg overflow-hidden">
@@ -144,18 +138,8 @@ const ProductDetailClient: React.FC<ProductDetailClientProps> = ({ product, card
         ))}
       </div>
 
-      <div className="border-t border-[#D9D9D9] mt-8 mb-8"/>
-
-      <div className="w-full relative">
-        <h3 className="text-left ml-10 max-sm:ml-0 text-sm md:text-base font-medium mb-4">
-          이런 상품 어때요?
-        </h3>
-          <div className="flex">
-            {cardData.map((card, i) => (
-              <Card key={i} {...card} />
-            ))}
-          </div>
-        </div>
+      <div className="border-t border-[#D9D9D9] mt-8 mb-8" />
+      <ProductDegtailCards />
     </div>
   );
 };

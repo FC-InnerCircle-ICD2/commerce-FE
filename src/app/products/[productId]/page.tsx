@@ -47,13 +47,6 @@ interface Product {
   options: ProductOption[];
 }
 
-interface CardData {
-  imgUrl: string;
-  title: string;
-  price: number;
-  review: number;
-}
-
 async function getProduct(productId: string): Promise<Product> {
   const response = await fetch(`${MOCK_URL}/v1/products/${productId}`);
   if (!response.ok) {
@@ -62,41 +55,13 @@ async function getProduct(productId: string): Promise<Product> {
   return response.json();
 }
 
-// 카드 데이터 (실제로는 API에서 가져와야 함)
-const cardData: CardData[] = [
-  {
-    imgUrl: 'https://housing.seoul.go.kr/design/theme/housing/images/sub/rnw_corner_bg03.png',
-    title: 'test',
-    price: 5,
-    review: 5,
-  },
-  {
-    imgUrl: 'https://housing.seoul.go.kr/design/theme/housing/images/sub/rnw_corner_bg03.png',
-    title: 'test',
-    price: 5,
-    review: 5,
-  },
-  {
-    imgUrl: 'https://housing.seoul.go.kr/design/theme/housing/images/sub/rnw_corner_bg03.png',
-    title: 'test',
-    price: 5,
-    review: 5,
-  },
-  {
-    imgUrl: 'https://housing.seoul.go.kr/design/theme/housing/images/sub/rnw_corner_bg03.png',
-    title: 'test',
-    price: 5,
-    review: 5,
-  },
-];
-
 export default async function ProductDetail({ params }: { params: { productId: string } }) {
   const product = await getProduct(params.productId);
 
   return (
     <>
       <Header />
-      <ProductDetailClient product={product} cardData={cardData} />
+      <ProductDetailClient product={product} />
     </>
   );
 }
