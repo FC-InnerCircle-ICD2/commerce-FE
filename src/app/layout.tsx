@@ -4,6 +4,7 @@ import './globals.css';
 import { init } from '@/mock/msw';
 import { MswComponent } from '@/mock/msw.component';
 import { ReactQueryProvider } from '@/providers/ReactQueryProvider';
+import MobileFooter from '@/components/layout/footer/MobileFooter';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -34,6 +35,7 @@ export default function RootLayout({
       <MswComponent />
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <ReactQueryProvider>{children}</ReactQueryProvider>
+        <MobileFooter />
       </body>
     </html>
   );

@@ -6,6 +6,7 @@ import SearchOverview from './searchOverview/SearchOverview';
 import SearchForm from './SearchForm';
 import { useCategory } from '@/hooks/queries/useCategory';
 import { MagnifyingGlassIcon } from '@heroicons/react/24/outline';
+import LoadingSpinner from './LoadingSpinner';
 
 export default function CategorySearch() {
   const [isFocus, setIsFocus] = useState<boolean>(false);
@@ -31,7 +32,9 @@ export default function CategorySearch() {
       className="grow max-w-[550] text-sm h-[50] py-1 gap-[10] bg-headerMain rounded-lg hidden items-center tablet:flex tablet:relative"
     >
       {categoryLoading ? (
-        <div className="w-[120px] flex items-center justify-center">로딩</div>
+        <div className="w-[120px]">
+          <LoadingSpinner size={30} />
+        </div>
       ) : (
         <Selectbox width="120" currentItem={currentItem} items={categoryOptions} handleChangeSelect={setCurrentItem} />
       )}
