@@ -1,5 +1,6 @@
-import { MOCK_URL } from "@/constants/constant";
-import ProductDetailClient from "./ProductDetailClient";
+import { MOCK_URL } from '@/constants/constant';
+import ProductDetailClient from './ProductDetailClient';
+import { Header } from '@/components/layout';
 
 interface ProductImage {
   id: number;
@@ -63,14 +64,39 @@ async function getProduct(productId: string): Promise<Product> {
 
 // 카드 데이터 (실제로는 API에서 가져와야 함)
 const cardData: CardData[] = [
-  { imgUrl: 'https://housing.seoul.go.kr/design/theme/housing/images/sub/rnw_corner_bg03.png', title: 'test', price: 5, review: 5 },
-  { imgUrl: 'https://housing.seoul.go.kr/design/theme/housing/images/sub/rnw_corner_bg03.png', title: 'test', price: 5, review: 5 },
-  { imgUrl: 'https://housing.seoul.go.kr/design/theme/housing/images/sub/rnw_corner_bg03.png', title: 'test', price: 5, review: 5 },
-  { imgUrl: 'https://housing.seoul.go.kr/design/theme/housing/images/sub/rnw_corner_bg03.png', title: 'test', price: 5, review: 5 },
+  {
+    imgUrl: 'https://housing.seoul.go.kr/design/theme/housing/images/sub/rnw_corner_bg03.png',
+    title: 'test',
+    price: 5,
+    review: 5,
+  },
+  {
+    imgUrl: 'https://housing.seoul.go.kr/design/theme/housing/images/sub/rnw_corner_bg03.png',
+    title: 'test',
+    price: 5,
+    review: 5,
+  },
+  {
+    imgUrl: 'https://housing.seoul.go.kr/design/theme/housing/images/sub/rnw_corner_bg03.png',
+    title: 'test',
+    price: 5,
+    review: 5,
+  },
+  {
+    imgUrl: 'https://housing.seoul.go.kr/design/theme/housing/images/sub/rnw_corner_bg03.png',
+    title: 'test',
+    price: 5,
+    review: 5,
+  },
 ];
 
 export default async function ProductDetail({ params }: { params: { productId: string } }) {
   const product = await getProduct(params.productId);
 
-  return <ProductDetailClient product={product} cardData={cardData} />;
+  return (
+    <>
+      <Header />
+      <ProductDetailClient product={product} cardData={cardData} />
+    </>
+  );
 }
