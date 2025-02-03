@@ -1,7 +1,7 @@
 import { MOCK_URL } from '@/constants/constant';
-import ProductDetailClient from './ProductDetailClient';
 import { Header } from '@/components/layout';
 import { IProduct } from '@/api/product';
+import ProductDetailClient from '../_components/detail/ProductDetailClient';
 
 async function getProduct(productId: string): Promise<IProduct> {
   const response = await fetch(`${MOCK_URL}/v1/products/${productId}`);
@@ -11,8 +11,9 @@ async function getProduct(productId: string): Promise<IProduct> {
   return response.json();
 }
 
-export default async function ProductDetail({ params }: { params: { productId: string } }) {
-  const product = await getProduct(params.productId);
+export default async function ProductDetail({ params }: { params: Promise<{ productId: string }> }) {
+  const { productId } = await params;
+  const product = await getProduct(productId);
 
   return (
     <>

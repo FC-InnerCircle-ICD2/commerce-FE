@@ -1,11 +1,13 @@
 'use client';
 
 import { useState } from 'react';
-import ProductDegtailCards from '../_components/detail/ProductDetailCards';
-import { IProduct } from '@/api/product';
+import { IProduct, IProductOptionDetail } from '@/api/product';
+import ProductDegtailCards from './ProductDetailCards';
+import ProductDetailSelectOptions from './ProductDetailSelectOptions';
 
 const ProductDetailClient: React.FC<{ product: IProduct }> = ({ product }) => {
   const [selectedTab, setSelectedTab] = useState('상세정보');
+  const [selectOptionDetails, setSelectOptionDetails] = useState<IProductOptionDetail[]>([]);
 
   // 대표 이미지 URL 찾기
   const representativeImageUrl = product.options.flatMap((option) => option.optionDetails).find((detail) => detail.url);
@@ -42,7 +44,11 @@ const ProductDetailClient: React.FC<{ product: IProduct }> = ({ product }) => {
                 <h3 className="text-md font-semibold">{option.name}</h3>
                 <div className="flex space-x-2 mt-2">
                   {option.optionDetails.map((detail) => (
-                    <button key={detail.value} className="px-4 py-2 border rounded-lg border-gray-400 text-sm">
+                    <button
+                      key={detail.value}
+                      className="px-4 py-2 border rounded-lg border-gray-400 text-sm hover:bg-slate-300"
+                      onClick={() => setSelectOptionDetails([...selectOptionDetails, detail])}
+                    >
                       {detail.value}
                     </button>
                   ))}
@@ -51,21 +57,11 @@ const ProductDetailClient: React.FC<{ product: IProduct }> = ({ product }) => {
             ))}
 
             <div className="border-t my-[30px] border-[#646464]" />
-
             {/* 선택된 옵션 */}
-            <div className="border rounded-lg p-4 bg-[#FFFFFF]">
-              <div className="flex justify-between items-center mb-2">
-                <span className="text-md font-semibold">{product.options[0]?.optionDetails[0]?.value}</span>
-                <button className="text-gray-500">✕</button>
-              </div>
-              <div className="flex justify-between items-center">
-                <div className="flex items-center rounded-lg overflow-hidden">
-                  <button className="px-4 py-2 border rounded-2xl text-[#CCCCCC]">-</button>
-                  <span className="px-6 py-2 text-lg">1</span>
-                  <button className="px-4 py-2 border rounded-2xl text-[#CCCCCC]">+</button>
-                </div>
-                <span className="text-lg font-semibold">{product.price.toLocaleString()} 원</span>
-              </div>
+            <div className="flex flex-col gap-4">
+              {selectOptionDetails.map((options, i) => {
+                return <ProductDetailSelectOptions key={i} product={product} seletedOptionDetail={options} />;
+              })}
             </div>
 
             <div className="border-t my-[30px] border-[#646464]" />

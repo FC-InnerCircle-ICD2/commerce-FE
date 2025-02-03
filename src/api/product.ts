@@ -1,23 +1,25 @@
 import { buildUrl } from '@/utils/buildUrl';
 import { MOCK_URL } from '@/constants/constant';
 
-interface IProductOptions {
+export interface IProductOptionDetail {
+  /** 옵션 값 */
+  value: string;
+  /** 재고 수량 */
+  quantity: number;
+  /** 추가 금액 */
+  additionalPrice: number;
+  /** 이미지 순서 */
+  fileOrder: number;
+  /** 이미지 url */
+  url: string;
+}
+
+export interface IProductOptions {
   /** 옵션 ID */
   id: number;
   /** 옵션 이름 */
   name: string;
-  optionDetails: Array<{
-    /** 옵션 값 */
-    value: string;
-    /** 재고 수량 */
-    quantity: number;
-    /** 추가 금액 */
-    additionalPrice: number;
-    /** 이미지 순서 */
-    fileOrder: number;
-    /** 이미지 url */
-    url: string;
-  }>;
+  optionDetails: IProductOptionDetail[];
 }
 
 export interface IProduct {
