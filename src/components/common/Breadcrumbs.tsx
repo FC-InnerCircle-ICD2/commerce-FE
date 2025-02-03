@@ -11,6 +11,7 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { SORT_OPTIONS } from '@/api/product';
+import { useRouter, useSearchParams } from 'next/navigation';
 
 import SortDropdown from './SortDropdown';
 
@@ -58,9 +59,16 @@ function BreadcrumbDropdown({ label, items, onSelect }: BreadcrumbDropdownProps)
 }
 
 export default function Breadcrumbs() {
+  const router = useRouter();
+  const searchParams = useSearchParams();
   const [selectedCategory, setSelectedCategory] = useState<string>('남성의류');
   const [selectedOuter, setSelectedOuter] = useState<string>('아우터');
-  const [selectedSort, setSelectedSort] = useState<SORT_OPTIONS>('PRICE_ASC');
+  const [selectedSort, setSelectedSort] = useState<SORT_OPTIONS>(() => {
+    const sortFromUrl = searchParams.get('sortOption') as SORT_OPTIONS;
+    return sortFromUrl && Object.values(SORT_OPTIONS_CONFIG).some((option) => option.value === sortFromUrl)
+      ? sortFromUrl
+      : 'PRICE_ASC';
+  });
 
   const getCurrentSortLabel = (value: SORT_OPTIONS): string => {
     return SORT_OPTIONS_CONFIG.find((option) => option.value === value)?.label ?? '';
@@ -95,11 +103,11 @@ export default function Breadcrumbs() {
         onSelect={(label: string) => {
           const sortValue = getSortValueByLabel(label);
           setSelectedSort(sortValue);
-          
+
           // URL 업데이트
-          const searchParams = new URLSearchParams(window.location.search);
-          searchParams.set('sortOption', sortValue);
-          window.location.search = searchParams.toString();
+          const newSearchParams = new URLSearchParams(searchParams.toString());
+          newSearchParams.set('sortOption', sortValue);
+          router.push(`?${newSearchParams.toString()}`);
         }}
       />
     </div>
