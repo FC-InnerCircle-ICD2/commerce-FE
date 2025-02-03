@@ -3,14 +3,17 @@ import { IProduct, IProductOptionDetail } from '@/api/product';
 type Props = {
   product: IProduct;
   seletedOptionDetail: IProductOptionDetail;
+  handleRemoveOption: (option: IProductOptionDetail) => void;
 };
 
-export default function ProductDetailSelectOptions({ product, seletedOptionDetail }: Props) {
+export default function ProductDetailSelectOptions({ product, seletedOptionDetail, handleRemoveOption }: Props) {
   return (
     <div className="border rounded-lg p-4 bg-[#FFFFFF]">
       <div className="flex justify-between items-center mb-2">
         <span className="text-md font-semibold">{seletedOptionDetail.value}</span>
-        <button className="text-gray-500">✕</button>
+        <button className="text-gray-500" onClick={() => handleRemoveOption(seletedOptionDetail)}>
+          ✕
+        </button>
       </div>
       <div className="flex justify-between items-center">
         <div className="flex items-center rounded-lg overflow-hidden">

@@ -12,6 +12,19 @@ const ProductDetailClient: React.FC<{ product: IProduct }> = ({ product }) => {
   // 대표 이미지 URL 찾기
   const representativeImageUrl = product.options.flatMap((option) => option.optionDetails).find((detail) => detail.url);
 
+  function handleAddOptionsDetail(option: IProductOptionDetail) {
+    const find = selectOptionDetails.find((item) => item.value === option.value);
+    if (find) {
+      // TODO: 갯수 추가하는 코드 필요
+    } else {
+      setSelectOptionDetails([...selectOptionDetails, option]);
+    }
+  }
+
+  function handleRemoveOption(option: IProductOptionDetail) {
+    setSelectOptionDetails([...selectOptionDetails.filter((item) => item.value !== option.value)]);
+  }
+
   return (
     <div className="container mx-auto flex px-4 py-8 flex-col gap-">
       <div className="container mx-auto flex flex-col lg:flex-row gap-8">
@@ -47,7 +60,7 @@ const ProductDetailClient: React.FC<{ product: IProduct }> = ({ product }) => {
                     <button
                       key={detail.value}
                       className="px-4 py-2 border rounded-lg border-gray-400 text-sm hover:bg-slate-300"
-                      onClick={() => setSelectOptionDetails([...selectOptionDetails, detail])}
+                      onClick={() => handleAddOptionsDetail(detail)}
                     >
                       {detail.value}
                     </button>
@@ -60,7 +73,14 @@ const ProductDetailClient: React.FC<{ product: IProduct }> = ({ product }) => {
             {/* 선택된 옵션 */}
             <div className="flex flex-col gap-4">
               {selectOptionDetails.map((options, i) => {
-                return <ProductDetailSelectOptions key={i} product={product} seletedOptionDetail={options} />;
+                return (
+                  <ProductDetailSelectOptions
+                    key={i}
+                    product={product}
+                    seletedOptionDetail={options}
+                    handleRemoveOption={handleRemoveOption}
+                  />
+                );
               })}
             </div>
 
