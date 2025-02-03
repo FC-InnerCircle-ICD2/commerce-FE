@@ -2,60 +2,24 @@
 
 import { useState } from 'react';
 import ProductDegtailCards from '../_components/detail/ProductDetailCards';
+import { IProduct } from '@/api/product';
 
-interface ProductDetailClientProps {
-  product: {
-    id: number;
-    name: string;
-    description: string;
-    price: number;
-    category: {
-      id: number;
-      name: string;
-      parentCategoryId: number | null;
-      subCategories: Array<any>;
-    };
-    provider: {
-      id: number;
-      name: string;
-      description: string;
-    };
-    options: Array<{
-      id: number;
-      name: string;
-      optionDetails: Array<{
-        id: number;
-        value: string;
-        quantity: number;
-        order: number;
-        additionalPrice: number;
-        images: Array<{
-          id: number;
-          fileOrder: number;
-          url: string;
-          representative: boolean;
-        }>;
-      }>;
-    }>;
-  };
-}
-
-const ProductDetailClient: React.FC<ProductDetailClientProps> = ({ product }) => {
+const ProductDetailClient: React.FC<{ product: IProduct }> = ({ product }) => {
   const [selectedTab, setSelectedTab] = useState('상세정보');
 
   // 대표 이미지 URL 찾기
-  const representativeImageUrl =
-    product.options
-      .flatMap((option) => option.optionDetails)
-      .flatMap((detail) => detail.images)
-      .find((image) => image.representative)?.url || '/placeholder-image.jpg';
+  const representativeImageUrl = product.options.flatMap((option) => option.optionDetails).find((detail) => detail.url);
 
   return (
     <div className="container mx-auto flex px-4 py-8 flex-col gap-">
       <div className="container mx-auto flex flex-col lg:flex-row gap-8">
         {/* 상품 이미지 */}
         <div className="w-full lg:w-1/2 flex-shrink-0">
-          <img src={representativeImageUrl} alt={product.name} className="w-full h-96 lg:h-[500px] object-cover" />
+          <img
+            src={representativeImageUrl?.url ?? '/placeholder-image.jpg'}
+            alt={product.name}
+            className="w-full h-96 lg:h-[500px] object-cover"
+          />
         </div>
 
         <div className="w-full flex flex-col items-center lg:w-1/2 ">
@@ -63,7 +27,7 @@ const ProductDetailClient: React.FC<ProductDetailClientProps> = ({ product }) =>
           <div className="w-full flex-grow bg-[#F8FAFC] border border-[#CBD5E1] rounded-lg py-[40px] px-[30px]">
             <h1 className="text-2xl font-bold">{product.name}</h1>
             <div className="text-gray-600 text-sm flex items-center gap-2 mt-2">
-              <span className="text-yellow-500">★ 4.9</span>
+              <span className="text-yellow-500">★ {product.rating}</span>
               <span>|</span>
               <span>490개의 리뷰</span>
               <span>{`>`}</span>
@@ -78,7 +42,7 @@ const ProductDetailClient: React.FC<ProductDetailClientProps> = ({ product }) =>
                 <h3 className="text-md font-semibold">{option.name}</h3>
                 <div className="flex space-x-2 mt-2">
                   {option.optionDetails.map((detail) => (
-                    <button key={detail.id} className="px-4 py-2 border rounded-lg border-gray-400 text-sm">
+                    <button key={detail.value} className="px-4 py-2 border rounded-lg border-gray-400 text-sm">
                       {detail.value}
                     </button>
                   ))}
