@@ -47,7 +47,14 @@ export default function SearchOverview({ parentRef, recommend, handleClose }: Pr
           <div className="w-full text-center text-[#404040] font-bold">최근 검색 결과가 없습니다.</div>
         )}
         {search.map((item: string, i: number) => {
-          return <SearchOverviewList key={i} search={item} handleRemoveSearch={handleRemoveSearch} />;
+          return (
+            <SearchOverviewList
+              key={i}
+              search={item}
+              handleRemoveSearch={handleRemoveSearch}
+              handleClose={handleClose}
+            />
+          );
         })}
       </ul>
       <label className="text-sm text-[#4F4F4F]">추천 검색어</label>
