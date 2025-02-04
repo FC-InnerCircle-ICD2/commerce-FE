@@ -21,8 +21,17 @@ const ProductSkeletons = () => {
   );
 };
 
-const ProductContent = async ({ searchParams }: { searchParams: { [key: string]: string | undefined } }) => {
-  const { keyword, priceMin, priceMax, rating, pageNumber, pageSize } = searchParams;
+type Params = Promise<{
+  keyword: string;
+  priceMin: string;
+  priceMax: string;
+  rating: string;
+  pageNumber: string;
+  pageSize: string;
+}>;
+
+const ProductContent = async ({ searchParams }: { searchParams: Params }) => {
+  const { keyword, priceMin, priceMax, rating, pageNumber, pageSize } = await searchParams;
 
   const products = await getProducts({
     keyword,
@@ -56,9 +65,9 @@ const ProductContent = async ({ searchParams }: { searchParams: { [key: string]:
   );
 };
 
-export default async function ProductsPage({ searchParams }: { searchParams: { [key: string]: string | undefined } }) {
+export default async function ProductsPage({ searchParams }: { searchParams: Params }) {
   try {
-    const { keyword, priceMin, priceMax, rating, pageNumber, pageSize } = searchParams;
+    const { keyword, priceMin, priceMax, rating, pageNumber, pageSize } = await searchParams;
 
     const products = await getProducts({
       keyword,
