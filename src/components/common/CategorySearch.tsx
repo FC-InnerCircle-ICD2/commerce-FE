@@ -26,6 +26,12 @@ export default function CategorySearch() {
     }
   }, [categoryOptions]);
 
+  function handleCloseSearchView() {
+    if (isFocus) {
+      setIsFocus(false);
+    }
+  }
+
   return (
     <div
       ref={parentRef}
@@ -42,6 +48,7 @@ export default function CategorySearch() {
         <SearchForm
           category={currentItem}
           classname="grow border-l-2 border-[#CBD5E1] pl-[15] text-[#3D3D3D] bg-transparent outline-none"
+          handleCloseSearchView={handleCloseSearchView}
         />
         <MagnifyingGlassIcon className="w-[25px] h-[25px] text-[#075985]" />
         {isFocus && (
