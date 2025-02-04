@@ -1,17 +1,16 @@
 'use client';
 
 import useLocalStorage from '@/hooks/common/useLocalStorage';
-import SearchOverviewButton from './SearchOverviewButton';
 import SearchOverviewList from './SearchOverviewList';
 import { RefObject, useEffect } from 'react';
 
 type Props = {
   parentRef: RefObject<HTMLDivElement | null>;
-  recommend: string[];
+  recommend?: string[];
   handleClose: () => void;
 };
 
-export default function SearchOverview({ parentRef, recommend, handleClose }: Props) {
+export default function SearchOverview({ parentRef, handleClose }: Props) {
   const [search, setSearch] = useLocalStorage<string[]>('search', []);
 
   const handleClickOutside = (event: MouseEvent) => {
@@ -57,12 +56,13 @@ export default function SearchOverview({ parentRef, recommend, handleClose }: Pr
           );
         })}
       </ul>
-      <label className="text-sm text-[#4F4F4F]">추천 검색어</label>
+      {/* TODO: 추후 MVP 후 추천 검색어 작업 필요 */}
+      {/* <label className="text-sm text-[#4F4F4F]">추천 검색어</label>
       <div className="w-full flex flex-wrap">
         {recommend.map((item, i) => {
           return <SearchOverviewButton key={i} title={item} />;
         })}
-      </div>
+      </div> */}
       <div className="w-full border-t border-[#EFEFEF] flex justify-end pt-5">
         <span className="text-sm font-bold text-[#949494] cursor-pointer" onClick={handleClose}>
           닫기
