@@ -1,13 +1,17 @@
 'use client';
 
 import { useState } from 'react';
-import { IProduct, IProductOptionDetail } from '@/api/product';
+import type { IProduct, IProductOptionDetail } from '@/api/product';
 import ProductDegtailCards from './ProductDetailCards';
 import ProductDetailSelectOptions from './ProductDetailSelectOptions';
 
+export interface ISelectOptionDetail extends IProductOptionDetail {
+  count: number;
+}
+
 const ProductDetailClient: React.FC<{ product: IProduct }> = ({ product }) => {
   const [selectedTab, setSelectedTab] = useState('상세정보');
-  const [selectOptionDetails, setSelectOptionDetails] = useState<IProductOptionDetail[]>([]);
+  const [selectOptionDetails, setSelectOptionDetails] = useState<ISelectOptionDetail[]>([]);
 
   // 대표 이미지 URL 찾기
   const representativeImageUrl = product.options.flatMap((option) => option.optionDetails).find((detail) => detail.url);
@@ -15,14 +19,30 @@ const ProductDetailClient: React.FC<{ product: IProduct }> = ({ product }) => {
   function handleAddOptionsDetail(option: IProductOptionDetail) {
     const find = selectOptionDetails.find((item) => item.value === option.value);
     if (find) {
+      setSelectOptionDetails([
+        ...selectOptionDetails.map((item) => {
+          if (item.value === option.value) return { ...item, count: item.count + 1 };
+          return item;
+        }),
+      ]);
       // TODO: 갯수 추가하는 코드 필요
     } else {
-      setSelectOptionDetails([...selectOptionDetails, option]);
+      setSelectOptionDetails([...selectOptionDetails, { count: 1, ...option }]);
     }
   }
 
-  function handleRemoveOption(option: IProductOptionDetail) {
+  function handleRemoveOption(option: ISelectOptionDetail) {
     setSelectOptionDetails([...selectOptionDetails.filter((item) => item.value !== option.value)]);
+  }
+
+  function handleOptionCount(option: ISelectOptionDetail, flag: boolean) {
+    setSelectOptionDetails([
+      ...selectOptionDetails.map((item) => {
+        if (item.value === option.value)
+          return { ...item, count: flag ? item.count + 1 : item.count - 1 < 1 ? 1 : item.count - 1 };
+        return item;
+      }),
+    ]);
   }
 
   return (
@@ -83,6 +103,7 @@ const ProductDetailClient: React.FC<{ product: IProduct }> = ({ product }) => {
                     key={i}
                     product={product}
                     seletedOptionDetail={options}
+                    handleOptionCount={handleOptionCount}
                     handleRemoveOption={handleRemoveOption}
                   />
                 );
@@ -95,9 +116,14 @@ const ProductDetailClient: React.FC<{ product: IProduct }> = ({ product }) => {
             <div className="flex justify-between">
               <span>총 상품 금액</span>
               <div className="flex gap-[15px] items-center">
-                <span>총 수량 1개</span>
+                <span>{selectOptionDetails.reduce((sum, option) => sum + option.count, 0).toLocaleString()}</span>
                 <span>|</span>
-                <span className="text-xl font-bold">{product.price.toLocaleString()}원</span>
+                <span className="text-xl font-bold">
+                  {(
+                    product.price * selectOptionDetails.reduce((sum, option) => sum + option.count, 0)
+                  ).toLocaleString()}
+                  원
+                </span>
               </div>
             </div>
           </div>
