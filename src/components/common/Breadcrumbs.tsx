@@ -49,19 +49,23 @@ export default function Breadcrumbs() {
 
   return (
     <div className="flex items-center justify-between lg:px-7 lg:py-4 px-3 py-2 bg-slate-50 lg:border border-slate-300 lg:rounded-xl">
-      <div className="flex items-center">
+      <div className="flex items-center min-w-0 flex-1">
         {searchQuery && (
-          <div className="flex items-center gap-2 px-3 py-1 bg-white rounded-lg border border-slate-200 shadow-sm">
-            <span className="text-slate-500 text-sm font-medium">검색어:</span>
-            <span className="text-slate-700 text-sm">{searchQuery}</span>
+          <div className="flex items-center gap-2 px-3 py-1 bg-white rounded-lg border border-slate-200 shadow-sm overflow-hidden min-w-0">
+            <span className="text-slate-500 text-sm font-medium shrink-0">검색어:</span>
+            <span className="text-slate-700 text-sm overflow-hidden whitespace-nowrap text-ellipsis">
+              {searchQuery}
+            </span>
           </div>
         )}
       </div>
-      <SortDropdown
-        label={getCurrentSortLabel(selectedSort)}
-        items={SORT_OPTIONS_CONFIG.map((option) => option.label)}
-        onSelect={handleSortChange}
-      />
+      <div className="shrink-0">
+        <SortDropdown
+          label={getCurrentSortLabel(selectedSort)}
+          items={SORT_OPTIONS_CONFIG.map((option) => option.label)}
+          onSelect={handleSortChange}
+        />
+      </div>
     </div>
   );
 }
