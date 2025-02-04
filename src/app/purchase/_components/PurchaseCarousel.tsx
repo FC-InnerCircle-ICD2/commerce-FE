@@ -4,19 +4,24 @@ import { Carousel } from 'ji-react-carousel';
 import CarouselLeft from '@/assets/purchase/carouselLeft.png';
 import CarouselRight from '@/assets/purchase/carouselRight.png';
 import AccountBlock from './AccountBlock';
-import { Card } from '@/components/common';
 import CardBlock from './CardBlock';
 
 interface Account {
-  bank: string;
-  accountNumber: string;
+  cardNumber: string;
+  expirationDate: string;
+  cvc: string;
+  cardOwnerName: string;
+  bankName?: string;
   accountImg?: string;
 }
 
 interface Card {
-  cardName: string;
   cardNumber: string;
+  expirationDate: string;
+  cvc: string;
+  cardOwnerName: string;
   cardImg: string;
+  bankName?: string;
 }
 
 interface Props {
@@ -47,13 +52,24 @@ export default function PurchaseCarousel(props: Props) {
         ? accounts.map((account, index) => (
             <AccountBlock
               key={index}
-              bank={account.bank}
-              accountNumber={account.accountNumber}
+              cardNumber={account.cardNumber}
+              expirationDate={account.expirationDate}
+              cvc={account.cvc}
+              cardOwnerName={account.cardOwnerName}
               accountImg={account.accountImg}
+              bankName={account.bankName}
             />
           ))
         : cards.map((card, index) => (
-            <CardBlock key={index} cardName={card.cardName} cardNumber={card.cardNumber} cardImg={card.cardImg} />
+            <CardBlock
+              key={index}
+              cardNumber={card.cardNumber}
+              expirationDate={card.expirationDate}
+              cvc={card.cvc}
+              cardOwnerName={card.cardOwnerName}
+              cardImg={card.cardImg}
+              bankName={card.bankName}
+            />
           ))}
     </Carousel>
   );
