@@ -311,59 +311,48 @@ export const handlers = [
 
   http.get(`${MOCK_URL}/v1/products/:productId`, ({ params }) => {
     const { productId } = params;
+    console.log(productId);
 
-    // 여기서는 예시로 productId가 '100'일 때의 응답이 작성됨
-    if (productId === '100') {
-      return HttpResponse.json({
-        productId: 7,
-        name: '여성티셔츠',
-        description: '겨울 티셔츠',
-        price: 3000,
-        category: {
-          productCategoryId: 8,
-          name: '여성 의류',
-          parentProductCategoryId: 2,
-          subProductCategories: [],
-        },
-        provider: {
-          providerId: 2,
-          name: 'FashionWorld',
-          description: '모든 사람을 위한 스타일리시한 의류',
-        },
-        options: [
-          {
-            id: 1,
-            name: '색상',
-            optionDetails: [
-              {
-                value: '검정',
-                quantity: 50,
-                additionalPrice: 0,
-                fileOrder: 1,
-                url: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/9.png',
-              },
-              {
-                value: '은색',
-                quantity: 30,
-                additionalPrice: 10000,
-                fileOrder: 2,
-                url: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/8.png',
-              },
-            ],
-          },
-        ],
-        rating: 4.8,
-      });
-    } else {
-      // productId가 '100'이 아닌 경우 404 에러 반환
-      return HttpResponse.json(
+    return HttpResponse.json({
+      productId: 7,
+      name: '여성티셔츠',
+      description: '겨울 티셔츠',
+      price: 3000,
+      category: {
+        productCategoryId: 8,
+        name: '여성 의류',
+        parentProductCategoryId: 2,
+        subProductCategories: [],
+      },
+      provider: {
+        providerId: 2,
+        name: 'FashionWorld',
+        description: '모든 사람을 위한 스타일리시한 의류',
+      },
+      options: [
         {
-          errorCode: 'PRODUCT-0006',
-          errorMessage: '해당 상품을 찾을 수 없습니다.',
+          id: 1,
+          name: '색상',
+          optionDetails: [
+            {
+              value: '검정',
+              quantity: 50,
+              additionalPrice: 0,
+              fileOrder: 1,
+              url: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/9.png',
+            },
+            {
+              value: '은색',
+              quantity: 30,
+              additionalPrice: 10000,
+              fileOrder: 2,
+              url: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/8.png',
+            },
+          ],
         },
-        { status: 404 },
-      );
-    }
+      ],
+      rating: 4.8,
+    });
   }),
 
   // 상품 목록 API
