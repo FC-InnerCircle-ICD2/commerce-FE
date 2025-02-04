@@ -67,6 +67,7 @@ export default function SearchInput({ category, classname, onSearch, handleClose
       <input
         type="text"
         value={inputValue}
+        maxLength={40}
         className="w-full bg-transparent outline-none"
         onChange={(e) => setInputValue(e.target.value)}
         placeholder="찾고 싶은 상품을 검색해보세요!"
