@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { useSearchParams } from 'next/navigation';
+import { useSearchParams, useRouter } from 'next/navigation';
 
 import { SORT_OPTIONS } from '@/api/product';
 
@@ -23,6 +23,7 @@ export default function Breadcrumbs() {
   const [selectedSort, setSelectedSort] = useState<SORT_OPTIONS>('PRICE_ASC');
   const [searchQuery, setSearchQuery] = useState<string>('');
   const searchParams = useSearchParams();
+  const router = useRouter();
 
   useEffect(() => {
     const query = searchParams.get('name');
@@ -43,7 +44,7 @@ export default function Breadcrumbs() {
 
     const params = new URLSearchParams(searchParams);
     params.set('sortOption', sortValue);
-    window.location.search = params.toString();
+    router.push(`?${params.toString()}`);
   };
 
   return (
