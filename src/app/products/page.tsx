@@ -79,6 +79,7 @@ const ProductContent = async ({
               {products.map((product) => (
                 <Card
                   key={product.productId}
+                  productId={product.productId}
                   imgUrl={product.options[0].optionDetails[0].url}
                   title={product.name}
                   price={product.price}
