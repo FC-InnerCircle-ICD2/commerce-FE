@@ -1,5 +1,5 @@
 import { BannerApis } from '@/constants/apiUrl';
-import { MOCK_URL } from '@/constants/constant';
+import { BASE_URL, MOCK_URL } from '@/constants/constant';
 
 export interface IBanner {
   id: number;
@@ -20,7 +20,7 @@ export interface IBanner {
 }
 
 export const getBanners = async (): Promise<IBanner[]> => {
-  const response = await fetch(`${MOCK_URL}${BannerApis.getBanner}`);
+  const response = await fetch(`${BASE_URL}${BannerApis.getBanner}`);
 
   if (!response.ok) {
     throw new Error(`Error fetching user: ${response.statusText}`);

@@ -1,5 +1,5 @@
 import { buildUrl } from '@/utils/buildUrl';
-import { MOCK_URL } from '@/constants/constant';
+import { MOCK_URL, BASE_URL } from '@/constants/constant';
 
 interface IProductOptions {
   /** 옵션 ID */
@@ -88,7 +88,7 @@ export type ProductsProps = {
 };
 
 export const getProducts = async (props: ProductsProps): Promise<IProduct[]> => {
-  const url = buildUrl(`${MOCK_URL}${PRODUCT_URL}`, props);
+  const url = buildUrl(`${BASE_URL}${PRODUCT_URL}`, props);
 
   const response = await fetch(url);
 
