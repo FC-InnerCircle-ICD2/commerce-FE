@@ -39,6 +39,7 @@ export const PriceFilter: React.FC<PriceFilterProps> = ({
       <div className="flex gap-2 items-center justify-between">
         <input
           type="number"
+          step="500"
           value={priceRange.min}
           className="w-2/5 p-2 border border-zinc-300 rounded text-sm"
           onChange={(e) => onInputChange('min', Number(e.target.value))}
@@ -46,6 +47,7 @@ export const PriceFilter: React.FC<PriceFilterProps> = ({
         <span className="text-neutral-500">~</span>
         <input
           type="number"
+          step="500"
           value={priceRange.max}
           className="w-2/5 p-2 border border-zinc-300 rounded text-sm"
           onChange={(e) => onInputChange('max', Number(e.target.value))}

@@ -21,8 +21,14 @@ export default function SearchInput({ category, classname, onSearch }: Props) {
     const nameParam = searchParams.get('name');
     if (nameParam) {
       setInputValue(nameParam);
+    } else {
+      setInputValue(''); // Clear input when name parameter is removed
     }
-  }, [searchParams]);
+  }, [searchParams]); // Update when URL parameters change
+
+  useEffect(() => {
+    setInputValue('');
+  }, [category?.value]);
 
   const handleSearch = () => {
     if (inputValue.trim() !== '') {
