@@ -8,6 +8,7 @@ import { getProducts } from '@/api/product';
 import { MobileFilter } from '@/app/products/_components/filter/MobileFilter';
 import { Header } from '@/components/layout';
 import { Suspense } from 'react';
+import CategoryHeader from '../category/_components/CategoryHeader';
 
 const ProductSkeletons = () => {
   return (
@@ -108,7 +109,13 @@ export default async function ProductsPage({
 }) {
   return (
     <>
-      <Header />
+      <div className="lg:hidden">
+        <CategoryHeader />
+      </div>
+
+      <div className="hidden md:block">
+        <Header />
+      </div>
       <div className="max-w-custom mx-auto lg:pt-8 pb-8">
         <div className="flex flex-col lg:flex-row lg:gap-5">
           <Suspense fallback={<ProductSkeletons />}>
