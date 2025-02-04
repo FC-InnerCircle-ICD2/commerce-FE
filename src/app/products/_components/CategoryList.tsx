@@ -14,6 +14,7 @@ function CategoryList() {
   const handleCategoryClick = (subCategoryId: number) => {
     const params = new URLSearchParams(searchParams);
     params.set('category', subCategoryId.toString());
+    params.delete('name'); // Remove search query when changing category
     router.push(`${pathname}?${params.toString()}`);
   };
 
