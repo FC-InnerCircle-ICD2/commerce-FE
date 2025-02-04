@@ -45,7 +45,7 @@ export default function CategoryHeader() {
         <div onClick={() => router.back()} className="shrink-0">
           <Image src="/assets/arrow.svg" width={24} height={24} alt="arrow" />
         </div>
-        <span className="font-bold">{getTitle()}</span>
+        <span className="font-bold overflow-hidden whitespace-nowrap text-ellipsis">{getTitle()}</span>
       </div>
     </header>
   );
