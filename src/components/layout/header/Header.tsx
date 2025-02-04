@@ -9,7 +9,7 @@ export default function Header() {
   return (
     <header className="w-full">
       <Navbar />
-      <div className="w-full py-4 px-3 justify-between flex items-center gap-2 tablet:py-10 tablet:px-[100] tablet:shadow-md">
+      <div className="w-full max-w-custom mx-auto py-4 px-3 justify-between flex items-center gap-2 tablet:py-10">
         <div className="flex grow items-center gap-2 tablet:gap-10">
           <Logo />
           <CategorySearch />
