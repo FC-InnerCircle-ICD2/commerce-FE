@@ -4,6 +4,7 @@ import ProductList from '@/components/home/ProductList';
 import ProductSkeletons from '@/components/home/ProductSkeleton';
 import { Header } from '@/components/layout';
 import { Suspense } from 'react';
+import Test from './Test';
 
 export default async function Home() {
   try {
@@ -11,6 +12,7 @@ export default async function Home() {
 
     return (
       <div className="flex flex-col h-screen overflow-x-hidden">
+        <Test />
         <Header />
         <div className="grow flex flex-col gap-[20]">
           <Carousel banners={banners} />
