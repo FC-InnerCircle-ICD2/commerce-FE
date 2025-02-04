@@ -6,6 +6,8 @@ import WideSelectBox from './_components/WideSelectBox';
 import OrderList from './_components/OrderList';
 import PaymentMethod from './_components/PaymentMethod';
 import PaymentDetail from './_components/PaymentDetail';
+import { Footer } from '@/components/layout';
+import PurchaseBanner from './_components/PurchaseBanner';
 
 export default async function Purchase() {
   return (
@@ -35,7 +37,7 @@ export default async function Purchase() {
           {/* 배송지 */}
           <TitleBoxContainer title="배송지" toggle={false}>
             <div className="flex justify-between items-center mb-1">
-              <p className="font-medium text-base lg:text-lg">김지훈(집)</p>
+              <p className="font-medium text-base lg:text-lg">홍길동(집)</p>
               <button className="border border-neutral-300 px-3.5 py-2.5 bg-white rounded-lg text-sm">변경</button>
             </div>
             <span className="font-medium text-sm lg:text-base text-neutral-500 mb-3">010-1234-5678</span>
@@ -60,7 +62,11 @@ export default async function Purchase() {
             </div>
 
             <div className="flex justify-between items-center mb-4">
-              <div className="bg-neutral-300 w-[80px] h-[80px] md:w-[100px] md:h-[100px] rounded-[10px]"></div>
+              <img
+                className="w-[80px] h-[80px] md:w-[100px] md:h-[100px] rounded-[10px]"
+                src="https://img.29cm.co.kr/next-product/2023/01/20/c26eef752da8444e876d51af65dfcb02_20230120135009.jpg?width=700"
+                alt="product image"
+              />
               <p className="font-normal ml-[10px] w-[calc(100%-90px)] text-sm lg:text-base lg:w-[calc(100%-110px)] flex flex-row-reverse">
                 테리파머 170g 고중량 국민 선물 호텔수건 5+5 총 수건 10장 세트 타올 샤워 타월
               </p>
@@ -95,6 +101,9 @@ export default async function Purchase() {
           </TitleBoxContainer>
         </div>
       </div>
+
+      <Footer />
+      <PurchaseBanner />
     </div>
   );
 }
