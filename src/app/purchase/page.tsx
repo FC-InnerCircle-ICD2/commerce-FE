@@ -102,7 +102,9 @@ export default async function Purchase() {
         </div>
       </div>
 
-      <Footer />
+      <div className="w-full md:pb-[90px] lg:pb-[100px]">
+        <Footer />
+      </div>
       <PurchaseBanner />
     </div>
   );
