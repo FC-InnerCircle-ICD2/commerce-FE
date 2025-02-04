@@ -1,8 +1,11 @@
 'use client';
 
 import { IOrder, postOrder } from '@/api/order';
+import { useRouter } from 'next/navigation';
 
 export default function PurchaseBanner() {
+  const router = useRouter();
+
   const dummy: IOrder = {
     paymentMethod: 'CARD',
     cardInfo: {
@@ -74,7 +77,9 @@ export default function PurchaseBanner() {
   async function handleOrderButton() {
     try {
       const result = await postOrder(dummy);
-      console.log('result: ', result);
+      if (result === 201) {
+        router.push('/complete');
+      }
     } catch (error) {
       console.error(error);
     }
