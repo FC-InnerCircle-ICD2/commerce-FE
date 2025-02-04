@@ -41,8 +41,8 @@ export default function CategoryHeader() {
 
   return (
     <header className="w-full h-[60] flex justify-between items-center px-4 shadow-md">
-      <div className="flex gap-5">
-        <div onClick={() => router.back()}>
+      <div className="flex gap-5 overflow-hidden min-w-0 flex-1">
+        <div onClick={() => router.back()} className="shrink-0">
           <Image src="/assets/arrow.svg" width={24} height={24} alt="arrow" />
         </div>
         <span className="font-bold">{getTitle()}</span>
