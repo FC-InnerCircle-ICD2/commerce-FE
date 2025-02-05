@@ -112,7 +112,7 @@ const ProductDetailClient: React.FC<{ product: IProduct }> = ({ product }) => {
                   {option.optionDetails.map((detail) => (
                     <button
                       key={detail.value}
-                      className="px-4 py-2 border rounded-lg border-gray-400 text-sm hover:bg-slate-300"
+                      className="px-4 py-2 border rounded-full border-gray-400 text-sm hover:bg-slate-500 hover:text-white"
                       onClick={() => handleAddOptionsDetail(option, detail)}
                     >
                       {detail.value}
@@ -142,9 +142,11 @@ const ProductDetailClient: React.FC<{ product: IProduct }> = ({ product }) => {
 
             {/* 총 가격 */}
             <div className="flex justify-between">
-              <span>총 상품 금액</span>
+              <span className="text-sm">총 상품 금액</span>
               <div className="flex gap-[15px] items-center">
-                <span>{selectOptionDetails.reduce((sum, option) => sum + option.count, 0).toLocaleString()}</span>
+                <span className="text-xs text-neutral-600">
+                  총 수량 {selectOptionDetails.reduce((sum, option) => sum + option.count, 0).toLocaleString()}개
+                </span>
                 <span>|</span>
                 <span className="text-xl font-bold">
                   {(
