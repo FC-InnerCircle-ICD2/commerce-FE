@@ -8,7 +8,6 @@ import { Suspense } from 'react';
 export default async function Home() {
   try {
     const banners = await getBanners();
-
     return (
       <div className="flex flex-col h-screen overflow-x-hidden">
         <Header />

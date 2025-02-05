@@ -310,9 +310,6 @@ export const handlers = [
   }),
 
   http.get(`${MOCK_URL}/v1/products/:productId`, ({ params }) => {
-    const { productId } = params;
-    console.log(productId);
-
     return HttpResponse.json({
       productId: 7,
       name: '여성티셔츠',
