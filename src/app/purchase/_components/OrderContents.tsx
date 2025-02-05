@@ -7,8 +7,73 @@ import PaymentMethod from './PaymentMethod';
 import TitleBoxContainer from './TitleBoxContainer';
 import WideSelectBox from './WideSelectBox';
 import PurchaseBanner from './PurchaseBanner';
+import { useLayoutEffect, useState } from 'react';
+import type { CardInfo, Delivery, OrderItems, PaymentMethodType } from '@/api/order';
 
 export default function OrderContents() {
+  const [paymentMethod, setPaymentMethod] = useState<PaymentMethodType>('BANK_TRANSFER');
+  const [cardInfo, setCardInfo] = useState<CardInfo | null>(null);
+  const [orderItems, setOrderItems] = useState<OrderItems>({
+    product: {
+      id: 1,
+      name: '테리파머',
+      description: '테리파머 170g 고중량 국민 선물 호텔수건 5+5 총 수건 10장 세트 타올 샤워 타월',
+      price: 86700,
+      image:
+        'https://img.29cm.co.kr/next-product/2023/01/20/c26eef752da8444e876d51af65dfcb02_20230120135009.jpg?width=700',
+      category: {
+        id: 1,
+        name: '테리파머',
+      },
+      provider: {
+        id: 1,
+        name: '테리파머 제조사',
+        description: '테리파머 제조사 설명',
+      },
+    },
+    selectedOptions: [
+      {
+        options: [
+          {
+            optionName: '색상',
+            value: '블랙',
+          },
+        ],
+        quantity: 1,
+        price: 28900,
+      },
+      {
+        options: [
+          {
+            optionName: '색상',
+            value: '블루',
+          },
+        ],
+        quantity: 1,
+        price: 28900,
+      },
+      {
+        options: [
+          {
+            optionName: '색상',
+            value: '남색',
+          },
+        ],
+        quantity: 1,
+        price: 28900,
+      },
+    ],
+    totalAmount: 86700,
+  });
+  const [delivery, setDelivery] = useState<Delivery>({
+    name: '홍길동',
+    phoneNumber: '010-1234-5678',
+    zonecode: '12345',
+    address: '경기도 광명시 광명동 주소',
+    detailAddress: '101동 1004호',
+    deliveryMemo: '',
+  });
+
   return (
     <>
       <div className="w-[calc(100%-32px)] lg:w-[calc(100%-12.5rem)] flex flex-col lg:flex-row">
@@ -17,13 +82,15 @@ export default function OrderContents() {
           {/* 배송지 */}
           <TitleBoxContainer title="배송지" toggle={false}>
             <div className="flex justify-between items-center mb-1">
-              <p className="font-medium text-base lg:text-lg">홍길동(집)</p>
+              <p className="font-medium text-base lg:text-lg">{delivery.name}</p>
               <button className="border border-neutral-300 px-3.5 py-2.5 bg-white rounded-lg text-sm">변경</button>
             </div>
-            <span className="font-medium text-sm lg:text-base text-neutral-500 mb-3">010-1234-5678</span>
-            <span className="font-medium text-sm mb-3">경기도 광명시 광명동 주소 (광명동, 주소) 101동 1004호</span>
+            <span className="font-medium text-sm lg:text-base text-neutral-500 mb-3">{delivery.phoneNumber}</span>
+            <span className="font-medium text-sm mb-3">{`${delivery.address} ${delivery.detailAddress}`}</span>
             <WideSelectBox
               placeholder="배송메모를 선택해주세요"
+              delivery={delivery}
+              setDelivery={setDelivery}
               options={[
                 '선택 안 함',
                 '부재 시 문 앞에 놓아주세요.',
@@ -37,28 +104,24 @@ export default function OrderContents() {
           {/* 주문상품 */}
           <TitleBoxContainer title="주문상품" toggle={false} margin="mb-5">
             <div className="flex justify-between items-center mb-4">
-              <p className="font-medium text-base lg:text-lg">테리파머</p>
+              <p className="font-medium text-base lg:text-lg">{orderItems?.product.name}</p>
               <span className="font-medium text-sm lg:text-base text-neutral-500">무료 배송</span>
             </div>
 
             <div className="flex justify-between items-center mb-4">
-              <img
-                className="w-[80px] h-[80px] md:w-[100px] md:h-[100px] rounded-[10px]"
-                src="https://img.29cm.co.kr/next-product/2023/01/20/c26eef752da8444e876d51af65dfcb02_20230120135009.jpg?width=700"
-                alt="product image"
-              />
+              {orderItems?.product.image && (
+                <img
+                  className="w-[80px] h-[80px] md:w-[100px] md:h-[100px] rounded-[10px]"
+                  src={orderItems?.product.image}
+                  alt="product image"
+                />
+              )}
               <p className="font-normal ml-[10px] w-[calc(100%-90px)] text-sm lg:text-base lg:w-[calc(100%-110px)] flex flex-row-reverse">
-                테리파머 170g 고중량 국민 선물 호텔수건 5+5 총 수건 10장 세트 타올 샤워 타월
+                {orderItems?.product.description}
               </p>
             </div>
 
-            <OrderList
-              products={[
-                { name: '02_180g 자카드 호텔수건 5+5 / 베이비블루', quantity: 1, price: 28900 },
-                { name: '02_180g 자카드 호텔수건 5+5 / 베이비블루', quantity: 1, price: 28900 },
-                { name: '02_180g 자카드 호텔수건 5+5 / 베이비블루', quantity: 1, price: 28900 },
-              ]}
-            />
+            <OrderList productOptions={orderItems?.selectedOptions} />
           </TitleBoxContainer>
 
           <TitleBoxContainer title={null} toggle={false}>

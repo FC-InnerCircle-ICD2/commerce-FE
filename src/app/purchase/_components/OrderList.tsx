@@ -1,19 +1,20 @@
-interface Product {
-  name: string;
-  quantity: number;
-  price: number;
+import type { OrderOption } from '@/api/order';
+import { numberFormatting } from '@/utils/numberFormatting';
+
+interface OptionListProps {
+  productOptions: OrderOption[];
 }
 
-interface Props {
-  products: Product[];
-}
+export default function OrderList(props: OptionListProps) {
+  const { productOptions } = props;
 
-export default function OrderList(props: Props) {
-  const { products } = props;
+  const getOptionName = (product: OrderOption) => {
+    return product.options.map((option) => `${option.optionName} / ${option.value}`).join(' | ');
+  };
 
   return (
     <ul>
-      {products.map((product, index) => (
+      {productOptions.map((product, index) => (
         <li
           key={index}
           className="border border-slate-300 rounded-[10px] bg-white w-full h-auto lg:h-12 p-4 my-[5px] flex items-center justify-between flex-col lg:flex-row"
@@ -24,12 +25,12 @@ export default function OrderList(props: Props) {
             </span>
             <div className="flex justify-between items-center">
               <span className="text-neutral-700 text-sm">
-                {product.name} | {product.quantity}개
+                {getOptionName(product)} | {product.quantity}개
               </span>
             </div>
           </div>
           <div className="flex justify-end w-full lg:w-auto">
-            <span className="font-semibold text-sm">{product.price.toLocaleString()}원</span>
+            <span className="font-semibold text-sm">{numberFormatting(product.price)}원</span>
           </div>
         </li>
       ))}
