@@ -20,7 +20,7 @@ export default function Carousel({ banners }: Props) {
         ]}
       >
         {banners.map((item) => {
-          return <img key={item.id} src={item.productBanner.image.url} alt={item.title} className="w-full h-full" />;
+          return <img key={item.id} src={item.bannerImage.url} alt={item.title} className="w-full h-full" />;
         })}
       </BannerCarousel>
     </div>

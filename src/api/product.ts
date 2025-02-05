@@ -1,5 +1,5 @@
 import { buildUrl } from '@/utils/buildUrl';
-import { MOCK_URL } from '@/constants/constant';
+import { BASE_URL } from '@/constants/constant';
 
 export interface IProductOptionDetail {
   /** 옵션 값 */
@@ -62,7 +62,7 @@ interface IProductAPI {
   };
 }
 
-export const PRODUCT_URL = '/v1/products/search';
+export const PRODUCT_URL = 'api/v1/products/search';
 
 export type SORT_OPTIONS = 'CREATE_DESC' | 'SALES_DESC' | 'PRICE_ASC' | 'PRICE_DESC';
 
@@ -90,13 +90,9 @@ export type ProductsProps = {
 };
 
 export const getProducts = async (props: ProductsProps): Promise<IProduct[]> => {
-  const url = buildUrl(`${MOCK_URL}${PRODUCT_URL}`, props);
+  const url = buildUrl(`${BASE_URL}${PRODUCT_URL}`, props);
 
   const response = await fetch(url);
-
-  if (!response.ok) {
-    throw new Error(`Error fetching user: ${response.statusText}`);
-  }
 
   const data: IProductAPI = await response.json();
   return data.content;

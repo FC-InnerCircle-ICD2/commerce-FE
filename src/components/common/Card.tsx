@@ -47,7 +47,7 @@ export default function Card({ productId, imgUrl, title, price, discount, review
       <div className="p-2">
         <p className="text-sm sm:text-base font-medium mb-[25px]">{title}</p>
         {discount && (
-          <p className="text-xs sm:text-sm text-[#989898] font-light line-through mt-2">{price.toLocaleString()}원</p>
+          <p className="text-xs sm:text-sm text-[#989898] font-light line-through mt-2">{price?.toLocaleString()}원</p>
         )}
         <div className="flex justify-between">
           <div className="flex gap-1">
@@ -56,7 +56,7 @@ export default function Card({ productId, imgUrl, title, price, discount, review
           </div>
           <div className="flex items-center gap-[5px]">
             <img src={Star.src} alt="star" className="w-[25px] h-[25px] sm:w-[18px] sm:h-[18px]" />
-            <p className="text-[#5A5A5A] text-sm sm:text-base ml-1">{review.toLocaleString()}</p>
+            <p className="text-[#5A5A5A] text-sm sm:text-base ml-1">{review ? review.toLocaleString() : 0}</p>
           </div>
         </div>
       </div>
