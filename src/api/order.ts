@@ -11,41 +11,49 @@ export interface OrderOption {
   price: number;
 }
 
-export interface IOrder {
-  paymentMethod: 'BANK_TRANSFER' | 'CARD' | 'KAKAO_PAY' | 'TOSS' | 'NAVER_PAY';
-  cardInfo: {
-    cardNumber: string;
-    expirationDate: string;
-    cvc: string;
-    cardOwnerName: string;
-  };
-  orderItems: {
-    product: {
+export type PaymentMethodType = 'BANK_TRANSFER' | 'CARD' | 'KAKAO_PAY' | 'TOSS' | 'NAVER_PAY';
+export interface CardInfo {
+  cardNumber: string;
+  expirationDate: string;
+  cvc: string;
+  cardOwnerName: string;
+}
+
+export interface OrderItems {
+  product: {
+    id: number;
+    name: string;
+    description: string;
+    price: number;
+    image?: string | null;
+    category: {
+      id: number;
+      name: string;
+    };
+    provider: {
       id: number;
       name: string;
       description: string;
-      price: number;
-      category: {
-        id: number;
-        name: string;
-      };
-      provider: {
-        id: number;
-        name: string;
-        description: string;
-      };
     };
-    selectedOptions: OrderOption[];
-    totalAmount: number;
   };
-  delivery: {
-    name: string;
-    phoneNumber: string;
-    zonecode: string;
-    address: string;
-    detailAddress: string;
-    deliveryMemo: string;
-  };
+  selectedOptions: OrderOption[];
+  totalAmount: number;
+}
+
+export interface Delivery {
+  name: string;
+  phoneNumber: string;
+  zonecode: string;
+  address: string;
+  detailAddress: string;
+  deliveryMemo: string;
+}
+
+export interface IOrder {
+  paymentMethod: PaymentMethodType;
+  cardInfo: CardInfo;
+  orderItems: OrderItems;
+  delivery: Delivery;
 }
 
 export const ORDER_URL = '/v1/orders';
