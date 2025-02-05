@@ -9,9 +9,10 @@ type Props = {
   category?: IOptions;
   classname: string;
   onSearch?: () => void;
+  handleCloseSearchView: () => void;
 };
 
-export default function SearchInput({ category, classname, onSearch }: Props) {
+export default function SearchInput({ category, classname, onSearch, handleCloseSearchView }: Props) {
   const router = useRouter();
   const searchParams = useSearchParams();
   const [search, setSearch] = useLocalStorage<string[]>('search', []);
@@ -39,6 +40,7 @@ export default function SearchInput({ category, classname, onSearch }: Props) {
       params.append('name', inputValue.trim());
 
       router.push(`/products?${params.toString()}`);
+      handleCloseSearchView();
       setSearch([inputValue, ...search]);
       onSearch?.();
     }

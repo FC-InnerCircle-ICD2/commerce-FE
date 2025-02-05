@@ -8,9 +8,10 @@ import { useRouter } from 'next/navigation';
 
 type Props = {
   categories: ICategory[];
+  handleClose?: () => void;
 };
 
-export default function CategoryForm({ categories }: Props) {
+export default function CategoryForm({ categories, handleClose }: Props) {
   const router = useRouter();
   const [currentCategory, setCurrentCategory] = useState<ICategory | null>(null);
 
@@ -23,6 +24,10 @@ export default function CategoryForm({ categories }: Props) {
     params.append('category', String(category.id));
 
     router.push(`/products?${params.toString()}`);
+
+    if (handleClose) {
+      handleClose();
+    }
   };
 
   return (
