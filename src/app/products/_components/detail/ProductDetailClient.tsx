@@ -1,33 +1,48 @@
 'use client';
 
 import { useState } from 'react';
-import type { IProduct, IProductOptionDetail } from '@/api/product';
+import type { IProduct, IProductOptionDetail, IProductOptions } from '@/api/product';
 import ProductDegtailCards from './ProductDetailCards';
 import ProductDetailSelectOptions from './ProductDetailSelectOptions';
+import { useRouter } from 'next/navigation';
 
-export interface ISelectOptionDetail extends IProductOptionDetail {
+export interface ISelectOptionDetail {
   count: number;
+  optionName: string;
+  value: string;
+  quantity: number;
+  price: number;
 }
 
 const ProductDetailClient: React.FC<{ product: IProduct }> = ({ product }) => {
+  const router = useRouter();
   const [selectedTab, setSelectedTab] = useState('상세정보');
   const [selectOptionDetails, setSelectOptionDetails] = useState<ISelectOptionDetail[]>([]);
 
   // 대표 이미지 URL 찾기
   const representativeImageUrl = product.options.flatMap((option) => option.optionDetails).find((detail) => detail.url);
 
-  function handleAddOptionsDetail(option: IProductOptionDetail) {
-    const find = selectOptionDetails.find((item) => item.value === option.value);
+  function handleAddOptionsDetail(option: IProductOptions, detail: IProductOptionDetail) {
+    const find = selectOptionDetails.find((item) => item.value === detail.value);
     if (find) {
       setSelectOptionDetails([
         ...selectOptionDetails.map((item) => {
-          if (item.value === option.value) return { ...item, count: item.count + 1 };
+          if (item.value === detail.value) return { ...item, count: item.count + 1 };
           return item;
         }),
       ]);
       // TODO: 갯수 추가하는 코드 필요
     } else {
-      setSelectOptionDetails([...selectOptionDetails, { count: 1, ...option }]);
+      setSelectOptionDetails([
+        ...selectOptionDetails,
+        {
+          count: 1,
+          optionName: option.name,
+          value: detail.value,
+          quantity: detail.quantity,
+          price: product.price,
+        },
+      ]);
     }
   }
 
@@ -44,6 +59,19 @@ const ProductDetailClient: React.FC<{ product: IProduct }> = ({ product }) => {
       }),
     ]);
   }
+
+  const handlePurchase = () => {
+    if (selectOptionDetails.length > 0) {
+      // JSON 데이터를 URL에 포함할 수 있도록 인코딩
+      const encodedData = encodeURIComponent(JSON.stringify(selectOptionDetails));
+      // 'test' 페이지로 이동하면서 데이터 전달
+      router.push(`/test?data=${encodedData}`);
+    }
+    // const params = new URLSearchParams();
+    // params.append('optionName', String(optionName.id));
+
+    // router.push(`/products?${params.toString()}`);
+  };
 
   return (
     <div className="container mx-auto flex px-4 py-8 flex-col gap-">
@@ -85,7 +113,7 @@ const ProductDetailClient: React.FC<{ product: IProduct }> = ({ product }) => {
                     <button
                       key={detail.value}
                       className="px-4 py-2 border rounded-lg border-gray-400 text-sm hover:bg-slate-300"
-                      onClick={() => handleAddOptionsDetail(detail)}
+                      onClick={() => handleAddOptionsDetail(option, detail)}
                     >
                       {detail.value}
                     </button>
@@ -129,7 +157,12 @@ const ProductDetailClient: React.FC<{ product: IProduct }> = ({ product }) => {
           </div>
 
           {/* 구매 버튼 */}
-          <button className="mt-6 px-6 py-3 bg-[#CBD5E1] text-[#082F49] font-bold rounded-lg w-full">구매하기</button>
+          <button
+            className="mt-6 px-6 py-3 bg-[#CBD5E1] text-[#082F49] font-bold rounded-lg w-full"
+            onClick={handlePurchase}
+          >
+            구매하기
+          </button>
         </div>
       </div>
 
