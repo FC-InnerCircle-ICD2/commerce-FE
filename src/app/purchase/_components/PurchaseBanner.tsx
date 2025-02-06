@@ -14,7 +14,7 @@ interface Props {
 }
 
 export default function PurchaseBanner(props: Props) {
-  const { paymentMethod, cardInfo, orderItems, delivery, totalPrice } = props;
+  const { cardInfo, orderItems, delivery, totalPrice } = props;
   const router = useRouter();
 
   const postData: IOrder = {
@@ -26,13 +26,12 @@ export default function PurchaseBanner(props: Props) {
 
   async function handleOrderButton() {
     try {
-      console.log('postData: ', postData);
       const result = await postOrder(postData);
-      if (result === 201) {
+      if (result === 200) {
         router.push('/complete');
       }
-    } catch (error) {
-      console.error(error);
+    } catch {
+      alert('주문에 실패했습니다');
     }
   }
 

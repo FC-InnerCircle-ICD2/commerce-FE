@@ -42,7 +42,7 @@ export default function CategorySearch() {
           <LoadingSpinner size={30} />
         </div>
       ) : (
-        <Selectbox width="120" currentItem={currentItem} items={categoryOptions} handleChangeSelect={setCurrentItem} />
+        <Selectbox width="150" currentItem={currentItem} items={categoryOptions} handleChangeSelect={setCurrentItem} />
       )}
       <div className="relative flex grow pr-[10]" onFocus={() => setIsFocus(true)}>
         <SearchForm

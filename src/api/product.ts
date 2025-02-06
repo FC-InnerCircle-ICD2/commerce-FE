@@ -1,23 +1,25 @@
 import { buildUrl } from '@/utils/buildUrl';
-import { MOCK_URL } from '@/constants/constant';
+import { BASE_URL } from '@/constants/constant';
 
-interface IProductOptions {
+export interface IProductOptionDetail {
+  /** 옵션 값 */
+  value: string;
+  /** 재고 수량 */
+  quantity: number;
+  /** 추가 금액 */
+  additionalPrice: number;
+  /** 이미지 순서 */
+  fileOrder: number;
+  /** 이미지 url */
+  url: string;
+}
+
+export interface IProductOptions {
   /** 옵션 ID */
   id: number;
   /** 옵션 이름 */
   name: string;
-  optionDetails: Array<{
-    /** 옵션 값 */
-    value: string;
-    /** 재고 수량 */
-    quantity: number;
-    /** 추가 금액 */
-    additionalPrice: number;
-    /** 이미지 순서 */
-    fileOrder: number;
-    /** 이미지 url */
-    url: string;
-  }>;
+  optionDetails: IProductOptionDetail[];
 }
 
 export interface IProduct {
@@ -60,7 +62,7 @@ interface IProductAPI {
   };
 }
 
-export const PRODUCT_URL = '/v1/products/search';
+export const PRODUCT_URL = 'api/v1/products/search';
 
 export type SORT_OPTIONS = 'CREATE_DESC' | 'SALES_DESC' | 'PRICE_ASC' | 'PRICE_DESC';
 
@@ -88,14 +90,43 @@ export type ProductsProps = {
 };
 
 export const getProducts = async (props: ProductsProps): Promise<IProduct[]> => {
-  const url = buildUrl(`${MOCK_URL}${PRODUCT_URL}`, props);
+  const url = buildUrl(`${BASE_URL}${PRODUCT_URL}`, props);
 
   const response = await fetch(url);
-
-  if (!response.ok) {
-    throw new Error(`Error fetching user: ${response.statusText}`);
-  }
 
   const data: IProductAPI = await response.json();
   return data.content;
 };
+
+export interface IProductDetailOptionDetails {
+  images: [
+    {
+      id: number;
+      fileOrder: number;
+      url: string;
+      representative: boolean;
+    },
+  ];
+  id: number;
+  value: string;
+  quantity: number;
+  order: number;
+  additionalPrice: number | null;
+}
+
+export interface IProductDetailOption {
+  optionDetails: IProductDetailOptionDetails[];
+  id: number;
+  name: string;
+}
+
+export interface IProductDetail {
+  options: IProductDetailOption[];
+  reviewStatistic: { averageRating: number; reviewCount: number };
+  id: number;
+  name: string;
+  description: string;
+  price: number;
+  category: { id: number; name: string; parentCategoryId: number; subCategories: [] };
+  provider: { id: number; name: string; description: string | null };
+}
