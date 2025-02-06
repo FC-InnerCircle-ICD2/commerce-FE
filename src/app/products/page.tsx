@@ -4,7 +4,7 @@ import CardSkeleton from '@/components/common/CardSkeleton';
 import CategoryList from './_components/CategoryList';
 import Filter from '@/app/products/_components/filter/Filter';
 import { Breadcrumbs } from '@/components/common';
-import { getProducts, IProduct } from '@/api/product';
+import { getProducts, IProduct, SORT_OPTIONS } from '@/api/product';
 import { MobileFilter } from '@/app/products/_components/filter/MobileFilter';
 import { Header } from '@/components/layout';
 import { Suspense } from 'react';
@@ -34,6 +34,7 @@ const ProductContent = async ({
     pageNumber?: string;
     pageSize?: string;
     categoryId?: string;
+    sortOption?: string;
   }>;
 }) => {
   const params = await searchParams;
@@ -47,6 +48,7 @@ const ProductContent = async ({
     pageSize: params.pageSize ? Number(params.pageSize) : undefined,
     productId: undefined,
     categoryId: params.categoryId ? Number(params.categoryId) : undefined,
+    sortOption: (params.sortOption as SORT_OPTIONS) || undefined,
   });
 
   if (!products) {
@@ -110,6 +112,8 @@ export default async function ProductsPage({
     rating?: string;
     pageNumber?: string;
     pageSize?: string;
+    categoryId?: string;
+    sortOption?: string;
   }>;
 }) {
   return (

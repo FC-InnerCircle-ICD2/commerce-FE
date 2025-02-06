@@ -13,14 +13,14 @@ interface SortOption {
 }
 
 const SORT_OPTIONS_CONFIG: SortOption[] = [
+  { value: 'CREATE_DESC', label: '등록순' },
   { value: 'PRICE_ASC', label: '낮은가격순' },
   { value: 'PRICE_DESC', label: '높은가격순' },
   { value: 'SALES_DESC', label: '판매량순' },
-  { value: 'CREATE_DESC', label: '등록순' },
 ];
 
 export default function Breadcrumbs() {
-  const [selectedSort, setSelectedSort] = useState<SORT_OPTIONS>('PRICE_ASC');
+  const [selectedSort, setSelectedSort] = useState<SORT_OPTIONS>('CREATE_DESC');
   const [searchQuery, setSearchQuery] = useState<string>('');
   const searchParams = useSearchParams();
   const router = useRouter();
