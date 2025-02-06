@@ -61,10 +61,10 @@ const ProductDetailClient: React.FC<{ product: IProductDetail }> = ({ product })
     if (selectOptionDetails.length > 0) {
       const paramData = {
         product,
-        selectOptionDetails,
+        selectedOptions: selectOptionDetails,
       };
       const encodedData = encodeURIComponent(JSON.stringify(paramData));
-      router.push(`/test?data=${encodedData}`);
+      router.push(`/purchase?data=${encodedData}`);
     }
   };
 

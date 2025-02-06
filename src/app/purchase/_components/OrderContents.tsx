@@ -8,7 +8,7 @@ import TitleBoxContainer from './TitleBoxContainer';
 import WideSelectBox from './WideSelectBox';
 import PurchaseBanner from './PurchaseBanner';
 import { useState } from 'react';
-import type { CardInfo, Delivery, OrderOption, PaymentMethodType } from '@/api/order';
+import type { CardInfo, Delivery, PaymentMethodType } from '@/api/order';
 import { numberFormatting } from '@/utils/numberFormatting';
 
 interface DetailOption {
@@ -72,7 +72,6 @@ export default function OrderContents(props: { orderData: ProductParamsData }) {
     cvc: '',
     cardOwnerName: '',
   });
-  const [orderItems, setOrderItems] = useState<OrderOption[]>([]);
   const [delivery, setDelivery] = useState<Delivery>({
     name: '홍길동',
     phoneNumber: '010-1234-5678',
@@ -81,14 +80,13 @@ export default function OrderContents(props: { orderData: ProductParamsData }) {
     detailAddress: '101동 1004호',
     deliveryMemo: '',
   });
-  const [productParamsData, setProductParamsData] = useState<ProductParamsData>(orderData);
-  const representativeImageUrl = productParamsData?.product.options
+  const representativeImageUrl = orderData?.product.options
     .flatMap((option) => option.optionDetails)
     .flatMap((detail) => detail.images)
     .find((images) => images.representative);
 
-  const orderOptionItems = productParamsData?.selectedOptions?.map((option) => {
-    const findOption = (name: string) => productParamsData.product.options.find((option) => option.name === name);
+  const orderOptionItems = orderData?.selectedOptions?.map((option) => {
+    const findOption = (name: string) => orderData.product.options.find((option) => option.name === name);
     const findOptionDetail = (option: OptionInfo | undefined, name: string) =>
       option?.optionDetails.find((detail) => detail.value === name);
 
@@ -96,7 +94,7 @@ export default function OrderContents(props: { orderData: ProductParamsData }) {
     const currentOptionDetail = findOptionDetail(currentOption, option.value);
 
     return {
-      productId: productParamsData.product.id,
+      productId: orderData.product.id,
       options: [
         {
           productOptionName: option.optionName,
@@ -107,16 +105,17 @@ export default function OrderContents(props: { orderData: ProductParamsData }) {
       ],
       quantity: option.count,
       price: option.price,
-      categoryId: productParamsData.product.category.id,
+      categoryId: orderData.product.category.id,
     };
   });
-  console.log('orderOptionItems: ', orderOptionItems);
 
   const getTotalPrice = <T extends boolean>(
     selectedOptions: SelectedOption[],
     formatted: T,
   ): T extends true ? string : number => {
     const total = selectedOptions.reduce((acc, cur) => (acc += cur.price * cur.count), 0);
+    // TODO: any 제거 해야함.
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     return (formatted ? `${numberFormatting(total)}원` : total) as any;
   };
 
@@ -149,10 +148,10 @@ export default function OrderContents(props: { orderData: ProductParamsData }) {
 
           {/* 주문상품 */}
           <TitleBoxContainer title="주문상품" toggle={false} margin="mb-5">
-            {productParamsData && (
+            {orderData && (
               <>
                 <div className="flex justify-between items-center mb-4">
-                  <p className="font-medium text-base lg:text-lg">{productParamsData.product.name}</p>
+                  <p className="font-medium text-base lg:text-lg">{orderData.product.name}</p>
                   <span className="font-medium text-sm lg:text-base text-neutral-500">무료 배송</span>
                 </div>
 
@@ -167,7 +166,7 @@ export default function OrderContents(props: { orderData: ProductParamsData }) {
                     <div className="bg-neutral-300 w-[80px] h-[80px] md:w-[100px] md:h-[100px] rounded-[10px]"></div>
                   )}
                   <p className="font-normal ml-[10px] w-[calc(100%-90px)] text-sm lg:text-base lg:w-[calc(100%-110px)] flex flex-row-reverse">
-                    {productParamsData.product.description}
+                    {orderData.product.description}
                   </p>
                 </div>
 
@@ -179,9 +178,7 @@ export default function OrderContents(props: { orderData: ProductParamsData }) {
           <TitleBoxContainer title={null} toggle={false}>
             <div className="flex justify-between items-center">
               <span className="text-base lg:text-lg font-medium">총 주문금액</span>
-              <span className="text-base lg:text-lg font-bold">
-                {getTotalPrice(productParamsData.selectedOptions, true)}
-              </span>
+              <span className="text-base lg:text-lg font-bold">{getTotalPrice(orderData.selectedOptions, true)}</span>
             </div>
           </TitleBoxContainer>
 
@@ -189,7 +186,7 @@ export default function OrderContents(props: { orderData: ProductParamsData }) {
           <TitleBoxContainer
             title="결제수단"
             toggle={true}
-            toggleTitle={getTotalPrice(productParamsData.selectedOptions, true)}
+            toggleTitle={getTotalPrice(orderData.selectedOptions, true)}
           >
             <PaymentMethod
               setCardInfo={setCardInfo}
@@ -204,12 +201,9 @@ export default function OrderContents(props: { orderData: ProductParamsData }) {
           <TitleBoxContainer
             title="결제상세"
             toggle={true}
-            toggleTitle={getTotalPrice(productParamsData.selectedOptions, true)}
+            toggleTitle={getTotalPrice(orderData.selectedOptions, true)}
           >
-            <PaymentDetail
-              paymentMethod={paymentMethod}
-              totalPrice={getTotalPrice(productParamsData.selectedOptions, true)}
-            />
+            <PaymentDetail paymentMethod={paymentMethod} totalPrice={getTotalPrice(orderData.selectedOptions, true)} />
           </TitleBoxContainer>
         </div>
       </div>
@@ -222,7 +216,7 @@ export default function OrderContents(props: { orderData: ProductParamsData }) {
         cardInfo={cardInfo}
         orderItems={orderOptionItems}
         delivery={delivery}
-        totalPrice={getTotalPrice(productParamsData.selectedOptions, false)}
+        totalPrice={getTotalPrice(orderData.selectedOptions, false)}
       />
     </>
   );

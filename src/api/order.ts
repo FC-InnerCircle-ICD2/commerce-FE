@@ -1,4 +1,4 @@
-import { MOCK_URL } from '@/constants/constant';
+// import { BASE_URL } from '@/constants/constant';
 
 export interface OrderOption {
   productId: number;
@@ -37,10 +37,10 @@ export interface IOrder {
   orderItems: OrderOption[];
 }
 
-export const ORDER_URL = '/v1/orders';
+export const ORDER_URL = 'api/v1/orders';
 
 export const postOrder = async (orderData: IOrder) => {
-  const response = await fetch(`${MOCK_URL}${ORDER_URL}`, {
+  const response = await fetch(`https://virtserver.swaggerhub.com/SGYJ8896/ecommerce-order-v2/1.0.0/${ORDER_URL}`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
