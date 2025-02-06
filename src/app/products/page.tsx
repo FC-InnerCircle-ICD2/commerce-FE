@@ -117,7 +117,7 @@ export default async function ProductsPage({
       <div className="hidden md:block">
         <Header />
       </div>
-      <div className="max-w-custom mx-auto lg:pt-8 pb-8">
+      <div className="max-w-custom mx-auto pb-8">
         <div className="flex flex-col lg:flex-row lg:gap-5">
           <Suspense fallback={<ProductSkeletons />}>
             <ProductContent searchParams={searchParams} />
