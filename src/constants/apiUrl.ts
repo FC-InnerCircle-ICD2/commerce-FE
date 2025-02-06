@@ -1,5 +1,5 @@
 export const CategoryApis = {
-  getCategory: '/v1/categories',
+  getCategory: 'api/v1/categories',
 } as const;
 
 export const BannerApis = {
