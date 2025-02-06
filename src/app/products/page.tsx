@@ -4,11 +4,12 @@ import CardSkeleton from '@/components/common/CardSkeleton';
 import CategoryList from './_components/CategoryList';
 import Filter from '@/app/products/_components/filter/Filter';
 import { Breadcrumbs } from '@/components/common';
-import { getProducts } from '@/api/product';
+import { getProducts, IProduct } from '@/api/product';
 import { MobileFilter } from '@/app/products/_components/filter/MobileFilter';
 import { Header } from '@/components/layout';
 import { Suspense } from 'react';
 import CategoryHeader from '../category/_components/CategoryHeader';
+import PREPARING from '@/assets/preparing.png';
 
 const ProductSkeletons = () => {
   return (
@@ -35,66 +36,68 @@ const ProductContent = async ({
     categoryId?: string;
   }>;
 }) => {
-  try {
-    const params = await searchParams;
+  const params = await searchParams;
 
-    const products = await getProducts({
-      keyword: params.keyword,
-      priceMin: params.priceMin ? Number(params.priceMin) : undefined,
-      priceMax: params.priceMax ? Number(params.priceMax) : undefined,
-      rating: params.rating ? Number(params.rating) : undefined,
-      pageNumber: params.pageNumber ? Number(params.pageNumber) : undefined,
-      pageSize: params.pageSize ? Number(params.pageSize) : undefined,
-      productId: undefined,
-      categoryId: params.categoryId ? Number(params.categoryId) : undefined,
-    });
+  const products = await getProducts({
+    keyword: params.keyword,
+    priceMin: params.priceMin ? Number(params.priceMin) : undefined,
+    priceMax: params.priceMax ? Number(params.priceMax) : undefined,
+    rating: params.rating ? Number(params.rating) : undefined,
+    pageNumber: params.pageNumber ? Number(params.pageNumber) : undefined,
+    pageSize: params.pageSize ? Number(params.pageSize) : undefined,
+    productId: undefined,
+    categoryId: params.categoryId ? Number(params.categoryId) : undefined,
+  });
 
-    if (!products) {
-      return <ProductSkeletons />;
-    }
+  if (!products) {
+    return <ProductSkeletons />;
+  }
 
-    return (
-      <>
-        {/* 왼쪽 사이드바 영역 */}
-        <div className="lg:w-1/4">
-          {/* 카테고리 영역 */}
-          <div className="w-full h-fit bg-slate-50 border border-slate-300 rounded-xl hidden lg:block mb-5">
-            <CategoryList />
-          </div>
-          {/* 필터 영역 */}
-          <div className="w-full h-fit bg-slate-50 border border-slate-300 rounded-xl hidden lg:block mb-5">
-            <Filter products={products} />
+  function getImageUrl(product: IProduct) {
+    return product.options.length === 0 || !product.options[0].optionDetails
+      ? PREPARING.src
+      : product.options[0].optionDetails[0].url;
+  }
+
+  return (
+    <>
+      {/* 왼쪽 사이드바 영역 */}
+      <div className="lg:w-1/4">
+        {/* 카테고리 영역 */}
+        <div className="w-full h-fit bg-slate-50 border border-slate-300 rounded-xl hidden lg:block mb-5">
+          <CategoryList />
+        </div>
+        {/* 필터 영역 */}
+        <div className="w-full h-fit bg-slate-50 border border-slate-300 rounded-xl hidden lg:block mb-5">
+          <Filter products={products} />
+        </div>
+      </div>
+
+      {/* 상품 목록 영역 */}
+      <main className="lg:w-3/4">
+        <div className="lg:mb-8 mb-1">
+          <Breadcrumbs />
+        </div>
+        <div className="lg:hidden block mb-8 px-3 py-2 bg-slate-50 border-slate-300 border">
+          <MobileFilter products={products} />
+        </div>
+        <div className="lg:px-0 px-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 bg-slate-50 border border-slate-300 rounded-xl p-7">
+            {products.map((product) => (
+              <Card
+                key={product.productId}
+                productId={product.productId}
+                imgUrl={getImageUrl(product)}
+                title={product.name}
+                price={product.price}
+                review={product.rating ?? 0}
+              />
+            ))}
           </div>
         </div>
-
-        {/* 상품 목록 영역 */}
-        <main className="lg:w-3/4">
-          <div className="lg:mb-8 mb-1">
-            <Breadcrumbs />
-          </div>
-          <div className="lg:hidden block mb-8 px-3 py-2 bg-slate-50 border-slate-300 border">
-            <MobileFilter products={products} />
-          </div>
-          <div className="lg:px-0 px-4">
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 bg-slate-50 border border-slate-300 rounded-xl p-7">
-              {products.map((product) => (
-                <Card
-                  key={product.productId}
-                  productId={product.productId}
-                  imgUrl={product.options[0].optionDetails[0].url}
-                  title={product.name}
-                  price={product.price}
-                  review={product.rating ?? 0}
-                />
-              ))}
-            </div>
-          </div>
-        </main>
-      </>
-    );
-  } catch {
-    return <div>상품을 불러오는데 실패했습니다. 잠시 후 다시 시도해주세요.</div>;
-  }
+      </main>
+    </>
+  );
 };
 
 export default async function ProductsPage({

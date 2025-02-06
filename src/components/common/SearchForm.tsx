@@ -34,9 +34,9 @@ export default function SearchInput({ category, classname, onSearch, handleClose
   const handleSearch = () => {
     if (inputValue.trim() !== '') {
       const params = new URLSearchParams();
-      if (category?.value) {
-        params.append('categoryId', category.value);
-      }
+      // if (category?.value) {
+      //   params.append('categoryId', category.value);
+      // }
       params.append('keyword', inputValue.trim());
 
       router.push(`/products?${params.toString()}`);

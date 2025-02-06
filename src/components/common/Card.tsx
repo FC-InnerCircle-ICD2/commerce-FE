@@ -3,12 +3,13 @@
 import Star from '@/assets/star.png';
 import { numberFormatting } from '@/utils/numberFormatting';
 import { useRouter } from 'next/navigation';
+import PREPARING from '@/assets/preparing.png';
 
 type Props = {
   /** 상품 ID */
   productId: number;
   /** 이미지 URL (상품 이미지 경로) */
-  imgUrl: string;
+  imgUrl: string | undefined;
 
   /** 카드 제목 (상품명) */
   title: string;
@@ -43,7 +44,7 @@ export default function Card({ productId, imgUrl, title, price, discount, review
 
   return (
     <div className="w-full cursor-pointer" onClick={handleCardClick}>
-      <img src={imgUrl} className="w-full h-auto aspect-square max-w-full block rounded-2xl" />
+      <img src={imgUrl ?? PREPARING.src} className="w-full h-auto aspect-square max-w-full block rounded-2xl" />
       <div className="p-2">
         <p className="text-sm sm:text-base font-medium mb-[25px]">{title}</p>
         {discount && (
