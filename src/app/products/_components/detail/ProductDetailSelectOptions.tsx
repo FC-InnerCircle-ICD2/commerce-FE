@@ -1,8 +1,8 @@
-import { IProduct } from '@/api/product';
+import { IProductDetail } from '@/api/product';
 import type { ISelectOptionDetail } from './ProductDetailClient';
 
 type Props = {
-  product: IProduct;
+  product: IProductDetail;
   seletedOptionDetail: ISelectOptionDetail;
   handleOptionCount: (option: ISelectOptionDetail, flag: boolean) => void;
   handleRemoveOption: (option: ISelectOptionDetail) => void;

@@ -97,3 +97,36 @@ export const getProducts = async (props: ProductsProps): Promise<IProduct[]> => 
   const data: IProductAPI = await response.json();
   return data.content;
 };
+
+export interface IProductDetailOptionDetails {
+  images: [
+    {
+      id: number;
+      fileOrder: number;
+      url: string;
+      representative: boolean;
+    },
+  ];
+  id: number;
+  value: string;
+  quantity: number;
+  order: number;
+  additionalPrice: number | null;
+}
+
+export interface IProductDetailOption {
+  optionDetails: IProductDetailOptionDetails[];
+  id: number;
+  name: string;
+}
+
+export interface IProductDetail {
+  options: IProductDetailOption[];
+  reviewStatistic: { averageRating: number; reviewCount: number };
+  id: number;
+  name: string;
+  description: string;
+  price: number;
+  category: { id: number; name: string; parentCategoryId: number; subCategories: [] };
+  provider: { id: number; name: string; description: string | null };
+}

@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import type { IProduct, IProductOptionDetail, IProductOptions } from '@/api/product';
+import type { IProductDetail, IProductDetailOption, IProductDetailOptionDetails } from '@/api/product';
 import ProductDegtailCards from './ProductDetailCards';
 import ProductDetailSelectOptions from './ProductDetailSelectOptions';
 import { useRouter } from 'next/navigation';
@@ -14,15 +14,12 @@ export interface ISelectOptionDetail {
   price: number;
 }
 
-const ProductDetailClient: React.FC<{ product: IProduct }> = ({ product }) => {
+const ProductDetailClient: React.FC<{ product: IProductDetail }> = ({ product }) => {
   const router = useRouter();
   const [selectedTab, setSelectedTab] = useState('상세정보');
   const [selectOptionDetails, setSelectOptionDetails] = useState<ISelectOptionDetail[]>([]);
 
-  // 대표 이미지 URL 찾기
-  const representativeImageUrl = product.options.flatMap((option) => option.optionDetails).find((detail) => detail.url);
-
-  function handleAddOptionsDetail(option: IProductOptions, detail: IProductOptionDetail) {
+  function handleAddOptionsDetail(option: IProductDetailOption, detail: IProductDetailOptionDetails) {
     const find = selectOptionDetails.find((item) => item.value === detail.value);
     if (find) {
       setSelectOptionDetails([
@@ -62,15 +59,13 @@ const ProductDetailClient: React.FC<{ product: IProduct }> = ({ product }) => {
 
   const handlePurchase = () => {
     if (selectOptionDetails.length > 0) {
-      // JSON 데이터를 URL에 포함할 수 있도록 인코딩
-      const encodedData = encodeURIComponent(JSON.stringify(selectOptionDetails));
-      // 'test' 페이지로 이동하면서 데이터 전달
+      const paramData = {
+        product,
+        selectOptionDetails,
+      };
+      const encodedData = encodeURIComponent(JSON.stringify(paramData));
       router.push(`/test?data=${encodedData}`);
     }
-    // const params = new URLSearchParams();
-    // params.append('optionName', String(optionName.id));
-
-    // router.push(`/products?${params.toString()}`);
   };
 
   return (
@@ -84,7 +79,7 @@ const ProductDetailClient: React.FC<{ product: IProduct }> = ({ product }) => {
         {/* 상품 이미지 */}
         <div className="w-full lg:w-1/2 flex-shrink-0">
           <img
-            src={representativeImageUrl?.url ?? '/placeholder-image.jpg'}
+            src={product.options[0].optionDetails[0].images[0].url ?? '/placeholder-image.jpg'}
             alt={product.name}
             className="w-full h-auto lg:h-[500px] object-cover"
           />
@@ -95,7 +90,7 @@ const ProductDetailClient: React.FC<{ product: IProduct }> = ({ product }) => {
           <div className="w-full flex-grow bg-[#F8FAFC] border border-[#CBD5E1] rounded-lg py-[40px] px-[30px]">
             <h1 className="text-2xl font-bold">{product.name}</h1>
             <div className="text-gray-600 text-sm flex items-center gap-2 mt-2">
-              <span className="text-yellow-500">★ {product.rating}</span>
+              <span className="text-yellow-500">★ {product.reviewStatistic.averageRating ?? 0}</span>
               <span>|</span>
               <span>490개의 리뷰</span>
               <span>{`>`}</span>

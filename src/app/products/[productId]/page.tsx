@@ -1,9 +1,9 @@
 import { BASE_URL } from '@/constants/constant';
 import { Header } from '@/components/layout';
-import { IProduct } from '@/api/product';
+import { IProductDetail } from '@/api/product';
 import ProductDetailClient from '../_components/detail/ProductDetailClient';
 
-async function getProduct(productId: string): Promise<IProduct> {
+async function getProduct(productId: string): Promise<IProductDetail> {
   const response = await fetch(`${BASE_URL}api/v1/products/${productId}`);
   // const response = await fetch('http://3.38.23.68:8080/api/v1/products/8562570505');
   if (!response.ok) {
