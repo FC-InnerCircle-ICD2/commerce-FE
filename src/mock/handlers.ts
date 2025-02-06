@@ -5,6 +5,7 @@ import { BASE_URL, MOCK_URL } from '@/constants/constant';
 import { CategoryApis, ProductApis, BannerApis } from '@/constants/apiUrl';
 import { http, HttpResponse, PathParams } from 'msw';
 import { PRODUCT_URL } from '@/api/product';
+import { ORDER_URL } from '@/api/order';
 
 const allPosts = new Map();
 
@@ -510,5 +511,11 @@ export const handlers = [
         totalPages: 0,
       },
     });
+  }),
+
+  // 결제 API
+  http.post(`${MOCK_URL}${ORDER_URL}`, async ({ request }) => {
+    const newPost = await request.json();
+    return HttpResponse.json(newPost, { status: 201 });
   }),
 ];
