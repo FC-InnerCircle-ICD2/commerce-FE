@@ -101,10 +101,7 @@ const ProductContent = async ({
               />
             ))}
           </div>
-          <Pagination
-            currentPage={products.page.number}
-            totalPages={products.page.totalPages}
-          />
+          <Pagination currentPage={products.page.number} totalPages={products.page.totalPages} />
         </div>
       </main>
     </>
