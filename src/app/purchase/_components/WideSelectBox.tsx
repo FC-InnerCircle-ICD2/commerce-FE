@@ -1,31 +1,38 @@
 'use client';
 
-import { useState } from 'react';
+import React, { useState } from 'react';
 import ExpandSelect from '@/assets/purchase/expandSelect.png';
+import type { Delivery } from '@/api/order';
 
 interface Props {
   placeholder: string;
   options: string[];
+  delivery: Delivery;
+  setDelivery: React.Dispatch<React.SetStateAction<Delivery>>;
 }
 
 export default function WideSelectBox(props: Props) {
   const [isOpen, setIsOpen] = useState(false);
-  const [selectedOption, setSelectedOption] = useState('');
-  const { placeholder, options } = props;
+  const { placeholder, options, delivery, setDelivery } = props;
 
   const openSelectOption = () => {
     setIsOpen(!isOpen);
   };
 
   const handleSelectOption = (option: string) => {
-    setSelectedOption(option);
+    setDelivery({
+      ...delivery,
+      deliveryMemo: option,
+    });
     setIsOpen(false);
   };
 
   return (
     <div className="relative w-full xl:w-1/2">
       <div className="w-full h-12 border border-slate-300 rounded-[10px] bg-white text-sm text-neutral-400 flex justify-between items-center p-5">
-        <span className={`${selectedOption && 'text-neutral-800 font-normal'}`}>{selectedOption || placeholder}</span>
+        <span className={`${delivery.deliveryMemo && 'text-neutral-800 font-normal'}`}>
+          {delivery.deliveryMemo || placeholder}
+        </span>
         <button onClick={() => openSelectOption()}>
           <img src={ExpandSelect.src} alt="Expand delivery note list" className="w-6 h-6" />
         </button>
