@@ -26,11 +26,11 @@ export default function Breadcrumbs() {
   const router = useRouter();
 
   useEffect(() => {
-    const query = searchParams.get('name');
+    const query = searchParams.get('keyword');
     setSearchQuery(query ? decodeURIComponent(query) : '');
 
     const sortOption = searchParams.get('sortOption') as SORT_OPTIONS;
-    if (sortOption && SORT_OPTIONS_CONFIG.some(option => option.value === sortOption)) {
+    if (sortOption && SORT_OPTIONS_CONFIG.some((option) => option.value === sortOption)) {
       setSelectedSort(sortOption);
     }
   }, [searchParams]); // Update searchQuery and selectedSort when URL parameters change
