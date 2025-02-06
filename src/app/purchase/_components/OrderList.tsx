@@ -9,7 +9,7 @@ export default function OrderList(props: OptionListProps) {
   const { productOptions } = props;
 
   const getOptionName = (product: OrderOption) => {
-    return product.options.map((option) => `${option.optionName} / ${option.value}`).join(' | ');
+    return product.options.map((option) => `${option.productOptionName} / ${option.productOptionValue}`).join(' | ');
   };
 
   return (

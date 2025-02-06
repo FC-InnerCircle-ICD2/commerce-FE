@@ -1,3 +1,5 @@
+import type { CardInfo } from '@/api/order';
+
 interface Card {
   cardNumber: string;
   expirationDate: string;
@@ -5,12 +7,23 @@ interface Card {
   cardOwnerName: string;
   cardImg: string;
   bankName?: string;
+  setCardInfo: React.Dispatch<React.SetStateAction<CardInfo>>;
 }
 
 export default function CardBlock(props: Card) {
-  const { cardNumber, cardOwnerName, expirationDate, cvc, cardImg, bankName } = props;
+  const { cardNumber, cardOwnerName, expirationDate, cvc, cardImg, bankName, setCardInfo } = props;
+
+  const handleCardBtn = () => {
+    setCardInfo({
+      cardNumber,
+      cardOwnerName,
+      expirationDate,
+      cvc,
+    });
+  };
+
   return (
-    <button>
+    <button onClick={handleCardBtn}>
       <div className="h-auto flex flex-col items-center">
         {cardImg && <img src={cardImg} alt="Bank account" className="w-full h-[120px] rounded-[5px]" />}
         <div className="flex justify-between mt-1 w-full items-center p-2 h-[30px]">

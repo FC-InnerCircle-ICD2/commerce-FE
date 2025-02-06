@@ -7,64 +7,72 @@ import PaymentMethod from './PaymentMethod';
 import TitleBoxContainer from './TitleBoxContainer';
 import WideSelectBox from './WideSelectBox';
 import PurchaseBanner from './PurchaseBanner';
-import { useLayoutEffect, useState } from 'react';
-import type { CardInfo, Delivery, OrderItems, PaymentMethodType } from '@/api/order';
+import { useState } from 'react';
+import type { CardInfo, Delivery, OrderOption, PaymentMethodType } from '@/api/order';
+import { numberFormatting } from '@/utils/numberFormatting';
 
-export default function OrderContents() {
+interface DetailOption {
+  id: number;
+  value: string;
+  quantity: number;
+  order: number;
+  additionalPrice?: number | null;
+  images: Array<{
+    id: number;
+    fileOrder: number;
+    url: string;
+    representative: boolean;
+  }>;
+}
+interface OptionInfo {
+  id: number;
+  name: string;
+  optionDetails: Array<DetailOption>;
+}
+interface SelectedOption {
+  count: number;
+  optionName: string;
+  value: string;
+  quantity: number;
+  price: number;
+}
+interface ProductParamsData {
+  product: {
+    options: OptionInfo[];
+    reviewStatistic: {
+      averageRating: number;
+      reviewCount: number;
+    };
+    id: number;
+    name: string;
+    description: string;
+    price: number;
+    category: {
+      id: number;
+      name: string;
+      parentCategoryId: number;
+      subCategories: Array<unknown>;
+    };
+    provider: {
+      id: number;
+      name: string;
+      description: string | null;
+    };
+  };
+  selectedOptions: SelectedOption[];
+}
+
+export default function OrderContents(props: { orderData: ProductParamsData }) {
+  const { orderData } = props;
+
   const [paymentMethod, setPaymentMethod] = useState<PaymentMethodType>('BANK_TRANSFER');
-  const [cardInfo, setCardInfo] = useState<CardInfo | null>(null);
-  const [orderItems, setOrderItems] = useState<OrderItems>({
-    product: {
-      id: 1,
-      name: '테리파머',
-      description: '테리파머 170g 고중량 국민 선물 호텔수건 5+5 총 수건 10장 세트 타올 샤워 타월',
-      price: 86700,
-      image:
-        'https://img.29cm.co.kr/next-product/2023/01/20/c26eef752da8444e876d51af65dfcb02_20230120135009.jpg?width=700',
-      category: {
-        id: 1,
-        name: '테리파머',
-      },
-      provider: {
-        id: 1,
-        name: '테리파머 제조사',
-        description: '테리파머 제조사 설명',
-      },
-    },
-    selectedOptions: [
-      {
-        options: [
-          {
-            optionName: '색상',
-            value: '블랙',
-          },
-        ],
-        quantity: 1,
-        price: 28900,
-      },
-      {
-        options: [
-          {
-            optionName: '색상',
-            value: '블루',
-          },
-        ],
-        quantity: 1,
-        price: 28900,
-      },
-      {
-        options: [
-          {
-            optionName: '색상',
-            value: '남색',
-          },
-        ],
-        quantity: 1,
-        price: 28900,
-      },
-    ],
-    totalAmount: 86700,
+  const [cardInfo, setCardInfo] = useState<CardInfo>({
+    cardNumber: '',
+    expirationDate: '',
+    cvc: '',
+    cardOwnerName: '',
   });
+  const [orderItems, setOrderItems] = useState<OrderOption[]>([]);
   const [delivery, setDelivery] = useState<Delivery>({
     name: '홍길동',
     phoneNumber: '010-1234-5678',
@@ -73,6 +81,44 @@ export default function OrderContents() {
     detailAddress: '101동 1004호',
     deliveryMemo: '',
   });
+  const [productParamsData, setProductParamsData] = useState<ProductParamsData>(orderData);
+  const representativeImageUrl = productParamsData?.product.options
+    .flatMap((option) => option.optionDetails)
+    .flatMap((detail) => detail.images)
+    .find((images) => images.representative);
+
+  const orderOptionItems = productParamsData?.selectedOptions?.map((option) => {
+    const findOption = (name: string) => productParamsData.product.options.find((option) => option.name === name);
+    const findOptionDetail = (option: OptionInfo | undefined, name: string) =>
+      option?.optionDetails.find((detail) => detail.value === name);
+
+    const currentOption = findOption(option.optionName);
+    const currentOptionDetail = findOptionDetail(currentOption, option.value);
+
+    return {
+      productId: productParamsData.product.id,
+      options: [
+        {
+          productOptionName: option.optionName,
+          productOptionId: currentOption?.id ?? 0,
+          productOptionValue: currentOptionDetail?.value ?? '',
+          productOptionDetailId: currentOptionDetail?.id ?? 0,
+        },
+      ],
+      quantity: option.count,
+      price: option.price,
+      categoryId: productParamsData.product.category.id,
+    };
+  });
+  console.log('orderOptionItems: ', orderOptionItems);
+
+  const getTotalPrice = <T extends boolean>(
+    selectedOptions: SelectedOption[],
+    formatted: T,
+  ): T extends true ? string : number => {
+    const total = selectedOptions.reduce((acc, cur) => (acc += cur.price * cur.count), 0);
+    return (formatted ? `${numberFormatting(total)}원` : total) as any;
+  };
 
   return (
     <>
@@ -103,44 +149,67 @@ export default function OrderContents() {
 
           {/* 주문상품 */}
           <TitleBoxContainer title="주문상품" toggle={false} margin="mb-5">
-            <div className="flex justify-between items-center mb-4">
-              <p className="font-medium text-base lg:text-lg">{orderItems?.product.name}</p>
-              <span className="font-medium text-sm lg:text-base text-neutral-500">무료 배송</span>
-            </div>
+            {productParamsData && (
+              <>
+                <div className="flex justify-between items-center mb-4">
+                  <p className="font-medium text-base lg:text-lg">{productParamsData.product.name}</p>
+                  <span className="font-medium text-sm lg:text-base text-neutral-500">무료 배송</span>
+                </div>
 
-            <div className="flex justify-between items-center mb-4">
-              {orderItems?.product.image && (
-                <img
-                  className="w-[80px] h-[80px] md:w-[100px] md:h-[100px] rounded-[10px]"
-                  src={orderItems?.product.image}
-                  alt="product image"
-                />
-              )}
-              <p className="font-normal ml-[10px] w-[calc(100%-90px)] text-sm lg:text-base lg:w-[calc(100%-110px)] flex flex-row-reverse">
-                {orderItems?.product.description}
-              </p>
-            </div>
+                <div className="flex justify-between items-center mb-4">
+                  {representativeImageUrl ? (
+                    <img
+                      className="w-[80px] h-[80px] md:w-[100px] md:h-[100px] rounded-[10px]"
+                      src={representativeImageUrl.url}
+                      alt="product image"
+                    />
+                  ) : (
+                    <div className="bg-neutral-300 w-[80px] h-[80px] md:w-[100px] md:h-[100px] rounded-[10px]"></div>
+                  )}
+                  <p className="font-normal ml-[10px] w-[calc(100%-90px)] text-sm lg:text-base lg:w-[calc(100%-110px)] flex flex-row-reverse">
+                    {productParamsData.product.description}
+                  </p>
+                </div>
 
-            <OrderList productOptions={orderItems?.selectedOptions} />
+                <OrderList productOptions={orderOptionItems} />
+              </>
+            )}
           </TitleBoxContainer>
 
           <TitleBoxContainer title={null} toggle={false}>
             <div className="flex justify-between items-center">
               <span className="text-base lg:text-lg font-medium">총 주문금액</span>
-              <span className="text-base lg:text-lg font-bold">86,700원</span>
+              <span className="text-base lg:text-lg font-bold">
+                {getTotalPrice(productParamsData.selectedOptions, true)}
+              </span>
             </div>
           </TitleBoxContainer>
 
           {/* 결제수단 */}
-          <TitleBoxContainer title="결제수단" toggle={true} toggleTitle="86,700원">
-            <PaymentMethod />
+          <TitleBoxContainer
+            title="결제수단"
+            toggle={true}
+            toggleTitle={getTotalPrice(productParamsData.selectedOptions, true)}
+          >
+            <PaymentMethod
+              setCardInfo={setCardInfo}
+              paymentMethod={paymentMethod}
+              setPaymentMethod={setPaymentMethod}
+            />
           </TitleBoxContainer>
         </div>
 
         {/* 결제상세 */}
         <div className="w-full lg:w-[35%]">
-          <TitleBoxContainer title="결제상세" toggle={true} toggleTitle="86,700원">
-            <PaymentDetail />
+          <TitleBoxContainer
+            title="결제상세"
+            toggle={true}
+            toggleTitle={getTotalPrice(productParamsData.selectedOptions, true)}
+          >
+            <PaymentDetail
+              paymentMethod={paymentMethod}
+              totalPrice={getTotalPrice(productParamsData.selectedOptions, true)}
+            />
           </TitleBoxContainer>
         </div>
       </div>
@@ -148,7 +217,13 @@ export default function OrderContents() {
       <div className="w-full md:pb-[90px] lg:pb-[100px]">
         <Footer />
       </div>
-      <PurchaseBanner />
+      <PurchaseBanner
+        paymentMethod={paymentMethod}
+        cardInfo={cardInfo}
+        orderItems={orderOptionItems}
+        delivery={delivery}
+        totalPrice={getTotalPrice(productParamsData.selectedOptions, false)}
+      />
     </>
   );
 }

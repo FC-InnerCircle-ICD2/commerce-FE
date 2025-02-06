@@ -1,14 +1,16 @@
 import { MOCK_URL } from '@/constants/constant';
 
 export interface OrderOption {
-  options: [
-    {
-      optionName: string;
-      value: string;
-    },
-  ];
+  productId: number;
+  options: Array<{
+    productOptionName: string;
+    productOptionId: number;
+    productOptionValue: string;
+    productOptionDetailId: number;
+  }>;
   quantity: number;
   price: number;
+  categoryId: number;
 }
 
 export type PaymentMethodType = 'BANK_TRANSFER' | 'CARD' | 'KAKAO_PAY' | 'TOSS' | 'NAVER_PAY';
@@ -17,27 +19,6 @@ export interface CardInfo {
   expirationDate: string;
   cvc: string;
   cardOwnerName: string;
-}
-
-export interface OrderItems {
-  product: {
-    id: number;
-    name: string;
-    description: string;
-    price: number;
-    image?: string | null;
-    category: {
-      id: number;
-      name: string;
-    };
-    provider: {
-      id: number;
-      name: string;
-      description: string;
-    };
-  };
-  selectedOptions: OrderOption[];
-  totalAmount: number;
 }
 
 export interface Delivery {
@@ -50,10 +31,10 @@ export interface Delivery {
 }
 
 export interface IOrder {
-  paymentMethod: PaymentMethodType;
   cardInfo: CardInfo;
-  orderItems: OrderItems;
-  delivery: Delivery;
+  deliveryInfo: Delivery;
+  totalAmount: number;
+  orderItems: OrderOption[];
 }
 
 export const ORDER_URL = '/v1/orders';

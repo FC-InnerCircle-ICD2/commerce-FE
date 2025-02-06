@@ -5,6 +5,7 @@ import CarouselLeft from '@/assets/purchase/carouselLeft.png';
 import CarouselRight from '@/assets/purchase/carouselRight.png';
 import AccountBlock from './AccountBlock';
 import CardBlock from './CardBlock';
+import type { CardInfo } from '@/api/order';
 
 interface Account {
   cardNumber: string;
@@ -27,11 +28,12 @@ interface Card {
 interface Props {
   accounts?: Account[];
   cards?: Card[];
+  setCardInfo: React.Dispatch<React.SetStateAction<CardInfo>>;
   carouselType: 'account' | 'card';
 }
 
 export default function PurchaseCarousel(props: Props) {
-  const { accounts = [], cards = [], carouselType } = props;
+  const { accounts = [], cards = [], carouselType, setCardInfo } = props;
 
   return (
     <Carousel
@@ -58,6 +60,7 @@ export default function PurchaseCarousel(props: Props) {
               cardOwnerName={account.cardOwnerName}
               accountImg={account.accountImg}
               bankName={account.bankName}
+              setCardInfo={setCardInfo}
             />
           ))
         : cards.map((card, index) => (
@@ -69,6 +72,7 @@ export default function PurchaseCarousel(props: Props) {
               cardOwnerName={card.cardOwnerName}
               cardImg={card.cardImg}
               bankName={card.bankName}
+              setCardInfo={setCardInfo}
             />
           ))}
     </Carousel>
