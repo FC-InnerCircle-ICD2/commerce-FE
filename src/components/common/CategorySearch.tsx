@@ -1,7 +1,7 @@
 'use client';
 
 import Selectbox, { type IOptions } from './Selectbox';
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { Suspense, useEffect, useMemo, useRef, useState } from 'react';
 import SearchOverview from './searchOverview/SearchOverview';
 import SearchForm from './SearchForm';
 import { useCategory } from '@/hooks/queries/useCategory';
@@ -45,11 +45,13 @@ export default function CategorySearch() {
         <Selectbox width="150" currentItem={currentItem} items={categoryOptions} handleChangeSelect={setCurrentItem} />
       )}
       <div className="relative flex grow pr-[10]" onFocus={() => setIsFocus(true)}>
-        <SearchForm
-          category={currentItem}
-          classname="grow border-l-2 border-[#CBD5E1] pl-[15] text-[#3D3D3D] bg-transparent outline-none"
-          handleCloseSearchView={handleCloseSearchView}
-        />
+        <Suspense>
+          <SearchForm
+            category={currentItem}
+            classname="grow border-l-2 border-[#CBD5E1] pl-[15] text-[#3D3D3D] bg-transparent outline-none"
+            handleCloseSearchView={handleCloseSearchView}
+          />
+        </Suspense>
         <MagnifyingGlassIcon className="w-[25px] h-[25px] text-[#075985]" />
         {isFocus && (
           <article className="absolute z-50 left-0 top-[50] w-full bg-white rounded-md shadow-md">

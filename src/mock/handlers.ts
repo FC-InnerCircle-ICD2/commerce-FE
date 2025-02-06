@@ -311,6 +311,7 @@ export const handlers = [
   }),
 
   http.get(`${MOCK_URL}/v1/products/:productId`, ({ params }) => {
+    console.log(params);
     return HttpResponse.json({
       productId: 7,
       name: '여성티셔츠',

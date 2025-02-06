@@ -2,14 +2,15 @@ import HeaderLogo from '@/assets/purchase/headerLogo.png';
 import ChevronRight from '@/assets/purchase/chevronRight.png';
 import OrderContents from './_components/OrderContents';
 
-export default async function Purchase({ searchParams }: { searchParams: { data?: string } }) {
-  if (!searchParams.data) {
+export default async function Purchase({ searchParams }: { searchParams: Promise<{ data?: string }> }) {
+  const { data } = await searchParams;
+  if (!data) {
     return <p>No order data found.</p>;
   }
   let orderData = null;
 
   try {
-    orderData = JSON.parse(decodeURIComponent(searchParams.data));
+    orderData = JSON.parse(decodeURIComponent(data));
   } catch {
     return <p>Error: Invalid order data</p>;
   }

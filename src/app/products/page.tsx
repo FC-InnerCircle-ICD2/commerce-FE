@@ -67,7 +67,9 @@ const ProductContent = async ({
       <div className="lg:w-1/4">
         {/* 카테고리 영역 */}
         <div className="w-full h-fit bg-slate-50 border border-slate-300 rounded-xl hidden lg:block mb-5">
-          <CategoryList />
+          <Suspense>
+            <CategoryList />
+          </Suspense>
         </div>
         {/* 필터 영역 */}
         <div className="w-full h-fit bg-slate-50 border border-slate-300 rounded-xl hidden lg:block mb-5">
@@ -78,7 +80,9 @@ const ProductContent = async ({
       {/* 상품 목록 영역 */}
       <main className="lg:w-3/4">
         <div className="lg:mb-8 mb-1">
-          <Breadcrumbs />
+          <Suspense>
+            <Breadcrumbs />
+          </Suspense>
         </div>
         <div className="lg:hidden block mb-8 px-3 py-2 bg-slate-50 border-slate-300 border">
           <MobileFilter products={products} />
@@ -119,7 +123,9 @@ export default async function ProductsPage({
   return (
     <>
       <div className="lg:hidden">
-        <CategoryHeader />
+        <Suspense>
+          <CategoryHeader />
+        </Suspense>
       </div>
 
       <div className="hidden md:block">
