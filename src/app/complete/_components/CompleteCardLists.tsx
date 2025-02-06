@@ -76,42 +76,40 @@ export default function CompleteCardLists() {
     };
   }, [products]);
 
+  if (!products) return null;
+
   return (
     <div className="mt-10 max-w-[875px] relative">
       <h3 className="text-left ml-10 max-sm:ml-0 text-sm md:text-base font-medium mb-4">이런 상품 어떠신가요?</h3>
       {deviceType === 'mobile' ? (
         <div className="grid grid-cols-2 gap-4">
-          {products
-            ?.slice(0, 6)
-            ?.map((product) => (
-              <Card
-                key={product.productId}
-                productId={product.productId}
-                imgUrl={product.options[0].optionDetails[0].url}
-                title={product.name}
-                price={product.price}
-                review={product.rating}
-              />
-            ))}
+          {products.content.slice(0, 6).map((product) => (
+            <Card
+              key={product.productId}
+              productId={product.productId}
+              imgUrl={product.options[0].optionDetails[0].url}
+              title={product.name}
+              price={product.price}
+              review={product.rating}
+            />
+          ))}
         </div>
       ) : deviceType === 'tablet' ? (
         <div className="grid grid-cols-3 gap-4">
-          {products
-            ?.slice(0, 3)
-            ?.map((product) => (
-              <Card
-                key={product.productId}
-                productId={product.productId}
-                imgUrl={product.options[0].optionDetails[0].url}
-                title={product.name}
-                price={product.price}
-                review={product.rating}
-              />
-            ))}
+          {products.content.slice(0, 3).map((product) => (
+            <Card
+              key={product.productId}
+              productId={product.productId}
+              imgUrl={product.options[0].optionDetails[0].url}
+              title={product.name}
+              price={product.price}
+              review={product.rating}
+            />
+          ))}
         </div>
       ) : (
         <>
-          {products && (
+          {products.content && (
             <Carousel
               infinite={false}
               viewCount={4}
@@ -120,7 +118,7 @@ export default function CompleteCardLists() {
               RightArrow={<RightArrow />}
               hasDeleteButton={false}
             >
-              {products.slice(0, 4).map((product) => (
+              {products.content.slice(0, 4).map((product) => (
                 <Card
                   key={product.productId}
                   productId={product.productId}
