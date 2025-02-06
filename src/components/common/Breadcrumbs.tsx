@@ -28,7 +28,12 @@ export default function Breadcrumbs() {
   useEffect(() => {
     const query = searchParams.get('name');
     setSearchQuery(query ? decodeURIComponent(query) : '');
-  }, [searchParams]); // Update searchQuery when URL parameters change
+
+    const sortOption = searchParams.get('sortOption') as SORT_OPTIONS;
+    if (sortOption && SORT_OPTIONS_CONFIG.some(option => option.value === sortOption)) {
+      setSelectedSort(sortOption);
+    }
+  }, [searchParams]); // Update searchQuery and selectedSort when URL parameters change
 
   const getCurrentSortLabel = (value: SORT_OPTIONS): string => {
     return SORT_OPTIONS_CONFIG.find((option) => option.value === value)?.label ?? '';

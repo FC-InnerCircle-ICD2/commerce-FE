@@ -89,13 +89,13 @@ export type ProductsProps = {
   pageSize?: number;
 };
 
-export const getProducts = async (props: ProductsProps): Promise<IProduct[]> => {
+export const getProducts = async (props: ProductsProps): Promise<IProductAPI> => {
   const url = buildUrl(`${BASE_URL}${PRODUCT_URL}`, props);
 
   const response = await fetch(url);
 
   const data: IProductAPI = await response.json();
-  return data.content;
+  return data;
 };
 
 export interface IProductDetailOptionDetails {

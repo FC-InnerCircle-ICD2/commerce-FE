@@ -10,6 +10,7 @@ import { Header } from '@/components/layout';
 import { Suspense } from 'react';
 import CategoryHeader from '../category/_components/CategoryHeader';
 import PREPARING from '@/assets/preparing.png';
+import Pagination from './_components/Pagination';
 
 const ProductSkeletons = () => {
   return (
@@ -48,7 +49,7 @@ const ProductContent = async ({
     pageSize: params.pageSize ? Number(params.pageSize) : undefined,
     productId: undefined,
     categoryId: params.categoryId ? Number(params.categoryId) : undefined,
-    sortOption: (params.sortOption as SORT_OPTIONS) || undefined,
+    sortOption: params.sortOption ? (params.sortOption as SORT_OPTIONS) : undefined,
   });
 
   if (!products) {
@@ -73,7 +74,7 @@ const ProductContent = async ({
         </div>
         {/* 필터 영역 */}
         <div className="w-full h-fit bg-slate-50 border border-slate-300 rounded-xl hidden lg:block mb-5">
-          <Filter products={products} />
+          <Filter products={products.content} />
         </div>
       </div>
 
@@ -85,11 +86,11 @@ const ProductContent = async ({
           </Suspense>
         </div>
         <div className="lg:hidden block mb-8 px-3 py-2 bg-slate-50 border-slate-300 border">
-          <MobileFilter products={products} />
+          <MobileFilter products={products.content} />
         </div>
         <div className="lg:px-0 px-4">
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 bg-slate-50 border border-slate-300 rounded-xl p-7">
-            {products.map((product) => (
+            {products.content.map((product) => (
               <Card
                 key={product.productId}
                 productId={product.productId}
@@ -100,6 +101,10 @@ const ProductContent = async ({
               />
             ))}
           </div>
+          <Pagination
+            currentPage={products.page.number}
+            totalPages={products.page.totalPages}
+          />
         </div>
       </main>
     </>
