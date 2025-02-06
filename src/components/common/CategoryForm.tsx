@@ -21,7 +21,7 @@ export default function CategoryForm({ categories, handleClose }: Props) {
 
   const handleCategoryItemClick = (category: ICategory) => {
     const params = new URLSearchParams();
-    params.append('category', String(category.id));
+    params.append('categoryId', String(category.id));
 
     router.push(`/products?${params.toString()}`);
 
@@ -32,7 +32,7 @@ export default function CategoryForm({ categories, handleClose }: Props) {
 
   return (
     <article className="w-full h-full flex gap-[10]">
-      <ul className="w-[160] flex flex-col gap-2">
+      <ul className="w-[160] flex flex-col gap-2 overflow-y-auto">
         {categories.map((category, i) => {
           return (
             <li

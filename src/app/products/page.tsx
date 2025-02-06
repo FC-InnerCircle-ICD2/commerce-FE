@@ -32,6 +32,7 @@ const ProductContent = async ({
     rating?: string;
     pageNumber?: string;
     pageSize?: string;
+    categoryId?: string;
   }>;
 }) => {
   try {
@@ -45,7 +46,7 @@ const ProductContent = async ({
       pageNumber: params.pageNumber ? Number(params.pageNumber) : undefined,
       pageSize: params.pageSize ? Number(params.pageSize) : undefined,
       productId: undefined,
-      categoryId: undefined,
+      categoryId: params.categoryId ? Number(params.categoryId) : undefined,
     });
 
     if (!products) {
@@ -83,7 +84,7 @@ const ProductContent = async ({
                   imgUrl={product.options[0].optionDetails[0].url}
                   title={product.name}
                   price={product.price}
-                  review={3}
+                  review={product.rating ?? 0}
                 />
               ))}
             </div>

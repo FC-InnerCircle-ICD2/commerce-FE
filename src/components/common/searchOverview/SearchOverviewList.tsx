@@ -13,7 +13,7 @@ export default function SearchOverviewList({ search, handleRemoveSearch, handleC
 
   function handleSearchClick() {
     const params = new URLSearchParams();
-    params.append('name', search);
+    params.append('keyword', search);
     handleClose();
     router.push(`/products?${params.toString()}`);
   }

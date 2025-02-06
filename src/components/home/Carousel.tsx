@@ -28,7 +28,13 @@ export default function Carousel({ banners }: Props) {
               src={item.bannerImage.url}
               alt={item.title}
               className="w-full h-full cursor-pointer"
-              onClick={() => router.push(item.productBannerResponse.linkUrl)}
+              onClick={() => {
+                if (item.productBannerResponse?.linkUrl) {
+                  router.push(item.productBannerResponse.linkUrl);
+                } else {
+                  alert('배너 경로가 존재하지 않습니다.');
+                }
+              }}
             />
           );
         })}
