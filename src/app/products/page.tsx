@@ -1,4 +1,5 @@
 import React from 'react';
+import { ShoppingBagIcon } from '@heroicons/react/24/outline';
 import Card from '@/components/common/Card';
 import CardSkeleton from '@/components/common/CardSkeleton';
 import CategoryList from './_components/CategoryList';
@@ -87,19 +88,31 @@ const ProductContent = async ({
           <MobileFilter products={products.content} />
         </div>
         <div className="lg:px-0 px-4">
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 bg-slate-50 border border-slate-300 rounded-xl p-7">
-            {products.content.map((product) => (
-              <Card
-                key={product.productId}
-                productId={product.productId}
-                imgUrl={getImageUrl(product)}
-                title={product.name}
-                price={product.price}
-                review={product.rating ?? 0}
-              />
-            ))}
+          <div className="bg-slate-50 border border-slate-300 rounded-xl p-7">
+            {products.content.length > 0 ? (
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
+                {products.content.map((product) => (
+                  <Card
+                    key={product.productId}
+                    productId={product.productId}
+                    imgUrl={getImageUrl(product)}
+                    title={product.name}
+                    price={product.price}
+                    review={product.rating ?? 0}
+                  />
+                ))}
+              </div>
+            ) : (
+              <div className="flex flex-col items-center justify-center py-16">
+                <ShoppingBagIcon className="w-16 h-16 text-slate-300 mb-4" />
+                <p className="text-lg font-medium text-slate-600">상품이 없습니다</p>
+                <p className="text-sm text-slate-400 mt-1">다른 검색어로 다시 시도해보세요</p>
+              </div>
+            )}
           </div>
-          <Pagination currentPage={products.page.number} totalPages={products.page.totalPages} />
+          {products.content.length > 0 && (
+            <Pagination currentPage={products.page.number} totalPages={products.page.totalPages} />
+          )}
         </div>
       </main>
     </>
