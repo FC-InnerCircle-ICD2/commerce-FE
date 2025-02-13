@@ -1,11 +1,15 @@
 import { PriceRange } from '@/types/product';
 import { COLOR_MAPPING } from '@/app/products/_components/filter/constants';
+import { StarIcon as StarEmptyIcon } from '@heroicons/react/24/outline';
+import { StarIcon as StarFilledIcon } from '@heroicons/react/24/solid';
 
 interface SelectedOptionTagProps {
   priceRange?: PriceRange;
   onPriceRangeRemove?: () => void;
   selectedColors?: string[];
   onColorRemove?: (color: string) => void;
+  selectedRating?: number | null;
+  onRatingRemove?: () => void;
   global?: boolean;
 }
 
@@ -14,8 +18,10 @@ export const SelectedOptionTag = ({
   onPriceRangeRemove,
   selectedColors,
   onColorRemove,
+  selectedRating,
+  onRatingRemove,
 }: SelectedOptionTagProps) => {
-  const hasSelectedOptions = priceRange || (selectedColors && selectedColors.length > 0);
+  const hasSelectedOptions = priceRange || (selectedColors && selectedColors.length > 0) || selectedRating;
 
   if (!hasSelectedOptions) return null;
 
@@ -46,6 +52,20 @@ export const SelectedOptionTag = ({
               </button>
             </div>
           ))}
+          {selectedRating && (
+            <span className="flex items-center gap-4 w-fit bg-slate-500 py-2 px-3 rounded-full">
+              <div className="flex items-center">
+                {[...Array(5)].map((_, index) => {
+                  const StarComponent = index < selectedRating ? StarFilledIcon : StarEmptyIcon;
+                  return <StarComponent key={index} className="h-4 w-4 text-white" />;
+                })}
+              </div>
+              <span className="text-sm font-semibold text-white">{selectedRating}점 이상</span>
+              <button onClick={onRatingRemove} className="text-md text-white">
+                ✕
+              </button>
+            </span>
+          )}
         </div>
       </div>
       <hr className="my-8" />
@@ -58,9 +78,11 @@ export const MobileSelectedOptionTag = ({
   onPriceRangeRemove,
   selectedColors,
   onColorRemove,
+  selectedRating,
+  onRatingRemove,
   global,
 }: SelectedOptionTagProps) => {
-  const hasSelectedOptions = priceRange || (selectedColors && selectedColors.length > 0);
+  const hasSelectedOptions = priceRange || (selectedColors && selectedColors.length > 0) || selectedRating;
 
   if (!hasSelectedOptions) return null;
 
@@ -89,6 +111,20 @@ export const MobileSelectedOptionTag = ({
             </button>
           </span>
         ))}
+        {selectedRating && (
+          <span className="flex items-center gap-4 w-fit bg-slate-500 py-2 px-3 rounded-full">
+            <div className="flex items-center">
+              {[...Array(5)].map((_, index) => {
+                const StarComponent = index < selectedRating ? StarFilledIcon : StarEmptyIcon;
+                return <StarComponent key={index} className="h-4 w-4 text-white" />;
+              })}
+            </div>
+            <span className="text-sm font-semibold text-white">{selectedRating}점 이상</span>
+            <button onClick={onRatingRemove} className="text-md text-white">
+              ✕
+            </button>
+          </span>
+        )}
       </div>
     );
   }
@@ -100,7 +136,7 @@ export const MobileSelectedOptionTag = ({
           <span className="text-sm font-semibold">
             {priceRange.min}원 ~ {priceRange.max}원
           </span>
-          <button onClick={onPriceRangeRemove} className="text-md">
+          <button onClick={onPriceRangeRemove} className="text-md text-gray-400">
             ✕
           </button>
         </span>
@@ -112,11 +148,25 @@ export const MobileSelectedOptionTag = ({
             style={{ backgroundColor: COLOR_MAPPING[color] || '#CCCCCC' }}
           />
           <span className="text-sm font-semibold">{color}</span>
-          <button onClick={() => onColorRemove?.(color)} className="text-md">
+          <button onClick={() => onColorRemove?.(color)} className="text-md text-gray-400">
             ✕
           </button>
         </span>
       ))}
+      {selectedRating && (
+        <span className="flex items-center gap-4 w-fit bg-white py-2 px-3 rounded-full">
+          <div className="flex items-center">
+            {[...Array(5)].map((_, index) => {
+              const StarComponent = index < selectedRating ? StarFilledIcon : StarEmptyIcon;
+              return <StarComponent key={index} className="h-4 w-4 text-yellow-400" />;
+            })}
+          </div>
+          <span className="text-sm font-semibold">{selectedRating}점 이상</span>
+          <button onClick={onRatingRemove} className="text-md text-gray-400">
+            ✕
+          </button>
+        </span>
+      )}
     </div>
   );
 };

@@ -19,7 +19,7 @@ export default function SearchInput({ category, classname, onSearch, handleClose
   const [inputValue, setInputValue] = useState<string>('');
 
   useEffect(() => {
-    const nameParam = searchParams.get('name');
+    const nameParam = searchParams?.get('name');
     if (nameParam) {
       setInputValue(nameParam);
     } else {

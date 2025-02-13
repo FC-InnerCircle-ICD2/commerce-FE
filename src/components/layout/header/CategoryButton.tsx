@@ -10,7 +10,7 @@ export default function CategoryButton() {
   return (
     <div className="relative hidden tablet:block">
       <button
-        className={`w-[65px] h-[65px] rounded-lg flex flex-col items-center justify-center gap-[5] ${categoryOpen && 'bg-headerMain'} hover:bg-headerMain`}
+        className={`w-[65px] h-[65px] rounded-lg flex flex-col items-center justify-center gap-[5px] ${categoryOpen && 'bg-headerMain'} hover:bg-headerMain`}
         onClick={() => setCategoryOpen(true)}
       >
         <Image src="/assets/category.svg" alt="shopping" width={24} height={24} />

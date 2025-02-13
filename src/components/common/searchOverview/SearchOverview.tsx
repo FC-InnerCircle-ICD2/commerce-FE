@@ -34,7 +34,7 @@ export default function SearchOverview({ parentRef, handleClose }: Props) {
   };
 
   return (
-    <article className="w-full p-4 flex flex-col gap-[25]">
+    <article className="w-full p-4 flex flex-col gap-[25px]">
       <div className="w-full flex justify-between text-sm">
         <span className="text-[#4F4F4F]">최근 검색어</span>
         <span className="text-[#949494] cursor-pointer" onClick={() => setSearch([])}>

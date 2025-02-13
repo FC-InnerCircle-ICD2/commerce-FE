@@ -16,7 +16,7 @@ export default function ProductDegtailCards() {
           <Card
             key={product.productId}
             productId={product.productId}
-            imgUrl={product.options[0].optionDetails[0].url}
+            imgUrl={product.images[0].url}
             title={product.name}
             price={product.price}
             review={product.rating}
