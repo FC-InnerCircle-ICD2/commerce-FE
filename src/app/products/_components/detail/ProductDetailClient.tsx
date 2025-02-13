@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import type { IProductDetail, IProductDetailOption, IProductDetailOptionDetails } from '@/api/product';
+import type { IProductDetail, IProductOptionDetail, IProductOptions } from '@/api/product';
 import ProductDegtailCards from './ProductDetailCards';
 import ProductDetailSelectOptions from './ProductDetailSelectOptions';
 import { useRouter } from 'next/navigation';
@@ -19,7 +19,7 @@ const ProductDetailClient: React.FC<{ product: IProductDetail }> = ({ product })
   const [selectedTab, setSelectedTab] = useState('상세정보');
   const [selectOptionDetails, setSelectOptionDetails] = useState<ISelectOptionDetail[]>([]);
 
-  function handleAddOptionsDetail(option: IProductDetailOption, detail: IProductDetailOptionDetails) {
+  function handleAddOptionsDetail(option: IProductOptions, detail: IProductOptionDetail) {
     const find = selectOptionDetails.find((item) => item.value === detail.value);
     if (find) {
       setSelectOptionDetails([
@@ -79,7 +79,7 @@ const ProductDetailClient: React.FC<{ product: IProductDetail }> = ({ product })
         {/* 상품 이미지 */}
         <div className="w-full lg:w-1/2 flex-shrink-0">
           <img
-            src={product.options[0].optionDetails[0].images[0].url ?? '/placeholder-image.jpg'}
+            src={product.images[0].url ?? '/placeholder-image.jpg'}
             alt={product.name}
             className="w-full h-auto lg:h-[500px] object-cover"
           />

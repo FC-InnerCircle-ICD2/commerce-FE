@@ -33,7 +33,7 @@ export default function PaymentMethod(props: Props) {
             name="payment"
             id="BANK_TRANSFER"
             value={'BANK_TRANSFER'}
-            className="w-5 h-5 lg:w-[25] lg:h-[25]"
+            className="w-5 h-5 lg:w-[25px] lg:h-[25px]"
             defaultChecked
             onChange={handlePayment}
           />
@@ -94,7 +94,7 @@ export default function PaymentMethod(props: Props) {
           name="payment"
           id="CARD"
           value={'CARD'}
-          className="w-5 h-5 lg:w-[25] lg:h-[25]"
+          className="w-5 h-5 lg:w-[25px] lg:h-[25px]"
           onChange={handlePayment}
         />
         <label htmlFor="CARD" className="ml-2 lg:ml-2.5 text-md lg:text-lg font-medium">

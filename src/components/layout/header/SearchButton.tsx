@@ -9,7 +9,7 @@ export default function SearchButton() {
   return (
     <>
       <div
-        className="grow h-10 bg-headerMain rounded-lg flex items-center px-[10] tablet:hidden"
+        className="grow h-10 bg-headerMain rounded-lg flex items-center px-[10px] tablet:hidden"
         onClick={() => setIsSearch(true)}
       >
         <p className="grow text-xs text-[#5B5B5B]">찾고 싶은 상품을 검색해 보세요!</p>

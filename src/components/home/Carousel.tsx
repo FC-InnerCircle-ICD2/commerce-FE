@@ -11,7 +11,7 @@ type Props = {
 export default function Carousel({ banners }: Props) {
   const router = useRouter();
   return (
-    <div className="w-full h-[350] bg-slate-200">
+    <div className="w-full h-[350px] bg-slate-200">
       <BannerCarousel
         auto={false}
         autoTimer={2000}

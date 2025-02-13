@@ -26,9 +26,14 @@ export default function Breadcrumbs() {
   const router = useRouter();
 
   useEffect(() => {
-    const query = searchParams.get('name');
+    const query = searchParams?.get('keyword');
     setSearchQuery(query ? decodeURIComponent(query) : '');
-  }, [searchParams]); // Update searchQuery when URL parameters change
+
+    const sortOption = searchParams?.get('sortOption') as SORT_OPTIONS;
+    if (sortOption && SORT_OPTIONS_CONFIG.some((option) => option.value === sortOption)) {
+      setSelectedSort(sortOption);
+    }
+  }, [searchParams]); // Update searchQuery and selectedSort when URL parameters change
 
   const getCurrentSortLabel = (value: SORT_OPTIONS): string => {
     return SORT_OPTIONS_CONFIG.find((option) => option.value === value)?.label ?? '';
@@ -42,7 +47,7 @@ export default function Breadcrumbs() {
     const sortValue = getSortValueByLabel(label);
     setSelectedSort(sortValue);
 
-    const params = new URLSearchParams(searchParams);
+    const params = new URLSearchParams(searchParams?.toString() || '');
     params.set('sortOption', sortValue);
     router.push(`?${params.toString()}`);
   };

@@ -11,7 +11,7 @@ export default async function Home() {
     return (
       <div className="flex flex-col h-screen overflow-x-hidden">
         <Header />
-        <div className="grow flex flex-col gap-[20]">
+        <div className="grow flex flex-col gap-5">
           <Carousel banners={banners} />
           <Suspense fallback={<ProductSkeletons />}>
             <ProductList />
