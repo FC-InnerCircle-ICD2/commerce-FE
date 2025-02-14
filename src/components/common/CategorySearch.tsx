@@ -35,7 +35,7 @@ export default function CategorySearch() {
   return (
     <div
       ref={parentRef}
-      className="grow max-w-[550px] text-sm h-[50px] py-1 gap-[10] bg-headerMain rounded-lg hidden items-center tablet:flex tablet:relative"
+      className="grow max-w-[550px] text-sm h-[50px] py-1 gap-[10px] bg-headerMain rounded-lg hidden items-center tablet:flex tablet:relative"
     >
       {categoryLoading ? (
         <div className="w-[120px]">
@@ -54,7 +54,7 @@ export default function CategorySearch() {
         </Suspense>
         <MagnifyingGlassIcon className="w-[25px] h-[25px] text-[#075985]" />
         {isFocus && (
-          <article className="absolute z-50 left-0 top-[50] w-full bg-white rounded-md shadow-md">
+          <article className="absolute z-50 left-0 top-[50px] w-full bg-white rounded-md shadow-md">
             <SearchOverview parentRef={parentRef} recommend={['추천']} handleClose={() => setIsFocus(false)} />
           </article>
         )}

@@ -46,7 +46,7 @@ const ProductContent = async ({
     priceMax: params.priceMax ? Number(params.priceMax) : undefined,
     rating: params.rating ? Number(params.rating) : undefined,
     pageNumber: params.pageNumber ? Number(params.pageNumber) : undefined,
-    pageSize: params.pageSize ? Number(params.pageSize) : undefined,
+    pageSize: params.pageSize ? Number(params.pageSize) : 12,
     productId: undefined,
     categoryId: params.categoryId ? Number(params.categoryId) : undefined,
     sortOption: params.sortOption ? (params.sortOption as SORT_OPTIONS) : undefined,
@@ -57,9 +57,7 @@ const ProductContent = async ({
   }
 
   function getImageUrl(product: IProduct) {
-    return product.options.length === 0 || !product.options[0].optionDetails
-      ? PREPARING.src
-      : product.options[0].optionDetails[0].url;
+    return product.options.length === 0 || !product.options[0].optionDetails ? PREPARING.src : product.images[0].url;
   }
 
   return (

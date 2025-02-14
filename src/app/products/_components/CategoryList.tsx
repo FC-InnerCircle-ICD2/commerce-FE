@@ -9,7 +9,7 @@ function CategoryList() {
   const searchParams = useSearchParams();
   const router = useRouter();
   const pathname = usePathname();
-  const categoryId = searchParams.get('categoryId');
+  const categoryId = searchParams?.get('categoryId');
 
   const handleCategoryClick = (categoryId: number) => {
     const params = new URLSearchParams();

@@ -1,17 +1,25 @@
 import { buildUrl } from '@/utils/buildUrl';
 import { BASE_URL } from '@/constants/constant';
+import { ICategory } from './category';
+
+export interface IProductImages {
+  id: number;
+  fileOrder: number;
+  url: string;
+  type: string;
+}
 
 export interface IProductOptionDetail {
+  /** option id */
+  id: number;
   /** 옵션 값 */
   value: string;
   /** 재고 수량 */
   quantity: number;
+  /** 이미지 순서 */
+  order: number;
   /** 추가 금액 */
   additionalPrice: number;
-  /** 이미지 순서 */
-  fileOrder: number;
-  /** 이미지 url */
-  url: string;
 }
 
 export interface IProductOptions {
@@ -34,21 +42,19 @@ export interface IProduct {
   /** 상품 별점 */
   rating: number;
   /** 카테고리 정보*/
-  category: {
-    /** 카테고리 ID */
-    categoryId: number;
-    /** 카테고리 이름 */
-    name: string;
-  };
+  category: ICategory;
   /** 공급자 */
   provider: {
     /** 공급자 ID */
-    providerId: number;
+    id: number;
     /** 공급자 이름 */
     name: string;
+    /** 공급자 정보 */
+    description: string;
   };
   /** 상품 옵션 */
   options: IProductOptions[];
+  images: IProductImages[];
 }
 
 interface IProductAPI {
@@ -98,35 +104,6 @@ export const getProducts = async (props: ProductsProps): Promise<IProductAPI> =>
   return data;
 };
 
-export interface IProductDetailOptionDetails {
-  images: [
-    {
-      id: number;
-      fileOrder: number;
-      url: string;
-      representative: boolean;
-    },
-  ];
-  id: number;
-  value: string;
-  quantity: number;
-  order: number;
-  additionalPrice: number | null;
-}
-
-export interface IProductDetailOption {
-  optionDetails: IProductDetailOptionDetails[];
-  id: number;
-  name: string;
-}
-
-export interface IProductDetail {
-  options: IProductDetailOption[];
+export interface IProductDetail extends IProduct {
   reviewStatistic: { averageRating: number; reviewCount: number };
-  id: number;
-  name: string;
-  description: string;
-  price: number;
-  category: { id: number; name: string; parentCategoryId: number; subCategories: [] };
-  provider: { id: number; name: string; description: string | null };
 }

@@ -7,8 +7,8 @@ import { useCategory } from '@/hooks/queries/useCategory';
 export default function CategoryHeader() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const categoryId = searchParams.get('category');
-  const keyword = searchParams.get('keyword');
+  const categoryId = searchParams?.get('category');
+  const keyword = searchParams?.get('keyword');
   const { categories } = useCategory();
 
   const getTitle = () => {
