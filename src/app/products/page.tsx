@@ -90,18 +90,23 @@ const ProductContent = async ({
         <div className="lg:px-0 px-4">
           <div className="bg-slate-50 border border-slate-300 rounded-xl p-7">
             {products.content.length > 0 ? (
-              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
-                {products.content.map((product) => (
-                  <Card
-                    key={product.productId}
-                    productId={product.productId}
-                    imgUrl={getImageUrl(product)}
-                    title={product.name}
-                    price={product.price}
-                    review={product.rating ?? 0}
-                  />
-                ))}
-              </div>
+              <>
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
+                  {products.content.map((product) => (
+                    <Card
+                      key={product.productId}
+                      productId={product.productId}
+                      imgUrl={getImageUrl(product)}
+                      title={product.name}
+                      price={product.price}
+                      review={product.rating ?? 0}
+                    />
+                  ))}
+                </div>
+                <div className="mt-8">
+                  <Pagination currentPage={products.page.number} totalPages={products.page.totalPages} />
+                </div>
+              </>
             ) : (
               <div className="flex flex-col items-center justify-center py-16">
                 <ShoppingBagIcon className="w-16 h-16 text-slate-300 mb-4" />
@@ -110,9 +115,6 @@ const ProductContent = async ({
               </div>
             )}
           </div>
-          {products.content.length > 0 && (
-            <Pagination currentPage={products.page.number} totalPages={products.page.totalPages} />
-          )}
         </div>
       </main>
     </>
