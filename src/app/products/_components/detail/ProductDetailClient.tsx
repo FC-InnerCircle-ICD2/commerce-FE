@@ -69,13 +69,13 @@ const ProductDetailClient: React.FC<{ product: IProductDetail }> = ({ product })
   };
 
   return (
-    <div className="container mx-auto flex px-4 py-8 flex-col gap-">
+    <div className="max-w-custom mx-auto flex px-4 py-8 flex-col">
       <nav className="w-full bg-slate-50 border border-slate-300 mb-5 rounded-xl flex justify-end px-[30px] py-[10px]">
         <div className="text-xs font-semibold text-zinc-700 shadow-md bg-white rounded px-2 py-1">
           {product.category.name}
         </div>
       </nav>
-      <div className="container mx-auto flex flex-col lg:flex-row gap-8">
+      <div className="max-w-custom flex flex-col lg:flex-row gap-8">
         {/* 상품 이미지 */}
         <div className="w-full lg:w-1/2 flex-shrink-0">
           <img

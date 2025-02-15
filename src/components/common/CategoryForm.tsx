@@ -39,14 +39,15 @@ export default function CategoryForm({ categories, handleClose }: Props) {
               className={`w-full h-10 rounded text-sm flex items-center justify-between p-[10] cursor-pointer tablet:text-xs ${category.id === currentCategory?.id ? 'font-bold text-[#082F49] bg-[#F1F5F9]' : 'font-normal text-[#4F4F4F] bg-transparent'}`}
               key={i}
             >
-              <button
-                className="w-full outline-none border-none flex items-center justify-between"
-                onClick={() => handleParentCategoryClick(category)}
+              <div
+                className="w-full outline-none border-none flex items-center justify-between hover:cursor-pointer hover:bg-gray-100 active:bg-gray-200"
+                onMouseEnter={() => handleParentCategoryClick(category)}
+                onMouseDown={() => handleParentCategoryClick(category)}
               >
                 <MagnifyingGlassIcon className="w-4 h-4 text-[#075985]" />
                 <div>{category.name}</div>
                 <Image src="/assets/categoryMove.svg" alt="categoryMove" width={20} height={20} />
-              </button>
+              </div>
             </li>
           );
         })}

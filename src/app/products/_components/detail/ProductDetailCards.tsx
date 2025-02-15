@@ -11,7 +11,7 @@ export default function ProductDegtailCards() {
   return (
     <div className="w-full relative">
       <h3 className="text-left max-sm:ml-0 text-sm md:text-base font-medium mb-4">이런 상품 어때요?</h3>
-      <div className="flex gap-4">
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
         {products.content.slice(0, 4).map((product) => (
           <Card
             key={product.productId}

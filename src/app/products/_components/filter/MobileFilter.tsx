@@ -2,6 +2,7 @@
 
 import React, { useState, useMemo, useEffect } from 'react';
 import { AdjustmentsHorizontalIcon } from '@heroicons/react/20/solid';
+import { NoSymbolIcon } from '@heroicons/react/24/outline';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { ArrowPathIcon } from '@heroicons/react/24/outline';
 
@@ -139,6 +140,8 @@ export const MobileFilter: React.FC<FilterProps> = ({ products }) => {
     setSelectedRating(null);
   };
 
+  const hasProducts = products.length > 0;
+
   return (
     <Drawer>
       <div className="flex items-center gap-3">
@@ -163,7 +166,7 @@ export const MobileFilter: React.FC<FilterProps> = ({ products }) => {
             onRatingRemove={handleRemoveRating}
             global
           />
-          {(selectedPriceRange || selectedRating) && (
+          {hasProducts && (selectedPriceRange || selectedRating) && (
             <button
               onClick={handleReset}
               className="flex items-center gap-1 text-sm text-gray-500 hover:text-gray-700 whitespace-nowrap"
@@ -179,27 +182,37 @@ export const MobileFilter: React.FC<FilterProps> = ({ products }) => {
         <div className="mx-auto w-full">
           <DrawerHeader>
             <div className="px-4 flex items-center justify-between">
-              <DrawerTitle></DrawerTitle>
-              <button
-                onClick={handleReset}
-                className="text-sm text-gray-500 hover:text-gray-700 flex items-center gap-1"
-              >
-                <ArrowPathIcon className="h-4 w-4" />
-                초기화
-              </button>
+              <DrawerTitle>필터</DrawerTitle>
+              {hasProducts && (
+                <button
+                  onClick={handleReset}
+                  className="text-sm text-gray-500 hover:text-gray-700 flex items-center gap-1"
+                >
+                  <ArrowPathIcon className="h-4 w-4" />
+                  초기화
+                </button>
+              )}
             </div>
           </DrawerHeader>
-          <div className="px-4 z-10">
-            <RatingFilter />
-            <PriceFilter
-              priceRange={priceRange}
-              sliderValue={sliderValue}
-              priceRangeValues={priceRangeValues}
-              onSliderChange={handleSliderChange}
-              onInputChange={handleInputChange}
-              onSearch={handlePriceSearch}
-            />
-          </div>
+          {!hasProducts ? (
+            <div className="flex flex-col items-center justify-center py-16 px-4">
+              <NoSymbolIcon className="w-12 h-12 text-slate-300 mb-3" />
+              <p className="text-base font-medium text-slate-600 text-center">필터를 적용할 상품이 없습니다</p>
+              <p className="text-sm text-slate-400 mt-1 text-center">다른 검색어로 다시 시도해보세요</p>
+            </div>
+          ) : (
+            <div className="px-4 z-10">
+              <RatingFilter />
+              <PriceFilter
+                priceRange={priceRange}
+                sliderValue={sliderValue}
+                priceRangeValues={priceRangeValues}
+                onSliderChange={handleSliderChange}
+                onInputChange={handleInputChange}
+                onSearch={handlePriceSearch}
+              />
+            </div>
+          )}
           <MobileSelectedOptionTag
             priceRange={selectedPriceRange}
             onPriceRangeRemove={() => {
