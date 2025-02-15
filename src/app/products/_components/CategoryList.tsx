@@ -1,11 +1,13 @@
 'use client';
 
-import { useCategory } from '@/hooks/queries/useCategory';
-import LoadingSpinner from '@/components/common/LoadingSpinner';
+import { ICategory } from '@/api/category';
 import { useSearchParams, useRouter, usePathname } from 'next/navigation';
 
-function CategoryList() {
-  const { categories, categoryLoading } = useCategory();
+interface CategoryListProps {
+  categories: ICategory[];
+}
+
+function CategoryList({ categories }: CategoryListProps) {
   const searchParams = useSearchParams();
   const router = useRouter();
   const pathname = usePathname();
@@ -16,20 +18,6 @@ function CategoryList() {
     params.set('categoryId', categoryId.toString());
     router.push(`${pathname}?${params.toString()}`);
   };
-
-  console.log(categories);
-
-  if (categoryLoading) {
-    return (
-      <div className="rounded-xl p-8">
-        <h2 className="text-lg font-bold mb-5">카테고리</h2>
-        <hr />
-        <div className="py-5">
-          <LoadingSpinner size={30} />
-        </div>
-      </div>
-    );
-  }
 
   // Find parent category by checking all categories and their subcategories
   const findParentCategory = () => {
@@ -48,7 +36,7 @@ function CategoryList() {
   const parentCategory = findParentCategory();
 
   return (
-    <div className="rounded-xl p-8">
+    <div className="rounded-xl p-8 bg-slate-50 border border-slate-300 hidden lg:block mb-5">
       <h2 className="text-lg font-bold mb-5">카테고리</h2>
       <hr />
       <ul className="flex lg:flex-col overflow-x-auto lg:overflow-x-visible pb-2 lg:pb-0 gap-2 mt-3">
