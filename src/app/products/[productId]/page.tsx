@@ -14,12 +14,17 @@ async function getProduct(productId: string): Promise<IProductDetail> {
 
 export default async function ProductDetail({ params }: { params: Promise<{ productId: string }> }) {
   const { productId } = await params;
-  const product = await getProduct(productId);
 
-  return (
-    <>
-      <Header />
-      <ProductDetailClient product={product} />
-    </>
-  );
+  try {
+    const product = await getProduct(productId);
+
+    return (
+      <>
+        <Header />
+        <ProductDetailClient product={product} />
+      </>
+    );
+  } catch {
+    return <div>상품 정보를 불러오는데 실패했습니다.</div>;
+  }
 }

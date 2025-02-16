@@ -20,6 +20,7 @@ const ProductDetailClient: React.FC<{ product: IProductDetail }> = ({ product })
   const [selectOptionDetails, setSelectOptionDetails] = useState<ISelectOptionDetail[]>([]);
 
   function handleAddOptionsDetail(option: IProductOptions, detail: IProductOptionDetail) {
+    // TODO: 옵션 상세의 ID는 각기 고유값이기에 detail배열을 입력받았을때 만약 해당 detail 배열의 ID값을 가지고 있는 옵션이 있으면 해당 옵션 count 추가, 아니면 옵션 배열 추가
     const find = selectOptionDetails.find((item) => item.value === detail.value);
     if (find) {
       setSelectOptionDetails([
@@ -28,7 +29,6 @@ const ProductDetailClient: React.FC<{ product: IProductDetail }> = ({ product })
           return item;
         }),
       ]);
-      // TODO: 갯수 추가하는 코드 필요
     } else {
       setSelectOptionDetails([
         ...selectOptionDetails,
