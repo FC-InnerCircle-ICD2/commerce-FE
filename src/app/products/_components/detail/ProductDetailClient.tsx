@@ -1,56 +1,49 @@
 'use client';
 
 import { useState } from 'react';
-import type { IProductDetail, IProductOptionDetail, IProductOptions } from '@/api/product';
+import type { IProductDetail } from '@/api/product';
 import ProductDegtailCards from './ProductDetailCards';
 import ProductDetailSelectOptions from './ProductDetailSelectOptions';
 import { useRouter } from 'next/navigation';
+import ProdudctDetailClientOptions, { SelectItem } from './ProductDetailClientOptions';
 
 export interface ISelectOptionDetail {
   count: number;
-  optionName: string;
-  value: string;
-  quantity: number;
-  price: number;
+  options: SelectItem[];
 }
 
 const ProductDetailClient: React.FC<{ product: IProductDetail }> = ({ product }) => {
   const router = useRouter();
   const [selectedTab, setSelectedTab] = useState('상세정보');
-  const [selectOptionDetails, setSelectOptionDetails] = useState<ISelectOptionDetail[]>([]);
+  const [selectOptions, setSelectOptions] = useState<ISelectOptionDetail[]>([]);
 
-  function handleAddOptionsDetail(option: IProductOptions, detail: IProductOptionDetail) {
-    // TODO: 옵션 상세의 ID는 각기 고유값이기에 detail배열을 입력받았을때 만약 해당 detail 배열의 ID값을 가지고 있는 옵션이 있으면 해당 옵션 count 추가, 아니면 옵션 배열 추가
-    const find = selectOptionDetails.find((item) => item.value === detail.value);
-    if (find) {
-      setSelectOptionDetails([
-        ...selectOptionDetails.map((item) => {
-          if (item.value === detail.value) return { ...item, count: item.count + 1 };
-          return item;
-        }),
-      ]);
-    } else {
-      setSelectOptionDetails([
-        ...selectOptionDetails,
-        {
-          count: 1,
-          optionName: option.name,
-          value: detail.value,
-          quantity: detail.quantity,
-          price: product.price,
-        },
-      ]);
-    }
+  function handleAddOption(newOptions: SelectItem[]) {
+    setSelectOptions((prevOptions) => {
+      // 동일한 options을 가진 항목 찾기
+      const existingDetail = prevOptions.find(
+        (detail) => JSON.stringify(detail.options) === JSON.stringify(newOptions),
+      );
+
+      if (existingDetail) {
+        // 같은 options이 있으면 count 증가
+        return prevOptions.map((detail) =>
+          detail === existingDetail ? { ...detail, count: detail.count + 1 } : detail,
+        );
+      } else {
+        // 새로운 options이면 새로운 ISelectOptionDetail 추가
+        return [...prevOptions, { count: 1, options: newOptions }];
+      }
+    });
   }
 
   function handleRemoveOption(option: ISelectOptionDetail) {
-    setSelectOptionDetails([...selectOptionDetails.filter((item) => item.value !== option.value)]);
+    setSelectOptions([...selectOptions.filter((item) => JSON.stringify(item) !== JSON.stringify(option))]);
   }
 
   function handleOptionCount(option: ISelectOptionDetail, flag: boolean) {
-    setSelectOptionDetails([
-      ...selectOptionDetails.map((item) => {
-        if (item.value === option.value)
+    setSelectOptions([
+      ...selectOptions.map((item) => {
+        if (JSON.stringify(item) === JSON.stringify(option))
           return { ...item, count: flag ? item.count + 1 : item.count - 1 < 1 ? 1 : item.count - 1 };
         return item;
       }),
@@ -58,10 +51,10 @@ const ProductDetailClient: React.FC<{ product: IProductDetail }> = ({ product })
   }
 
   const handlePurchase = () => {
-    if (selectOptionDetails.length > 0) {
+    if (selectOptions.length > 0) {
       const paramData = {
         product,
-        selectedOptions: selectOptionDetails,
+        selectedOptions: selectOptions,
       };
       const encodedData = encodeURIComponent(JSON.stringify(paramData));
       router.push(`/purchase?data=${encodedData}`);
@@ -96,31 +89,12 @@ const ProductDetailClient: React.FC<{ product: IProductDetail }> = ({ product })
               <span>{`>`}</span>
             </div>
             <p className="text-2xl font-bold mt-4">{product.price.toLocaleString()}원</p>
-
             <div className="border-t my-[30px] border-[#646464]" />
-
-            {/* 옵션 선택 */}
-            {product.options.map((option) => (
-              <div key={option.id} className="mb-4">
-                <h3 className="text-md font-semibold">{option.name}</h3>
-                <div className="flex space-x-2 mt-2">
-                  {option.optionDetails.map((detail) => (
-                    <button
-                      key={detail.value}
-                      className="px-4 py-2 border rounded-full border-gray-400 text-sm hover:bg-slate-500 hover:text-white"
-                      onClick={() => handleAddOptionsDetail(option, detail)}
-                    >
-                      {detail.value}
-                    </button>
-                  ))}
-                </div>
-              </div>
-            ))}
-
+            <ProdudctDetailClientOptions options={product.options} handleAddOptionDetail={handleAddOption} />
             <div className="border-t my-[30px] border-[#646464]" />
             {/* 선택된 옵션 */}
             <div className="flex flex-col gap-4">
-              {selectOptionDetails.map((options, i) => {
+              {selectOptions.map((options, i) => {
                 return (
                   <ProductDetailSelectOptions
                     key={i}
@@ -140,14 +114,11 @@ const ProductDetailClient: React.FC<{ product: IProductDetail }> = ({ product })
               <span className="text-sm">총 상품 금액</span>
               <div className="flex gap-[15px] items-center">
                 <span className="text-xs text-neutral-600">
-                  총 수량 {selectOptionDetails.reduce((sum, option) => sum + option.count, 0).toLocaleString()}개
+                  총 수량 {selectOptions.reduce((sum, option) => sum + option.count, 0).toLocaleString()}개
                 </span>
                 <span>|</span>
                 <span className="text-xl font-bold">
-                  {(
-                    product.price * selectOptionDetails.reduce((sum, option) => sum + option.count, 0)
-                  ).toLocaleString()}
-                  원
+                  {(product.price * selectOptions.reduce((sum, option) => sum + option.count, 0)).toLocaleString()}원
                 </span>
               </div>
             </div>
