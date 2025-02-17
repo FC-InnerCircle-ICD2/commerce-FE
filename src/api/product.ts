@@ -105,5 +105,6 @@ export const getProducts = async (props: ProductsProps): Promise<IProductAPI> =>
 };
 
 export interface IProductDetail extends IProduct {
+  id: number;
   reviewStatistic: { averageRating: number; reviewCount: number };
 }
