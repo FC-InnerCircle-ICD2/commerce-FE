@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import { UserCircleIcon } from '@heroicons/react/24/outline';
 import LoginPopup from '../modals/LoginPopup';
@@ -8,17 +8,38 @@ import LoginPopup from '../modals/LoginPopup';
 const Navbar = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isPopupOpen, setIsPopupOpen] = useState(false);
+  const [username, setUsername] = useState('');
+
+  useEffect(() => {
+    const accessToken = localStorage.getItem('accessToken');
+    if (accessToken) {
+      setIsLoggedIn(true);
+      // 실제 구현에서는 토큰을 검증하고 사용자 정보를 가져와야 합니다.
+      setUsername('홍길동'); // 예시 이름
+    } else {
+      setIsLoggedIn(false); // Ensure logged out state when no token
+      setUsername('');
+    }
+  }, []);
 
   const handleLogin = () => {
     setIsPopupOpen(true);
   };
 
   const handleLogout = () => {
+    localStorage.removeItem('accessToken');
+    localStorage.removeItem('refreshToken');
     setIsLoggedIn(false);
+    setUsername('');
   };
 
   const closePopup = () => {
     setIsPopupOpen(false);
+  };
+
+  const onLoginSuccess = () => {
+    setIsLoggedIn(true);
+    setUsername('홍길동'); // 예시 이름, 실제로는 로그인 응답에서 받아와야 합니다.
   };
 
   return (
@@ -41,7 +62,7 @@ const Navbar = () => {
                 <>
                   <span className="flex items-center gap-2">
                     <UserCircleIcon className="w-3 h-3 text-[#5F6368]" />
-                    <span>홍길동 님</span>
+                    <span>{username} 님</span>
                   </span>
                   <button
                     onClick={handleLogout}
@@ -64,7 +85,7 @@ const Navbar = () => {
       </nav>
 
       {isPopupOpen && (
-        <LoginPopup closePopup={closePopup} />
+        <LoginPopup closePopup={closePopup} onLoginSuccess={onLoginSuccess} />
       )}
     </>
   );
