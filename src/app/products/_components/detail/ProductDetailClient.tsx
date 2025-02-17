@@ -61,6 +61,17 @@ const ProductDetailClient: React.FC<{ product: IProductDetail }> = ({ product })
     }
   };
 
+  function calculateTotalAdditionalPrice(): number {
+    return selectOptions.reduce((total, detail) => {
+      // 각 selectOptions의 additional price 계산 (옵션 가격 합 - 기준 가격)
+      const additionalPriceSum =
+        detail.options.reduce((sum, option) => sum + option.additionalPrice, 0) + product.price;
+
+      // count만큼 곱한 후 전체 합산
+      return total + additionalPriceSum * detail.count;
+    }, 0);
+  }
+
   return (
     <div className="max-w-custom mx-auto flex px-4 py-8 flex-col">
       <nav className="w-full bg-slate-50 border border-slate-300 mb-5 rounded-xl flex justify-end px-[30px] py-[10px]">
@@ -118,7 +129,8 @@ const ProductDetailClient: React.FC<{ product: IProductDetail }> = ({ product })
                 </span>
                 <span>|</span>
                 <span className="text-xl font-bold">
-                  {(product.price * selectOptions.reduce((sum, option) => sum + option.count, 0)).toLocaleString()}원
+                  {calculateTotalAdditionalPrice().toLocaleString()}원
+                  {/* {(product.price * selectOptions.reduce((sum, option) => sum + option.count, 0)).toLocaleString()}원 */}
                 </span>
               </div>
             </div>
