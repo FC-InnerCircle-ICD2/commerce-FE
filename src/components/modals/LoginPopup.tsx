@@ -3,62 +3,43 @@ import { useState } from 'react';
 import kakaoSymbol from '../../assets/kakao.png';
 import naverSymbol from '../../assets/naver.png';
 
-const LoginPopup = ({ closePopup, onLoginSuccess }: { closePopup: () => void, onLoginSuccess: () => void }) => {
+const LoginPopup: React.FC<{ closePopup: () => void, onLoginSuccess: () => void }> = ({ closePopup, onLoginSuccess }) => {
   const [isLoading, setIsLoading] = useState(false);
 
-  /** 
-   * TODO: mockBackendRequest를 실제 백엔드 API 호출로 대체해야 합니다.
-   * 이 함수는 선택된 제공자(카카오/네이버)의 OAuth URL을 가져와야 합니다.
-   */
-  const mockBackendRequest = async (provider: 'kakao' | 'naver') => {
-    setIsLoading(true);
-    await new Promise(resolve => setTimeout(resolve, 1000));
-    const mockUrls = {
-      kakao: 'https://mockkakaologin.com/authorize',
-      naver: 'https://mocknaverlogin.com/authorize'
-    };
-    setIsLoading(false);
-    return mockUrls[provider];
+  const getLoginUrl = async (provider: 'kakao' | 'naver') => {
+    const response = await fetch(`/api/auth/${provider}`);
+    const data = await response.json();
+    return data.url;
   };
 
-  /** 
-   * TODO: 실제 OAuth 흐름을 구현할 때 mockAuthProcess를 제거해야 합니다.
-   */
-  const mockAuthProcess = async (provider: 'kakao' | 'naver') => {
-    await new Promise(resolve => setTimeout(resolve, 1500));
-    return `mock_auth_code_${provider}`;
-  };
-
-  /** 
-   * TODO: mockTokenExchange를 실제 백엔드 API 호출로 대체해야 합니다.
-   * 이 함수는 인증 코드를 액세스 토큰과 리프레시 토큰으로 교환해야 합니다.
-   */
-  const mockTokenExchange = async (authCode: string) => {
-    await new Promise(resolve => setTimeout(resolve, 1000));
-    return {
-      accessToken: `mock_access_token_${authCode}`,
-      refreshToken: `mock_refresh_token_${authCode}`
-    };
+  const exchangeCodeForTokens = async (code: string, provider: 'kakao' | 'naver') => {
+    const response = await fetch(`/api/auth/${provider}`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ code }),
+    });
+    return response.json();
   };
 
   const handleLogin = async (provider: 'kakao' | 'naver') => {
     try {
-      const loginUrl = await mockBackendRequest(provider);
+      setIsLoading(true);
+      const loginUrl = await getLoginUrl(provider);
       console.log(`백엔드에서 받은 로그인 URL: ${loginUrl}`);
       
-      /** 
-       * TODO: 제공자의 OAuth 페이지로 실제 리다이렉트를 구현해야 합니다.
-       * 모의 인증 프로세스를 실제 OAuth 흐름으로 대체해야 합니다.
-       */
+      // TODO: 실제 OAuth 리다이렉트 구현
+      // 실제 구현 시 이 부분에서 loginUrl로 리다이렉트해야 합니다.
       console.log(`${provider} 로그인 페이지로 리다이렉트 (모의)`);
-      const authCode = await mockAuthProcess(provider);
       
-      console.log(`인증 코드 발급 완료: ${authCode}`);
-      const { accessToken, refreshToken } = await mockTokenExchange(authCode);
+      // TODO: 실제 인증 코드 수신 구현
+      // 실제 구현 시 이 부분은 OAuth 콜백에서 처리되어야 합니다.
+      const mockCode = `mock_auth_code_${provider}_${Date.now()}`;
       
-      /** 
-       * TODO: Next.js 에서 토큰을 저장하는 방법을 확인 해야합니다. (추후 검토)
-       */
+      console.log(`인증 코드 발급 완료: ${mockCode}`);
+      const { accessToken, refreshToken } = await exchangeCodeForTokens(mockCode, provider);
+      
+      // TODO: 토큰 저장 방식 검토
+      // 보안을 위해 HttpOnly 쿠키 사용을 고려해야 합니다.
       localStorage.setItem('accessToken', accessToken);
       localStorage.setItem('refreshToken', refreshToken);
       
@@ -67,7 +48,7 @@ const LoginPopup = ({ closePopup, onLoginSuccess }: { closePopup: () => void, on
       closePopup();
     } catch (error) {
       console.error('로그인 실패:', error);
-      /** TODO: 적절한 에러 처리와 사용자 피드백을 구현해야 합니다. */
+      // TODO: 사용자에게 오류 메시지 표시
     } finally {
       setIsLoading(false);
     }
