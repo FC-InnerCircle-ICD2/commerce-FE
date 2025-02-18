@@ -7,6 +7,7 @@ import { Header } from '@/components/layout';
 import { Suspense } from 'react';
 
 export default async function Home() {
+  console.log('cicd 테스트')
   try {
     const banners = await getBanners();
     return (
