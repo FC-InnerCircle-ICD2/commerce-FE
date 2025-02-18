@@ -11,7 +11,6 @@ export default async function Home() {
     const banners = await getBanners();
     return (
       <div className="flex flex-col h-screen overflow-x-hidden">
-        test
         <Header />
         <div className="grow flex flex-col gap-5">
           <Carousel banners={banners} />
