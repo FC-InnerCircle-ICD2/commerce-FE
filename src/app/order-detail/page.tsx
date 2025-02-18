@@ -1,8 +1,10 @@
 import { Footer, Header } from '@/components/layout';
 import OrderItem from './_components/OrderItem';
+import OrderDetailSearch from './_components/OrderDetailSearch';
 
-export default async function OrderDetail() {
-  // const { data } = await searchParams;
+export default async function OrderDetail({ query }: { query: Promise<{ data?: string }> }) {
+  const { data } = await query;
+  console.log('data: ', data);
   // if (!data) {
   //   return <p>No order data found.</p>;
   // }
@@ -100,31 +102,38 @@ export default async function OrderDetail() {
       <Header />
 
       {/* Content */}
-      <div className="flex flex-col">
-        <div className="mt-[50px] w-[calc(100%-32px)] lg:w-[1240px] flex flex-col lg:flex-row">
+      <div className="flex flex-col w-full">
+        <div className="mt-[20px] lg:mt-[50px] w-[calc(100%-32px)] lg:w-[calc(100%-200px)] flex flex-col lg:flex-row mx-auto">
           <div className="rounded-t-[.9375rem] border border-slate-300 bg-slate-50 w-full h-auto flex flex-col">
-            <h3 className="text-lg font-semibold p-8">주문/배송내역</h3>
-            <div className="w-full h-[60px] border-t border-slate-300 px-8 flex items-center justify-between">
-              <button className="bg-slate-500 rounded-full w-14 h-10 text-sm text-white">전체</button>
-              <div className="relative w-72">
+            <h3 className="text-md lg:text-lg font-semibold p-4 lg:p-8">주문/배송내역</h3>
+            <OrderDetailSearch />
+            {/* <div className="w-full h-[50px] lg:h-[60px] border-t border-slate-300 px-4 lg:px-8 flex items-center justify-between">
+              <button className="bg-slate-500 rounded-full w-14 h-8 lg:h-10 text-sm text-white">전체</button>
+              <div className="relative w-60 lg:w-72">
                 <input
                   type="text"
                   placeholder="검색어를 입력하세요"
-                  className="w-full border border-neutral-300 bg-white rounded-full h-10 text-sm px-4"
+                  className="w-full border border-neutral-300 bg-white rounded-full h-8 lg:h-10 text-sm px-4"
                 />
-                <button type="button" className="absolute right-2 top-1/2 transform -translate-y-1/2 px-3 py-1">
+                <button
+                  type="button"
+                  className="absolute right-2 top-1/2 transform -translate-y-1/2 px-2 lg:px-3 lg:py-1"
+                >
                   🔍
                 </button>
               </div>
-            </div>
+            </div> */}
           </div>
         </div>
-        {orderData.content.map((orderInfo) => (
-          <OrderItem orderInfo={orderInfo} key={orderInfo.orderId} />
-        ))}
+
+        <div className=" w-[calc(100%-32px)] lg:w-[calc(100%-200px)] flex flex-col mx-auto">
+          {orderData.content.map((orderInfo) => (
+            <OrderItem orderInfo={orderInfo} key={orderInfo.orderId} />
+          ))}
+        </div>
       </div>
 
-      <div className="mt-20 w-full flex flex-col">
+      <div className="mt-12 lg:mt-20 w-full flex flex-col">
         <Footer />
       </div>
     </div>
