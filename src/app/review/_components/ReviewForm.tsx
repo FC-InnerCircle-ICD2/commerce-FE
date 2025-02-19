@@ -9,7 +9,7 @@ type Props = {
 export default function ReviewForm({ product }: Props) {
   const [file, setFile] = useState<File | null>(null);
   const [preview, setPreview] = useState<string | null>(null);
-  const [review, setReview] = useState<string>('');
+  const [content, setContent] = useState<string>('');
   const [rating, setRating] = useState<string>('0');
   const fileInputRef = useRef<HTMLInputElement | null>(null);
 
@@ -27,7 +27,7 @@ export default function ReviewForm({ product }: Props) {
   };
 
   const handleReviewChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setReview(event.target.value);
+    setContent(event.target.value);
   };
 
   const handleChangeRating = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -37,15 +37,16 @@ export default function ReviewForm({ product }: Props) {
   };
 
   const handleUpload = async () => {
-    if (!file || !review || !rating) {
+    if (!file || !content || !rating) {
       alert('빈값이 존재하면 안됩니다');
       return;
     }
 
     const formData = new FormData();
-    formData.append('image', file);
-    formData.append('review', review);
+    formData.append('imageFiles', file);
+    formData.append('content', content);
     formData.append('rating', rating);
+    formData.append('userId', '유저 아이디');
     formData.forEach((value, key) => {
       console.log(key, value);
     });
@@ -96,7 +97,7 @@ export default function ReviewForm({ product }: Props) {
       <article className="w-full flex gap-8 py-[15px]">
         <label className="text-sm font-bold">상세 리뷰</label>
         <textarea
-          value={review}
+          value={content}
           onChange={handleReviewChange}
           placeholder="상세 리뷰를 달아주세요!"
           className="h-[200px] p-2 border rounded grow resize-none outline-none"
