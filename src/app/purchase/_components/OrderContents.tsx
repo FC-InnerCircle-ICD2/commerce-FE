@@ -17,53 +17,72 @@ interface DetailOption {
   quantity: number;
   order: number;
   additionalPrice?: number | null;
-  images: Array<{
-    id: number;
-    fileOrder: number;
-    url: string;
-    representative: boolean;
-  }>;
 }
 interface OptionInfo {
   id: number;
   name: string;
   optionDetails: Array<DetailOption>;
 }
-interface SelectedOption {
-  count: number;
+
+interface SubCategory {
+  id: number;
+  name: string;
+  parentCategoryId: number | null;
+  subCategories: Array<unknown>;
+}
+
+interface SelectedOptionDetail {
   optionName: string;
+  id: number;
+  detailId: number;
   value: string;
+  additionalPrice: number;
   quantity: number;
-  price: number;
+}
+
+export interface SelectedOption {
+  count: number;
+  options: SelectedOptionDetail[];
+}
+
+interface ProductDetailImage {
+  id: number;
+  fileOrder: number;
+  url: string;
+  type: string;
 }
 interface ProductParamsData {
   product: {
-    options: OptionInfo[];
-    reviewStatistic: {
-      averageRating: number;
-      reviewCount: number;
-    };
     id: number;
+    productId: number;
     name: string;
     description: string;
     price: number;
     category: {
       id: number;
       name: string;
-      parentCategoryId: number;
-      subCategories: Array<unknown>;
+      parentCategoryId: number | null;
+      subCategories: Array<SubCategory>;
     };
     provider: {
       id: number;
       name: string;
       description: string | null;
     };
+    options: OptionInfo[];
+    reviewStatistic: {
+      averageRating: number;
+      reviewCount: number;
+    };
+    rating: number;
+    images: ProductDetailImage[];
   };
   selectedOptions: SelectedOption[];
 }
 
 export default function OrderContents(props: { orderData: ProductParamsData }) {
   const { orderData } = props;
+  console.log('orderData: ', orderData);
 
   const [paymentMethod, setPaymentMethod] = useState<PaymentMethodType>('BANK_TRANSFER');
   const [cardInfo, setCardInfo] = useState<CardInfo>({
@@ -80,44 +99,48 @@ export default function OrderContents(props: { orderData: ProductParamsData }) {
     detailAddress: '101동 1004호',
     deliveryMemo: '',
   });
-  const representativeImageUrl = orderData?.product.options
-    .flatMap((option) => option.optionDetails)
-    .flatMap((detail) => detail.images)
-    .find((images) => images.representative);
+
+  const representativeImageUrl = orderData?.product.images.find((image) => image.type === 'MAIN');
+  const getPrice = (selectedOptions: Array<SelectedOption>) => {
+    let count = 0;
+    let addPrice = 0;
+
+    selectedOptions.forEach((option) => {
+      count += option.count;
+      option.options.forEach((detail) => {
+        addPrice += detail.additionalPrice;
+      });
+    });
+
+    return count * orderData.product.price + addPrice;
+  };
+
+  const getCount = (selectedOptions: Array<SelectedOption>) => {
+    let count = 0;
+    selectedOptions.forEach((option) => {
+      count += option.count;
+    });
+    return count;
+  };
 
   const orderOptionItems = orderData?.selectedOptions?.map((option) => {
-    const findOption = (name: string) => orderData.product.options.find((option) => option.name === name);
-    const findOptionDetail = (option: OptionInfo | undefined, name: string) =>
-      option?.optionDetails.find((detail) => detail.value === name);
-
-    const currentOption = findOption(option.optionName);
-    const currentOptionDetail = findOptionDetail(currentOption, option.value);
+    const optionDetails = option.options.map((detail) => {
+      return {
+        productOptionId: detail.id,
+        productOptionDetailId: detail.detailId,
+        additionalPrice: detail.additionalPrice,
+      };
+    });
 
     return {
       productId: orderData.product.id,
-      options: [
-        {
-          productOptionName: option.optionName,
-          productOptionId: currentOption?.id ?? 0,
-          productOptionValue: currentOptionDetail?.value ?? '',
-          productOptionDetailId: currentOptionDetail?.id ?? 0,
-        },
-      ],
-      quantity: option.count,
-      price: option.price,
+      productOptionDetails: optionDetails,
       categoryId: orderData.product.category.id,
+      productName: orderData.product.name,
+      price: getPrice(orderData.selectedOptions),
+      quantity: getCount(orderData.selectedOptions),
     };
   });
-
-  const getTotalPrice = <T extends boolean>(
-    selectedOptions: SelectedOption[],
-    formatted: T,
-  ): T extends true ? string : number => {
-    const total = selectedOptions.reduce((acc, cur) => (acc += cur.price * cur.count), 0);
-    // TODO: any 제거 해야함.
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    return (formatted ? `${numberFormatting(total)}원` : total) as any;
-  };
 
   return (
     <>
@@ -170,7 +193,7 @@ export default function OrderContents(props: { orderData: ProductParamsData }) {
                   </p>
                 </div>
 
-                <OrderList productOptions={orderOptionItems} />
+                <OrderList productPrice={orderData.product.price} productOptions={orderData?.selectedOptions} />
               </>
             )}
           </TitleBoxContainer>
@@ -178,7 +201,7 @@ export default function OrderContents(props: { orderData: ProductParamsData }) {
           <TitleBoxContainer title={null} toggle={false}>
             <div className="flex justify-between items-center">
               <span className="text-base lg:text-lg font-medium">총 주문금액</span>
-              <span className="text-base lg:text-lg font-bold">{getTotalPrice(orderData.selectedOptions, true)}</span>
+              <span className="text-base lg:text-lg font-bold">{`${numberFormatting(getPrice(orderData.selectedOptions))}원`}</span>
             </div>
           </TitleBoxContainer>
 
@@ -186,7 +209,7 @@ export default function OrderContents(props: { orderData: ProductParamsData }) {
           <TitleBoxContainer
             title="결제수단"
             toggle={true}
-            toggleTitle={getTotalPrice(orderData.selectedOptions, true)}
+            toggleTitle={`${numberFormatting(getPrice(orderData.selectedOptions))}원`}
           >
             <PaymentMethod
               setCardInfo={setCardInfo}
@@ -201,9 +224,12 @@ export default function OrderContents(props: { orderData: ProductParamsData }) {
           <TitleBoxContainer
             title="결제상세"
             toggle={true}
-            toggleTitle={getTotalPrice(orderData.selectedOptions, true)}
+            toggleTitle={`${numberFormatting(getPrice(orderData.selectedOptions))}원`}
           >
-            <PaymentDetail paymentMethod={paymentMethod} totalPrice={getTotalPrice(orderData.selectedOptions, true)} />
+            <PaymentDetail
+              paymentMethod={paymentMethod}
+              totalPrice={`${numberFormatting(getPrice(orderData.selectedOptions))}원`}
+            />
           </TitleBoxContainer>
         </div>
       </div>
@@ -216,7 +242,7 @@ export default function OrderContents(props: { orderData: ProductParamsData }) {
         cardInfo={cardInfo}
         orderItems={orderOptionItems}
         delivery={delivery}
-        totalPrice={getTotalPrice(orderData.selectedOptions, false)}
+        totalPrice={getPrice(orderData.selectedOptions)}
       />
     </>
   );

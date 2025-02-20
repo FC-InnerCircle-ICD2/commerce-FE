@@ -2,15 +2,15 @@
 
 export interface OrderOption {
   productId: number;
-  options: Array<{
-    productOptionName: string;
+  productOptionDetails: Array<{
     productOptionId: number;
-    productOptionValue: string;
     productOptionDetailId: number;
+    additionalPrice: number;
   }>;
-  quantity: number;
-  price: number;
   categoryId: number;
+  productName: string;
+  price: number;
+  quantity: number;
 }
 
 export type PaymentMethodType = 'BANK_TRANSFER' | 'CARD' | 'KAKAO_PAY' | 'TOSS' | 'NAVER_PAY';
