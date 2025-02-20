@@ -1,15 +1,21 @@
 import type { OrderOption } from '@/api/order';
 import { numberFormatting } from '@/utils/numberFormatting';
+import type { SelectedOption } from './OrderContents';
 
 interface OptionListProps {
-  productOptions: OrderOption[];
+  productOptions: SelectedOption[];
+  productPrice: number;
 }
 
 export default function OrderList(props: OptionListProps) {
-  const { productOptions } = props;
+  const { productOptions, productPrice } = props;
 
-  const getOptionName = (product: OrderOption) => {
-    return product.options.map((option) => `${option.productOptionName} / ${option.productOptionValue}`).join(' | ');
+  const getOptionName = (selectOption: SelectedOption) => {
+    return selectOption.options.map((detail) => `${detail.optionName} / ${detail.value}`).join(' | ');
+  };
+
+  const getOptionTotalPrice = (selectOption: SelectedOption) => {
+    return selectOption.options.reduce((acc, cur) => acc + cur.additionalPrice, 0);
   };
 
   return (
@@ -25,12 +31,14 @@ export default function OrderList(props: OptionListProps) {
             </span>
             <div className="flex justify-between items-center">
               <span className="text-neutral-700 text-sm">
-                {getOptionName(product)} | {product.quantity}개
+                {getOptionName(product)} | {product.count}개
               </span>
             </div>
           </div>
           <div className="flex justify-end w-full lg:w-auto">
-            <span className="font-semibold text-sm">{numberFormatting(product.price)}원</span>
+            <span className="font-semibold text-sm">
+              {numberFormatting(productPrice + getOptionTotalPrice(product))}원
+            </span>
           </div>
         </li>
       ))}

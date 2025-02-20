@@ -11,6 +11,178 @@ export default async function Purchase({ searchParams }: { searchParams: Promise
 
   try {
     orderData = JSON.parse(decodeURIComponent(data));
+    // orderData = {
+    //   product: {
+    //     id: 1,
+    //     productId: 1,
+    //     name: '핸드폰',
+    //     description: '핸드폰 설명',
+    //     price: 1500000,
+    //     category: {
+    //       id: 1,
+    //       name: '전자제품',
+    //       parentCategoryId: null,
+    //       subCategories: [
+    //         {
+    //           id: 4,
+    //           name: '노트북',
+    //           parentCategoryId: 1,
+    //           subCategories: [],
+    //         },
+    //         {
+    //           id: 5,
+    //           name: '스마트폰',
+    //           parentCategoryId: 1,
+    //           subCategories: [],
+    //         },
+    //         {
+    //           id: 6,
+    //           name: '태블릿',
+    //           parentCategoryId: 1,
+    //           subCategories: [],
+    //         },
+    //       ],
+    //     },
+    //     provider: {
+    //       id: 1,
+    //       name: 'TechProvider',
+    //       description: '최고의 기술 제품 제공 업체',
+    //     },
+    //     options: [
+    //       {
+    //         id: 5,
+    //         name: '색상',
+    //         optionDetails: [
+    //           {
+    //             id: 8,
+    //             value: '검정',
+    //             quantity: 50,
+    //             order: 1,
+    //             additionalPrice: 0,
+    //           },
+    //           {
+    //             id: 12,
+    //             value: '은색',
+    //             quantity: 30,
+    //             order: 2,
+    //             additionalPrice: 10000,
+    //           },
+    //         ],
+    //       },
+    //       {
+    //         id: 6,
+    //         name: '사이즈',
+    //         optionDetails: [
+    //           {
+    //             id: 8,
+    //             value: 'XS',
+    //             quantity: 50,
+    //             order: 1,
+    //             additionalPrice: 0,
+    //           },
+    //           {
+    //             id: 10,
+    //             value: 'MD',
+    //             quantity: 20,
+    //             order: 2,
+    //             additionalPrice: 3000,
+    //           },
+    //           {
+    //             id: 12,
+    //             value: 'LG',
+    //             quantity: 30,
+    //             order: 2,
+    //             additionalPrice: 10000,
+    //           },
+    //         ],
+    //       },
+    //     ],
+    //     reviewStatistic: {
+    //       averageRating: 4.5,
+    //       reviewCount: 120,
+    //     },
+    //     rating: 3,
+    //     images: [
+    //       {
+    //         id: 1,
+    //         fileOrder: 1,
+    //         url: 'https://example.com/images/main.png',
+    //         type: 'MAIN',
+    //       },
+    //       {
+    //         id: 5,
+    //         fileOrder: 1,
+    //         url: 'https://example.com/images/datail.png',
+    //         type: 'DETAIL',
+    //       },
+    //     ],
+    //   },
+    //   selectedOptions: [
+    //     {
+    //       count: 1,
+    //       options: [
+    //         {
+    //           optionName: '색상',
+    //           id: 5,
+    //           detailId: 12,
+    //           value: '은색',
+    //           additionalPrice: 10000,
+    //           quantity: 30,
+    //         },
+    //         {
+    //           optionName: '사이즈',
+    //           id: 6,
+    //           detailId: 10,
+    //           value: 'MD',
+    //           additionalPrice: 3000,
+    //           quantity: 20,
+    //         },
+    //       ],
+    //     },
+    //     {
+    //       count: 1,
+    //       options: [
+    //         {
+    //           optionName: '색상',
+    //           id: 5,
+    //           detailId: 12,
+    //           value: '은색',
+    //           additionalPrice: 10000,
+    //           quantity: 30,
+    //         },
+    //         {
+    //           optionName: '사이즈',
+    //           id: 6,
+    //           detailId: 12,
+    //           value: 'LG',
+    //           additionalPrice: 10000,
+    //           quantity: 30,
+    //         },
+    //       ],
+    //     },
+    //     {
+    //       count: 1,
+    //       options: [
+    //         {
+    //           optionName: '색상',
+    //           id: 5,
+    //           detailId: 8,
+    //           value: '검정',
+    //           additionalPrice: 0,
+    //           quantity: 50,
+    //         },
+    //         {
+    //           optionName: '사이즈',
+    //           id: 6,
+    //           detailId: 10,
+    //           value: 'MD',
+    //           additionalPrice: 3000,
+    //           quantity: 20,
+    //         },
+    //       ],
+    //     },
+    //   ],
+    // };
   } catch {
     return <p>Error: Invalid order data</p>;
   }
