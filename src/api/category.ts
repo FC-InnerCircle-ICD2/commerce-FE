@@ -1,3 +1,6 @@
+import { CategoryApis } from "@/constants/apiUrl";
+import { BASE_URL } from "@/constants/constant";
+
 export interface ICategory {
   id: number;
   name: string;
@@ -6,9 +9,7 @@ export interface ICategory {
 }
 
 export const getCategory = async (): Promise<ICategory[]> => {
-  const response = await fetch(
-    `${process.env.NODE_ENV === 'development' ? 'http://localhost:3000' : 'https://commerce-fe-teal.vercel.app'}/api/proxy`,
-  );
+  const response = await fetch(`${BASE_URL}${CategoryApis.getCategory}?page=1&size=8&sort=%5B"created%2CDESC"%5D`);
   if (!response.ok) {
     throw new Error(`Error fetching user: ${response.statusText}`);
   }
