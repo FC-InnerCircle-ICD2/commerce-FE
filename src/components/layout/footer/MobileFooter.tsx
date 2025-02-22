@@ -5,7 +5,7 @@ import { ShoppingCartIcon } from '@heroicons/react/24/outline';
 
 export default function MobileFooter() {
   return (
-    <footer className="w-full py-[10px] px-[25px] sticky -bottom-[1px] z-50 bg-white flex justify-between shadow-md text-[#075985] text-[10px] tablet:hidden">
+    <footer className="w-full py-[10px] px-[25px] fixed bottom-0 left-0 z-50 bg-white flex justify-between shadow-md text-[#075985] text-[10px] tablet:hidden">
       <Link href="/" className="flex flex-col items-center">
         <Image src="/assets/home.svg" alt="home" width={35} height={35} />
         <p>홈</p>
