@@ -2,7 +2,7 @@
 
 import useLocalStorage from '@/hooks/common/useLocalStorage';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect, forwardRef } from 'react';
 import { IOptions } from './Selectbox';
 
 type Props = {
@@ -12,7 +12,7 @@ type Props = {
   handleCloseSearchView: () => void;
 };
 
-export default function SearchInput({ category, classname, onSearch, handleCloseSearchView }: Props) {
+const SearchInput = forwardRef<HTMLFormElement, Props>(({ category, classname, onSearch, handleCloseSearchView }, ref) => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const [search, setSearch] = useLocalStorage<string[]>('search', []);
@@ -63,7 +63,7 @@ export default function SearchInput({ category, classname, onSearch, handleClose
   };
 
   return (
-    <form onSubmit={handleSubmit} className={classname}>
+    <form ref={ref} onSubmit={handleSubmit} className={classname}>
       <input
         type="text"
         value={inputValue}
@@ -74,4 +74,6 @@ export default function SearchInput({ category, classname, onSearch, handleClose
       />
     </form>
   );
-}
+});
+
+export default SearchInput;
