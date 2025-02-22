@@ -14,6 +14,7 @@ export const RatingFilter = () => {
     } else {
       params.set('rating', rating.toString());
     }
+    params.set('pageNumber', '0');
     router.push(`?${params.toString()}`);
   };
 
