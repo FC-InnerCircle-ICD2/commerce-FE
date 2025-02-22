@@ -1,56 +1,49 @@
 'use client';
 
 import { useState } from 'react';
-import type { IProductDetail, IProductOptionDetail, IProductOptions } from '@/api/product';
+import type { IProductDetail } from '@/api/product';
 import ProductDegtailCards from './ProductDetailCards';
 import ProductDetailSelectOptions from './ProductDetailSelectOptions';
 import { useRouter } from 'next/navigation';
+import ProdudctDetailClientOptions, { SelectItem } from './ProductDetailClientOptions';
 
 export interface ISelectOptionDetail {
   count: number;
-  optionName: string;
-  value: string;
-  quantity: number;
-  price: number;
+  options: SelectItem[];
 }
 
 const ProductDetailClient: React.FC<{ product: IProductDetail }> = ({ product }) => {
   const router = useRouter();
   const [selectedTab, setSelectedTab] = useState('상세정보');
-  const [selectOptionDetails, setSelectOptionDetails] = useState<ISelectOptionDetail[]>([]);
+  const [selectOptions, setSelectOptions] = useState<ISelectOptionDetail[]>([]);
 
-  function handleAddOptionsDetail(option: IProductOptions, detail: IProductOptionDetail) {
-    const find = selectOptionDetails.find((item) => item.value === detail.value);
-    if (find) {
-      setSelectOptionDetails([
-        ...selectOptionDetails.map((item) => {
-          if (item.value === detail.value) return { ...item, count: item.count + 1 };
-          return item;
-        }),
-      ]);
-      // TODO: 갯수 추가하는 코드 필요
-    } else {
-      setSelectOptionDetails([
-        ...selectOptionDetails,
-        {
-          count: 1,
-          optionName: option.name,
-          value: detail.value,
-          quantity: detail.quantity,
-          price: product.price,
-        },
-      ]);
-    }
+  function handleAddOption(newOptions: SelectItem[]) {
+    setSelectOptions((prevOptions) => {
+      // 동일한 options을 가진 항목 찾기
+      const existingDetail = prevOptions.find(
+        (detail) => JSON.stringify(detail.options) === JSON.stringify(newOptions),
+      );
+
+      if (existingDetail) {
+        // 같은 options이 있으면 count 증가
+        return prevOptions.map((detail) =>
+          detail === existingDetail ? { ...detail, count: detail.count + 1 } : detail,
+        );
+      } else {
+        // 새로운 options이면 새로운 ISelectOptionDetail 추가
+        return [...prevOptions, { count: 1, options: newOptions }];
+      }
+    });
   }
 
   function handleRemoveOption(option: ISelectOptionDetail) {
-    setSelectOptionDetails([...selectOptionDetails.filter((item) => item.value !== option.value)]);
+    setSelectOptions([...selectOptions.filter((item) => JSON.stringify(item) !== JSON.stringify(option))]);
   }
 
   function handleOptionCount(option: ISelectOptionDetail, flag: boolean) {
-    setSelectOptionDetails([
-      ...selectOptionDetails.map((item) => {
-        if (item.value === option.value)
+    setSelectOptions([
+      ...selectOptions.map((item) => {
+        if (JSON.stringify(item) === JSON.stringify(option))
           return { ...item, count: flag ? item.count + 1 : item.count - 1 < 1 ? 1 : item.count - 1 };
         return item;
       }),
@@ -58,15 +51,26 @@ const ProductDetailClient: React.FC<{ product: IProductDetail }> = ({ product })
   }
 
   const handlePurchase = () => {
-    if (selectOptionDetails.length > 0) {
+    if (selectOptions.length > 0) {
       const paramData = {
         product,
-        selectedOptions: selectOptionDetails,
+        selectedOptions: selectOptions,
       };
       const encodedData = encodeURIComponent(JSON.stringify(paramData));
       router.push(`/purchase?data=${encodedData}`);
     }
   };
+
+  function calculateTotalAdditionalPrice(): number {
+    return selectOptions.reduce((total, detail) => {
+      // 각 selectOptions의 additional price 계산 (옵션 가격 합 - 기준 가격)
+      const additionalPriceSum =
+        detail.options.reduce((sum, option) => sum + option.additionalPrice, 0) + product.price;
+
+      // count만큼 곱한 후 전체 합산
+      return total + additionalPriceSum * detail.count;
+    }, 0);
+  }
 
   return (
     <div className="max-w-custom mx-auto flex px-4 py-8 flex-col">
@@ -96,31 +100,12 @@ const ProductDetailClient: React.FC<{ product: IProductDetail }> = ({ product })
               <span>{`>`}</span>
             </div>
             <p className="text-2xl font-bold mt-4">{product.price.toLocaleString()}원</p>
-
             <div className="border-t my-[30px] border-[#646464]" />
-
-            {/* 옵션 선택 */}
-            {product.options.map((option) => (
-              <div key={option.id} className="mb-4">
-                <h3 className="text-md font-semibold">{option.name}</h3>
-                <div className="flex space-x-2 mt-2">
-                  {option.optionDetails.map((detail) => (
-                    <button
-                      key={detail.value}
-                      className="px-4 py-2 border rounded-full border-gray-400 text-sm hover:bg-slate-500 hover:text-white"
-                      onClick={() => handleAddOptionsDetail(option, detail)}
-                    >
-                      {detail.value}
-                    </button>
-                  ))}
-                </div>
-              </div>
-            ))}
-
+            <ProdudctDetailClientOptions options={product.options} handleAddOptionDetail={handleAddOption} />
             <div className="border-t my-[30px] border-[#646464]" />
             {/* 선택된 옵션 */}
             <div className="flex flex-col gap-4">
-              {selectOptionDetails.map((options, i) => {
+              {selectOptions.map((options, i) => {
                 return (
                   <ProductDetailSelectOptions
                     key={i}
@@ -140,14 +125,12 @@ const ProductDetailClient: React.FC<{ product: IProductDetail }> = ({ product })
               <span className="text-sm">총 상품 금액</span>
               <div className="flex gap-[15px] items-center">
                 <span className="text-xs text-neutral-600">
-                  총 수량 {selectOptionDetails.reduce((sum, option) => sum + option.count, 0).toLocaleString()}개
+                  총 수량 {selectOptions.reduce((sum, option) => sum + option.count, 0).toLocaleString()}개
                 </span>
                 <span>|</span>
                 <span className="text-xl font-bold">
-                  {(
-                    product.price * selectOptionDetails.reduce((sum, option) => sum + option.count, 0)
-                  ).toLocaleString()}
-                  원
+                  {calculateTotalAdditionalPrice().toLocaleString()}원
+                  {/* {(product.price * selectOptions.reduce((sum, option) => sum + option.count, 0)).toLocaleString()}원 */}
                 </span>
               </div>
             </div>

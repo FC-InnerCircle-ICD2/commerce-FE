@@ -14,10 +14,18 @@ export default function ProductDetailSelectOptions({
   handleOptionCount,
   handleRemoveOption,
 }: Props) {
+  function formatSelectOptions(): string {
+    return seletedOptionDetail.options.map((option) => option.value).join(' / ');
+  }
+
+  function getAdditionalPrice() {
+    return seletedOptionDetail.options.reduce((sum, option) => sum + option.additionalPrice, 0);
+  }
+
   return (
     <div className="border rounded-lg p-4 bg-[#FFFFFF]">
       <div className="flex justify-between items-center mb-2">
-        <span className="text-md font-semibold">{seletedOptionDetail.value}</span>
+        <span className="text-md font-semibold">{formatSelectOptions()}</span>
         <button className="text-gray-500" onClick={() => handleRemoveOption(seletedOptionDetail)}>
           ✕
         </button>
@@ -38,7 +46,9 @@ export default function ProductDetailSelectOptions({
             +
           </button>
         </div>
-        <span className="text-lg font-semibold">{(product.price * seletedOptionDetail.count).toLocaleString()} 원</span>
+        <span className="text-lg font-semibold">
+          {((product.price + getAdditionalPrice()) * seletedOptionDetail.count).toLocaleString()} 원
+        </span>
       </div>
     </div>
   );
