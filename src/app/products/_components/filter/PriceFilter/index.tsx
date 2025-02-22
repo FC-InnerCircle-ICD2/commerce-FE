@@ -42,7 +42,11 @@ export const PriceFilter: React.FC<PriceFilterProps> = ({
           step="500"
           value={priceRange.min}
           className="w-2/5 p-2 border border-zinc-300 rounded text-sm"
-          onChange={(e) => onInputChange('min', Number(e.target.value))}
+          onChange={(e) => {
+            const value = Math.floor(Number(e.target.value));
+            if (value > 100000000) return;
+            onInputChange('min', value);
+          }}
         />
         <span className="text-neutral-500">~</span>
         <input
@@ -50,7 +54,11 @@ export const PriceFilter: React.FC<PriceFilterProps> = ({
           step="500"
           value={priceRange.max}
           className="w-2/5 p-2 border border-zinc-300 rounded text-sm"
-          onChange={(e) => onInputChange('max', Number(e.target.value))}
+          onChange={(e) => {
+            const value = Math.floor(Number(e.target.value));
+            if (value > 100000000) return;
+            onInputChange('max', value);
+          }}
         />
         <button
           onClick={onSearch}
