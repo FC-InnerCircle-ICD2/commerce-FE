@@ -40,7 +40,7 @@ export const PriceFilter: React.FC<PriceFilterProps> = ({
         <input
           type="number"
           step="500"
-          value={priceRange.min}
+          value={priceRange.min || ''}
           className="w-2/5 p-2 border border-zinc-300 rounded text-sm"
           onChange={(e) => {
             const value = Math.floor(Number(e.target.value));
@@ -52,7 +52,7 @@ export const PriceFilter: React.FC<PriceFilterProps> = ({
         <input
           type="number"
           step="500"
-          value={priceRange.max}
+          value={priceRange.max || ''}
           className="w-2/5 p-2 border border-zinc-300 rounded text-sm"
           onChange={(e) => {
             const value = Math.floor(Number(e.target.value));
