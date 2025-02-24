@@ -19,7 +19,7 @@ export default async function Review({ searchParams }: { searchParams: Promise<{
   return (
     <>
       <Header />
-      <div className="max-w-custom mx-auto w-full flex flex-col px-[150px]">
+      <div className="max-w-custom mx-auto w-full flex flex-col px-3 pt-8 tablet:px-[150px]">
         <h1 className="font-bold text-2xl border-b border-slate-300 pb-3">리뷰 등록하기</h1>
         <ReviewForm product={product} />
       </div>
