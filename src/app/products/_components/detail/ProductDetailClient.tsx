@@ -6,6 +6,7 @@ import ProductDegtailCards from './ProductDetailCards';
 import ProductDetailSelectOptions from './ProductDetailSelectOptions';
 import { useRouter } from 'next/navigation';
 import ProdudctDetailClientOptions, { SelectItem } from './ProductDetailClientOptions';
+import ProductDetailClientReview from './ProductDetailClientReivew';
 
 export interface ISelectOptionDetail {
   count: number;
@@ -160,8 +161,8 @@ const ProductDetailClient: React.FC<{ product: IProductDetail }> = ({ product })
             {tab}
           </button>
         ))}
+        {selectedTab === '리뷰' && <ProductDetailClientReview productId={product.id} />}
       </div>
-
       <div className="border-t border-[#D9D9D9] mt-8 mb-8" />
       <ProductDegtailCards />
     </div>

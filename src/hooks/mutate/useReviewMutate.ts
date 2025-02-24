@@ -1,4 +1,4 @@
-import { postReviews } from '@/api/product';
+import { postReviews } from '@/api/review';
 import { useMutation } from '@tanstack/react-query';
 
 export function useReviewAddMutate() {

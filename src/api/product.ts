@@ -1,7 +1,6 @@
 import { buildUrl } from '@/utils/buildUrl';
 import { ICategory } from './category';
 import { BASE_URL } from '@/constants/constant';
-import { TEST_TOKEN } from '@/dummy';
 
 export interface IProductImages {
   id: number;
@@ -69,8 +68,6 @@ interface IProductAPI {
   };
 }
 
-const PRODUCT_BASE_URL = 'https://product-api.emmotional-cart.click';
-
 export const PRODUCT_URL = 'api/v1/products/search';
 
 export type SORT_OPTIONS = 'CREATE_DESC' | 'SALES_DESC' | 'PRICE_ASC' | 'PRICE_DESC';
@@ -109,23 +106,5 @@ export const getProducts = async (props: ProductsProps): Promise<IProductAPI> =>
   const response = await fetch(url);
 
   const data: IProductAPI = await response.json();
-  return data;
-};
-
-export type ReviewProps = {
-  productId: number;
-  formData: FormData;
-};
-
-export const postReviews = async (props: ReviewProps) => {
-  const response = await fetch(`${PRODUCT_BASE_URL}/api/v1/products/${props.productId}/review`, {
-    method: 'POST',
-    body: props.formData,
-    headers: {
-      Authorization: `Bearer ${TEST_TOKEN}`,
-    },
-  });
-
-  const data = await response.json();
   return data;
 };
