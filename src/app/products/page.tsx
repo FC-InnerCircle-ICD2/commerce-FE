@@ -2,15 +2,14 @@ import React, { Suspense } from 'react';
 import { ShoppingBagIcon } from '@heroicons/react/24/outline';
 import Card from '@/components/common/Card';
 import { CategorySkeleton, FilterSkeleton, ProductListSkeleton } from '@/components/skeletons';
-import CategoryList from './_components/CategoryList';
 import Filter from '@/app/products/_components/filter/Filter';
 import { Breadcrumbs } from '@/components/common';
 import { MobileFilter } from '@/app/products/_components/filter/MobileFilter';
 import { Header } from '@/components/layout';
 import CategoryHeader from '../category/_components/CategoryHeader';
 import Pagination from './_components/Pagination';
-import { getCategory } from '@/api/category';
 import { getProducts, SORT_OPTIONS, IProduct } from '@/api/product';
+import CategoryServer from './_components/CategoryServer';
 
 interface SearchParams {
   keyword?: string;
@@ -22,11 +21,6 @@ interface SearchParams {
   categoryId?: string;
   sortOption?: SORT_OPTIONS;
 }
-
-const CategoryServer = async () => {
-  const categories = await getCategory();
-  return <CategoryList categories={categories} />;
-};
 
 const FilterSection = async ({
   searchParams,
