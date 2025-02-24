@@ -14,6 +14,12 @@ const nextConfig: NextConfig = {
     }
     return config;
   },
+    // 환경 변수 설정 추가
+    env: {
+      NEXT_PUBLIC_TEMP_TOKEN: process.env.NEXT_PUBLIC_TEMP_TOKEN,
+    },
+    // Edge Runtime에 환경 변수 노출
+  serverExternalPackages: ["some-package"], // ✅ 변경된 옵션 사용
 };
 
 export default nextConfig;
