@@ -1,4 +1,3 @@
-import type { OrderOption } from '@/api/order';
 import { numberFormatting } from '@/utils/numberFormatting';
 import type { SelectedOption } from './OrderContents';
 
