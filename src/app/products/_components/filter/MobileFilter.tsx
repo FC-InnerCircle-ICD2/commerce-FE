@@ -132,6 +132,7 @@ export const MobileFilter: React.FC<FilterProps> = ({ products }) => {
     params.delete('priceMin');
     params.delete('priceMax');
     params.delete('rating');
+    params.set('pageNumber', '0');
     router.push(`?${params.toString()}`);
 
     setSelectedPriceRange(undefined);
