@@ -12,6 +12,8 @@ import { ArrowPathIcon, AdjustmentsHorizontalIcon } from '@heroicons/react/24/ou
 
 const Filter: React.FC<FilterProps> = ({ products }) => {
   const searchParams = useSearchParams();
+  const categoryId = searchParams?.get('categoryId');
+
   const priceRangeValues = useMemo(() => {
     const price = products.map((p) => p.price).filter((price): price is number => price !== undefined && !isNaN(price));
 
@@ -23,7 +25,7 @@ const Filter: React.FC<FilterProps> = ({ products }) => {
       min: Math.min(...price),
       max: Math.max(...price),
     };
-  }, [products]);
+  }, [categoryId]);
 
   const [priceRange, setPriceRange] = useState<PriceRange>(() => {
     const minParam = searchParams?.get('priceMin');
@@ -92,6 +94,7 @@ const Filter: React.FC<FilterProps> = ({ products }) => {
       params.delete('priceMax');
     }
 
+    params.set('pageNumber', '0');
     router.push(`/products?${params.toString()}`);
     setSelectedPriceRange(priceRange);
   };

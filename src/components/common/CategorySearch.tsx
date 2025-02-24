@@ -5,10 +5,11 @@ import { Suspense, useEffect, useMemo, useRef, useState } from 'react';
 import SearchOverview from './searchOverview/SearchOverview';
 import SearchForm from './SearchForm';
 import { useCategory } from '@/hooks/queries/useCategory';
-import { MagnifyingGlassIcon } from '@heroicons/react/24/outline';
+import SearchIcon from './SearchIcon';
 import LoadingSpinner from './LoadingSpinner';
 
 export default function CategorySearch() {
+  const formRef = useRef<HTMLFormElement>(null);
   const [isFocus, setIsFocus] = useState<boolean>(false);
   const parentRef = useRef<HTMLDivElement>(null);
   const [currentItem, setCurrentItem] = useState<IOptions>({ label: '', value: '' });
@@ -47,12 +48,13 @@ export default function CategorySearch() {
       <div className="relative flex grow pr-[10px]" onFocus={() => setIsFocus(true)}>
         <Suspense>
           <SearchForm
+            ref={formRef}
             category={currentItem}
             classname="grow border-l-2 border-[#CBD5E1] pl-[15px] text-[#3D3D3D] bg-transparent outline-none"
             handleCloseSearchView={handleCloseSearchView}
           />
         </Suspense>
-        <MagnifyingGlassIcon className="w-[25px] h-[25px] text-[#075985]" />
+        <SearchIcon onClick={() => formRef.current?.requestSubmit()} size="lg" />
         {isFocus && (
           <article className="absolute z-50 left-0 top-[50px] w-full bg-white rounded-md shadow-md">
             <SearchOverview parentRef={parentRef} recommend={['추천']} handleClose={() => setIsFocus(false)} />
