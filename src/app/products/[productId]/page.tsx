@@ -122,12 +122,12 @@ export default async function ProductDetail({ params }: { params: Promise<{ prod
   const { productId } = await params;
 
   try {
-    await getProduct(productId);
+    const product = await getProduct(productId);
 
     return (
       <>
         <Header />
-        <ProductDetailClient product={dummy} />
+        <ProductDetailClient product={product} />
       </>
     );
   } catch {
