@@ -12,6 +12,8 @@ import { ArrowPathIcon, AdjustmentsHorizontalIcon } from '@heroicons/react/24/ou
 
 const Filter: React.FC<FilterProps> = ({ products }) => {
   const searchParams = useSearchParams();
+  const categoryId = searchParams?.get('categoryId');
+
   const priceRangeValues = useMemo(() => {
     const price = products.map((p) => p.price).filter((price): price is number => price !== undefined && !isNaN(price));
 
@@ -23,7 +25,7 @@ const Filter: React.FC<FilterProps> = ({ products }) => {
       min: Math.min(...price),
       max: Math.max(...price),
     };
-  }, [products]);
+  }, [categoryId]);
 
   const [priceRange, setPriceRange] = useState<PriceRange>(() => {
     const minParam = searchParams?.get('priceMin');
@@ -59,16 +61,18 @@ const Filter: React.FC<FilterProps> = ({ products }) => {
     const minParam = searchParams?.get('priceMin');
     const maxParam = searchParams?.get('priceMax');
 
+    const newMin = minParam ? Number(minParam) : priceRangeValues.min;
+    const newMax = maxParam ? Number(maxParam) : priceRangeValues.max;
+
+    setPriceRange({ min: newMin, max: newMax });
+    setSliderValue([newMin, newMax]);
+
     if (minParam || maxParam) {
-      const newMin = minParam ? Number(minParam) : priceRange.min;
-      const newMax = maxParam ? Number(maxParam) : priceRange.max;
-      setPriceRange({ min: newMin, max: newMax });
-      setSliderValue([newMin, newMax]);
       setSelectedPriceRange({ min: newMin, max: newMax });
     } else {
       setSelectedPriceRange(undefined);
     }
-  }, [searchParams]);
+  }, [searchParams, priceRangeValues]);
 
   useEffect(() => {
     const ratingParam = searchParams?.get('rating');
@@ -89,6 +93,7 @@ const Filter: React.FC<FilterProps> = ({ products }) => {
     } else {
       params.delete('priceMax');
     }
+
     params.set('pageNumber', '0');
     router.push(`/products?${params.toString()}`);
     setSelectedPriceRange(priceRange);
@@ -108,7 +113,6 @@ const Filter: React.FC<FilterProps> = ({ products }) => {
     params.delete('priceMin');
     params.delete('priceMax');
     params.delete('rating');
-    params.set('pageNumber', '0');
     router.push(`?${params.toString()}`);
     setSelectedPriceRange(undefined);
     setSelectedRating(null);
@@ -144,7 +148,6 @@ const Filter: React.FC<FilterProps> = ({ products }) => {
               const params = new URLSearchParams(searchParams?.toString() || '');
               params.delete('priceMin');
               params.delete('priceMax');
-              params.set('pageNumber', '0');
               router.push(`/products?${params.toString()}`);
               setSelectedPriceRange(undefined);
             }}
@@ -152,7 +155,6 @@ const Filter: React.FC<FilterProps> = ({ products }) => {
             onRatingRemove={() => {
               const params = new URLSearchParams(searchParams?.toString() || '');
               params.delete('rating');
-              params.set('pageNumber', '0');
               router.push(`/products?${params.toString()}`);
               setSelectedRating(null);
             }}
