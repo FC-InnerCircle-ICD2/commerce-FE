@@ -1,5 +1,6 @@
 'use client';
 import { IProductDetail } from '@/api/product';
+import { useReviewAddMutate } from '@/hooks/mutate/useReviewMutate';
 import React, { useRef, useState } from 'react';
 
 type Props = {
@@ -12,6 +13,7 @@ export default function ReviewForm({ product }: Props) {
   const [content, setContent] = useState<string>('');
   const [rating, setRating] = useState<string>('0');
   const fileInputRef = useRef<HTMLInputElement | null>(null);
+  const { reviewMutate } = useReviewAddMutate();
 
   const triggerFileInput = () => {
     fileInputRef.current?.click();
@@ -43,25 +45,17 @@ export default function ReviewForm({ product }: Props) {
     }
 
     const formData = new FormData();
-    formData.append('imageFiles', file);
+    formData.append('productName', product.name);
+    // TODO: 해당 부분들 배열형식으로 수정되야할듯.
+    formData.append('productOptionId', String(product.options[0].id));
+    formData.append('productOptionName', product.options[0].name);
+    formData.append('reviewImages', file);
     formData.append('content', content);
     formData.append('rating', rating);
-    formData.append('userId', '유저 아이디');
-    formData.forEach((value, key) => {
-      console.log(key, value);
+    reviewMutate({
+      productId: product.id,
+      formData,
     });
-
-    // try {
-    //   const response = await axios.post(서버 URL, formData, {
-    //     headers: {
-    //       'Content-Type': 'multipart/form-data',
-    //     },
-    //   });
-
-    //   alert('업로드 성공!');
-    // } catch (error) {
-    //   alert('업로드 실패!');
-    // }
   };
 
   return (
