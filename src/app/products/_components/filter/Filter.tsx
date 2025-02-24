@@ -91,7 +91,7 @@ const Filter: React.FC<FilterProps> = ({ products }) => {
     } else {
       params.delete('priceMax');
     }
-
+    params.set('pageNumber', '0');
     router.push(`/products?${params.toString()}`);
     setSelectedPriceRange(priceRange);
   };
@@ -146,6 +146,7 @@ const Filter: React.FC<FilterProps> = ({ products }) => {
               const params = new URLSearchParams(searchParams?.toString() || '');
               params.delete('priceMin');
               params.delete('priceMax');
+              params.set('pageNumber', '0');
               router.push(`/products?${params.toString()}`);
               setSelectedPriceRange(undefined);
             }}
@@ -153,6 +154,7 @@ const Filter: React.FC<FilterProps> = ({ products }) => {
             onRatingRemove={() => {
               const params = new URLSearchParams(searchParams?.toString() || '');
               params.delete('rating');
+              params.set('pageNumber', '0');
               router.push(`/products?${params.toString()}`);
               setSelectedRating(null);
             }}
