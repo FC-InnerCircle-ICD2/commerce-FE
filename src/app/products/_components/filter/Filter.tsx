@@ -59,18 +59,16 @@ const Filter: React.FC<FilterProps> = ({ products }) => {
     const minParam = searchParams?.get('priceMin');
     const maxParam = searchParams?.get('priceMax');
 
-    const newMin = minParam ? Number(minParam) : priceRangeValues.min;
-    const newMax = maxParam ? Number(maxParam) : priceRangeValues.max;
-
-    setPriceRange({ min: newMin, max: newMax });
-    setSliderValue([newMin, newMax]);
-
     if (minParam || maxParam) {
+      const newMin = minParam ? Number(minParam) : priceRange.min;
+      const newMax = maxParam ? Number(maxParam) : priceRange.max;
+      setPriceRange({ min: newMin, max: newMax });
+      setSliderValue([newMin, newMax]);
       setSelectedPriceRange({ min: newMin, max: newMax });
     } else {
       setSelectedPriceRange(undefined);
     }
-  }, [searchParams, priceRangeValues]);
+  }, [searchParams]);
 
   useEffect(() => {
     const ratingParam = searchParams?.get('rating');
