@@ -2,6 +2,7 @@ import { CategorySearch } from '../../common';
 import Navbar from '../Navbar';
 import CategoryButton from './CategoryButton';
 import Logo from './Logo';
+import MyShoppingButton from './MyShoppingButton';
 import SearchButton from './SearchButton';
 import ShoppingButton from './ShoppingButton';
 
@@ -17,6 +18,7 @@ export default function Header() {
         </div>
         <div className="flex gap-2">
           <CategoryButton />
+          <MyShoppingButton />
           <ShoppingButton />
         </div>
       </div>
