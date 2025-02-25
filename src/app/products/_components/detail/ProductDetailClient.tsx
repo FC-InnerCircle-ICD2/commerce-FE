@@ -19,7 +19,6 @@ const ProductDetailClient: React.FC<{ product: IProductDetail }> = ({ product })
   const [selectedTab, setSelectedTab] = useState<string>('상세정보');
   const [selectOptions, setSelectOptions] = useState<ISelectOptionDetail[]>([]);
 
-  console.log(product);
   function handleAddOption(newOptions: SelectItem[]) {
     setSelectOptions((prevOptions) => {
       // 동일한 options을 가진 항목 찾기
