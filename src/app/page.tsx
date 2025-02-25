@@ -19,7 +19,7 @@ export default async function Home() {
     return (
       <div className="flex flex-col h-screen overflow-x-hidden">
         <Header />
-        <TokenHandler accessToken={accessToken} /> {/* 새로운 컴포넌트 추가 */}
+        <TokenHandler accessToken={accessToken} />
         <div className="grow flex flex-col gap-5">
           <Carousel banners={banners} />
           <Suspense fallback={<ProductSkeleton />}>
