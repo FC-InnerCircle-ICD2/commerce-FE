@@ -7,7 +7,7 @@ import LoginPopup from '../modals/LoginPopup';
 import { useAuthStore } from '@/store/authStore';
 
 const Navbar = () => {
-  const { isLoggedIn, accessToken, setAccessToken, logout } = useAuthStore();
+  const { isLoggedIn, accessToken, logout } = useAuthStore();
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [username, setUsername] = useState('');
 
@@ -31,11 +31,6 @@ const Navbar = () => {
 
   const closePopup = () => {
     setIsPopupOpen(false);
-  };
-
-  const onLoginSuccess = (token: string) => {
-    setAccessToken(token); // 로그인 성공 시 액세스 토큰 설정
-    setUsername('홍길동'); // 예시 이름, 실제로는 로그인 응답에서 받아와야 합니다.
   };
 
   return (
@@ -81,7 +76,7 @@ const Navbar = () => {
       </nav>
 
       {isPopupOpen && (
-        <LoginPopup closePopup={closePopup} onLoginSuccess={onLoginSuccess} />
+        <LoginPopup closePopup={closePopup} />
       )}
     </>
   );
