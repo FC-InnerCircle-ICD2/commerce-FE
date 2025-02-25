@@ -1,16 +1,13 @@
 'use client';
 
-import { IProduct } from '@/api/product';
 import { useState } from 'react';
 import CartCheckComponent from './CartCheckComponent';
 import CartList from './CartList';
 import CartFooter from './CartFooter';
+import { IProduct } from '@/api/product';
 
-type Props = {
-  products: IProduct[];
-};
-
-export default function CartContainer({ products }: Props) {
+export default function CartContainer() {
+  const products: IProduct[] = [];
   const [checkList, setCheckList] = useState<IProduct[]>([]);
 
   function handleChangeCheckList(product: IProduct) {
