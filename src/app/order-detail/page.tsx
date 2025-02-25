@@ -3,8 +3,8 @@ import OrderItem from './_components/OrderItem';
 import OrderDetailSearch from './_components/OrderDetailSearch';
 
 export default async function OrderDetail({ query }: { query: Promise<{ data?: string }> }) {
-  const { data } = await query;
-  console.log('data: ', data);
+  // const { data } = await query;
+  // console.log('data: ', data);
   // if (!data) {
   //   return <p>No order data found.</p>;
   // }
