@@ -81,20 +81,11 @@ const Filter: React.FC<FilterProps> = ({ products }) => {
 
   const handlePriceSearch = () => {
     const params = new URLSearchParams(searchParams?.toString() || '');
-
-    if (priceRange.min !== priceRangeValues.min) {
-      params.set('priceMin', priceRange.min.toString());
-    } else {
-      params.delete('priceMin');
-    }
-
-    if (priceRange.max !== priceRangeValues.max) {
-      params.set('priceMax', priceRange.max.toString());
-    } else {
-      params.delete('priceMax');
-    }
-
+    
+    params.set('priceMin', priceRange.min.toString());
+    params.set('priceMax', priceRange.max.toString());
     params.set('pageNumber', '0');
+    
     router.push(`/products?${params.toString()}`);
     setSelectedPriceRange(priceRange);
   };
