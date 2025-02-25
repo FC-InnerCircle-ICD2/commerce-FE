@@ -1,5 +1,3 @@
-import { TEST_TOKEN } from '@/dummy';
-
 export interface IReviewContent {
   reviewImages: [
     {
@@ -43,9 +41,6 @@ export const postReviews = async (props: ReviewProps) => {
   const response = await fetch(`${PRODUCT_BASE_URL}/api/v1/products/${props.productId}/review`, {
     method: 'POST',
     body: props.formData,
-    headers: {
-      Authorization: `Bearer ${TEST_TOKEN}`,
-    },
   });
 
   const data = await response.json();

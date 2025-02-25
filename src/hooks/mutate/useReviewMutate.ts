@@ -1,15 +1,17 @@
 import { postReviews } from '@/api/review';
 import { useMutation } from '@tanstack/react-query';
+import { useRouter, use } from 'next/navigation';
 
 export function useReviewAddMutate() {
+  const router = useRouter();
   const { mutate: reviewMutate } = useMutation({
     mutationKey: ['addReview'],
     mutationFn: postReviews,
-    onSuccess: (data) => {
-      console.log('success : ' + data);
+    onSuccess: () => {
+      alert('리뷰가 등록되었습니다');
+      router.push('/');
     },
     onError: (e) => {
-      console.log('asd');
       console.error(e);
     },
   });
