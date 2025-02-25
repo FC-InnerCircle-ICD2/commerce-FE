@@ -4,7 +4,6 @@ import Image from 'next/image';
 import { useState } from 'react';
 import kakaoSymbol from '../../assets/kakao.png';
 import naverSymbol from '../../assets/naver.png';
-import { useAuthStore } from '@/store/authStore';
 
 const NAVER_LOGIN_URL =
   'https://auth-api.emmotional-cart.click/oauth2/authorization/naver?redirect_uri=http://localhost:3000';
