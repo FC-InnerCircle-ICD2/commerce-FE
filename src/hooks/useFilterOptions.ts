@@ -12,7 +12,9 @@ export const useFilterOptions = (products: IProduct[]) => {
           if (!optionsMap[option.name]) {
             optionsMap[option.name] = new Set();
           }
-          optionsMap[option.name].add(option.value);
+          option.optionDetails.forEach((detail) => {
+            optionsMap[option.name].add(detail.value);
+          });
         }
       });
     });

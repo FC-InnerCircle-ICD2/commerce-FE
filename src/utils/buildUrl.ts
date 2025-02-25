@@ -8,5 +8,5 @@ export function buildUrl(base: string, params: Record<string, string | number | 
     }
   }
 
-  return `${base}?${searchParams.toString()}`;
+  return `${base}?${searchParams?.toString() || ''}`;
 }

@@ -1,23 +1,31 @@
 import { getBanners } from '@/api/banner';
-import { getProducts } from '@/api/product';
 import Carousel from '@/components/home/Carousel';
 import ProductList from '@/components/home/ProductList';
+import { ProductSkeleton } from '@/components/skeletons';
+import { headers } from 'next/headers';
 import { Header } from '@/components/layout';
-import MobileFooter from '@/components/layout/footer/MobileFooter';
+import { Suspense } from 'react';
+import { TokenHandler } from '@/components/TokenHandler';
 
 export default async function Home() {
   try {
     const banners = await getBanners();
-    const products = await getProducts({ sort: 'registration' });
-
+    const headerList = await headers();
+    const cookieHeader = headerList.get('cookie') || '';
+    
+    // 쿠키에서 accessToken 추출
+    const accessToken = cookieHeader.split('; ').find(row => row.startsWith('Access-Token='))?.split('=')[1] || null;
+  
     return (
       <div className="flex flex-col h-screen overflow-x-hidden">
         <Header />
-        <div className="grow flex flex-col gap-[20]">
+        <TokenHandler accessToken={accessToken} /> {/* 새로운 컴포넌트 추가 */}
+        <div className="grow flex flex-col gap-5">
           <Carousel banners={banners} />
-          <ProductList products={products} />
+          <Suspense fallback={<ProductSkeleton />}>
+            <ProductList />
+          </Suspense>
         </div>
-        <MobileFooter />
       </div>
     );
   } catch {

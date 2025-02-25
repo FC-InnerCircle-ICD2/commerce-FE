@@ -1,9 +1,8 @@
 import type { Metadata } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
 import './globals.css';
-import { init } from '@/mock/msw';
-import { MswComponent } from '@/mock/msw.component';
 import { ReactQueryProvider } from '@/providers/ReactQueryProvider';
+import MobileFooter from '@/components/layout/footer/MobileFooter';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -25,15 +24,16 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  if (process.env.NODE_ENV === 'development') {
-    init();
-  }
+  // if (process.env.NODE_ENV === 'development') {
+  //   init();
+  // }
 
   return (
     <html lang="en">
-      <MswComponent />
+      {/* <MswComponent /> */}
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <ReactQueryProvider>{children}</ReactQueryProvider>
+        <MobileFooter />
       </body>
     </html>
   );

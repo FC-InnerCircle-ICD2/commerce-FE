@@ -4,7 +4,17 @@ import { useQuery } from '@tanstack/react-query';
 
 export function useProducts(props: ProductsProps) {
   const { data: products } = useQuery({
-    queryKey: [ProductsQueryKeys.products, props.name, props.productCategoryId, props.rating, props.size, props.sort],
+    queryKey: [
+      ProductsQueryKeys.products,
+      props.productId,
+      props.categoryId,
+      props.keyword,
+      props.priceMin,
+      props.priceMax,
+      props.sortOption,
+      props.pageSize,
+      props.pageNumber,
+    ],
     queryFn: () => getProducts(props),
   });
 

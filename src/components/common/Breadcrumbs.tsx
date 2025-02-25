@@ -1,76 +1,76 @@
 'use client';
 
-import { useState } from 'react';
-import Image from 'next/image';
-import { ChevronRightIcon } from '@heroicons/react/24/solid';
-import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbSeparator } from '@/components/ui/breadcrumb';
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
+import { useState, useEffect } from 'react';
+import { useSearchParams, useRouter } from 'next/navigation';
+
+import { SORT_OPTIONS } from '@/api/product';
 
 import SortDropdown from './SortDropdown';
 
-interface BreadcrumbDropdownProps {
+interface SortOption {
+  value: SORT_OPTIONS;
   label: string;
-  items: string[];
-  onSelect: (item: string) => void;
 }
 
-function BreadcrumbDropdown({ label, items, onSelect }: BreadcrumbDropdownProps) {
-  return (
-    <DropdownMenu>
-      <DropdownMenuTrigger asChild className="flex items-center gap-1 outline-none">
-        <button className="px-2">
-          {label}
-          <Image src="/assets/dropdownDown.svg" width={20} height={20} alt="dropdown arrow" />
-        </button>
-      </DropdownMenuTrigger>
-      <DropdownMenuContent>
-        {items.map((item) => (
-          <DropdownMenuItem key={item} onSelect={() => onSelect(item)}>
-            {item}
-          </DropdownMenuItem>
-        ))}
-      </DropdownMenuContent>
-    </DropdownMenu>
-  );
-}
+const SORT_OPTIONS_CONFIG: SortOption[] = [
+  { value: 'CREATE_DESC', label: '등록순' },
+  { value: 'PRICE_ASC', label: '낮은가격순' },
+  { value: 'PRICE_DESC', label: '높은가격순' },
+  { value: 'SALES_DESC', label: '판매량순' },
+];
 
 export default function Breadcrumbs() {
-  const [selectedCategory, setSelectedCategory] = useState<string>('남성의류');
-  const [selectedOuter, setSelectedOuter] = useState<string>('아우터');
-  const [selectedSort, setSelectedSort] = useState<string>('낮은 가격순');
+  const [selectedSort, setSelectedSort] = useState<SORT_OPTIONS>('CREATE_DESC');
+  const [searchQuery, setSearchQuery] = useState<string>('');
+  const searchParams = useSearchParams();
+  const router = useRouter();
 
-  const categoryItems = {
-    clothing: ['상의', '하의', '아우터'],
-    outer: ['코트', '자켓', '패딩'],
+  useEffect(() => {
+    const query = searchParams?.get('keyword');
+    setSearchQuery(query ? decodeURIComponent(query) : '');
+
+    const sortOption = searchParams?.get('sortOption') as SORT_OPTIONS;
+    if (sortOption && SORT_OPTIONS_CONFIG.some((option) => option.value === sortOption)) {
+      setSelectedSort(sortOption);
+    }
+  }, [searchParams]); // Update searchQuery and selectedSort when URL parameters change
+
+  const getCurrentSortLabel = (value: SORT_OPTIONS): string => {
+    return SORT_OPTIONS_CONFIG.find((option) => option.value === value)?.label ?? '';
   };
 
-  const sortItems = ['높은 가격순', '판매 많은순', '등록순'];
+  const getSortValueByLabel = (label: string): SORT_OPTIONS => {
+    return SORT_OPTIONS_CONFIG.find((option) => option.label === label)?.value ?? 'CREATE_DESC';
+  };
+
+  const handleSortChange = (label: string) => {
+    const sortValue = getSortValueByLabel(label);
+    setSelectedSort(sortValue);
+
+    const params = new URLSearchParams(searchParams?.toString() || '');
+    params.set('sortOption', sortValue);
+    router.push(`?${params.toString()}`);
+  };
 
   return (
     <div className="flex items-center justify-between lg:px-7 lg:py-4 px-3 py-2 bg-slate-50 lg:border border-slate-300 lg:rounded-xl">
-      <Breadcrumb className="flex items-center gap-2 list-none">
-        <BreadcrumbItem className="border border-slate-300 rounded-full bg-white px-3 py-2 text-sm">
-          <BreadcrumbLink href="/">홈</BreadcrumbLink>
-        </BreadcrumbItem>
-        <BreadcrumbSeparator>
-          <ChevronRightIcon className="w-6 h-6" />
-        </BreadcrumbSeparator>
-        <BreadcrumbItem className="border border-slate-300 rounded-full bg-white px-1 py-2 text-sm">
-          <BreadcrumbDropdown label={selectedCategory} items={categoryItems.clothing} onSelect={setSelectedCategory} />
-        </BreadcrumbItem>
-        <BreadcrumbSeparator>
-          <ChevronRightIcon className="w-6 h-6" />
-        </BreadcrumbSeparator>
-        <BreadcrumbItem className="border border-slate-300 rounded-full bg-white px-1 py-2 text-sm">
-          <BreadcrumbDropdown label={selectedOuter} items={categoryItems.outer} onSelect={setSelectedOuter} />
-        </BreadcrumbItem>
-      </Breadcrumb>
-      <SortDropdown label={selectedSort} items={sortItems} onSelect={setSelectedSort} />
+      <div className="flex items-center min-w-0 flex-1">
+        {searchQuery && (
+          <div className="flex items-center gap-2 px-3 py-1 bg-white rounded-lg border border-slate-200 shadow-sm overflow-hidden min-w-0">
+            <span className="text-slate-500 text-sm font-medium shrink-0">검색어:</span>
+            <span className="text-slate-700 text-sm overflow-hidden whitespace-nowrap text-ellipsis">
+              {searchQuery}
+            </span>
+          </div>
+        )}
+      </div>
+      <div className="shrink-0">
+        <SortDropdown
+          label={getCurrentSortLabel(selectedSort)}
+          items={SORT_OPTIONS_CONFIG.map((option) => option.label)}
+          onSelect={handleSortChange}
+        />
+      </div>
     </div>
   );
 }
