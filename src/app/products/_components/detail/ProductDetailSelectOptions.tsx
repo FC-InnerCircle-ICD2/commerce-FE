@@ -15,7 +15,6 @@ export default function ProductDetailSelectOptions({
   handleOptionCount,
   handleRemoveOption,
 }: Props) {
-  console.log(product);
   const { addCartMutate } = useCartAddMutate();
   function formatSelectOptions(): string {
     return seletedOptionDetail.options.map((option) => option.value).join(' / ');

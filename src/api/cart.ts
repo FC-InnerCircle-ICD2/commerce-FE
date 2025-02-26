@@ -66,9 +66,34 @@ export type AddCartProps = {
 };
 
 export const postAddCarts = async ({ datas }: AddCartProps) => {
-  console.log(datas);
   const response = await fetchWithAuth(BASE_URL, {
     method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(datas),
+  });
+
+  if (!response.ok) {
+    throw new Error(`HTTP error! Status: ${response.status}`);
+  }
+
+  const data = await response.json();
+  return data;
+};
+
+export type ChangeCartProps = {
+  datas: {
+    productId: number;
+    optionId: number;
+    optionDetailId: number;
+    optionDetailQuantity: number;
+  };
+};
+
+export const postChangeCartQuantity = async ({ datas }: ChangeCartProps) => {
+  const response = await fetchWithAuth(BASE_URL, {
+    method: 'PUT',
     headers: {
       'Content-Type': 'application/json',
     },
