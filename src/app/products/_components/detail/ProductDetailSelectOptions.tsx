@@ -1,5 +1,6 @@
 import { IProductDetail } from '@/api/product';
 import type { ISelectOptionDetail } from './ProductDetailClient';
+import { useCartAddMutate } from '@/hooks/mutate/useCartMutate';
 
 type Props = {
   product: IProductDetail;
@@ -14,6 +15,8 @@ export default function ProductDetailSelectOptions({
   handleOptionCount,
   handleRemoveOption,
 }: Props) {
+  console.log(product);
+  const { addCartMutate } = useCartAddMutate();
   function formatSelectOptions(): string {
     return seletedOptionDetail.options.map((option) => option.value).join(' / ');
   }
@@ -22,10 +25,32 @@ export default function ProductDetailSelectOptions({
     return seletedOptionDetail.options.reduce((sum, option) => sum + option.additionalPrice, 0);
   }
 
+  function handleAddCartsButton() {
+    addCartMutate({
+      datas: {
+        productId: product.id,
+        productName: product.name,
+        price: product.price,
+        subTotalPrice: (product.price + getAdditionalPrice()) * seletedOptionDetail.count,
+        optionId: seletedOptionDetail.options[0].id,
+        optionName: seletedOptionDetail.options[0].optionName,
+        optionDetailId: seletedOptionDetail.options[0].detailId,
+        optionDetailValue: seletedOptionDetail.options[0].value,
+        optionDetailQuantity: seletedOptionDetail.options[0].quantity,
+        optionDetailAdditionalPrice: seletedOptionDetail.options[0].additionalPrice,
+        imageId: product.images[0].id,
+        imageUrl: product.images[0].url,
+        providerId: product.provider.id,
+        providerName: product.provider.name,
+      },
+    });
+  }
+
   return (
     <div className="border rounded-lg p-4 bg-[#FFFFFF]">
       <div className="flex justify-between items-center mb-2">
         <span className="text-md font-semibold">{formatSelectOptions()}</span>
+        <button onClick={() => handleAddCartsButton()}>장바구니</button>
         <button className="text-gray-500" onClick={() => handleRemoveOption(seletedOptionDetail)}>
           ✕
         </button>
