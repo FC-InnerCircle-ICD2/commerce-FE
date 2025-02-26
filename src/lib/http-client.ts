@@ -17,17 +17,13 @@ interface NextFetchRequestConfig {
 }
 
 class HttpClient {
-  private baseUrl: string;
-
-  constructor(baseUrl: string = 'https://jsonplaceholder.typicode.com/') {
-    this.baseUrl = baseUrl;
-  }
+  constructor() {}
 
   /**
    * 모든 API 요청을 처리하는 기본 메소드
    */
   private async request<T, U>(endpoint: string, options: RequestOptions<T> = {}): Promise<U> {
-    const url = this.baseUrl + endpoint;
+    const url = endpoint;
     const { method = 'GET', headers = {}, body, ...rest } = options;
 
     // 클라이언트 사이드에서만 localStorage 접근
@@ -46,15 +42,26 @@ class HttpClient {
       },
       ...rest,
     };
-
-    // GET 요청이 아닌 경우에만 body 추가
+    // FormData인 경우 Content-Type 자동 설정을 위해 headers에서 제거
     if (method !== 'GET' && body) {
-      fetchOptions.body = JSON.stringify(body);
+      if (body instanceof FormData) {
+        fetchOptions.body = body;
+
+        // Headers가 Record<string, string>인 경우에만 Content-Type 제거
+        if (headers instanceof Headers) {
+          headers.delete('Content-Type');
+        } else if (typeof headers === 'object') {
+          delete (headers as Record<string, string>)['Content-Type'];
+        }
+      } else {
+        fetchOptions.body = JSON.stringify(body);
+        (fetchOptions.headers as Record<string, string>)['Content-Type'] = 'application/json';
+      }
     }
 
     try {
       const response = await fetch(url, fetchOptions);
-      
+
       // 401 에러 처리 (토큰 만료 등)
       if (response.status === 401) {
         console.error('Authentication error: Token might be expired');
