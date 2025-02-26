@@ -3,8 +3,14 @@
 import { useEffect, useState } from 'react';
 import httpClient from '@/lib/http-client';
 
+interface User {
+  id: number;
+  name: string;
+  email: string;
+}
+
 const TestPage = () => {
-  const [data, setData] = useState<any>(null);
+  const [data, setData] = useState<User | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -17,11 +23,16 @@ const TestPage = () => {
           email: 'john.doe@example.com',
         };
 
-        const response = await httpClient.post<any>('users', requestData);
-        console.log(response);
+        const response = await httpClient.post<typeof requestData, User>('users', requestData);
+  
         setData(response);
-      } catch (err: any) {
-        setError(err.message);
+      } catch (err) {
+        if (err instanceof Error) {
+          setError(err.message);
+        } else {
+          // 예외적인 경우를 처리하기 위해 fallback 처리
+          setError('An unknown error occurred');
+        }
       } finally {
         setLoading(false);
       }

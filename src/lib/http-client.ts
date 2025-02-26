@@ -1,11 +1,11 @@
-import { BASE_URL } from "@/constants/constant";
+// import { BASE_URL } from "@/constants/constant";
 
 type RequestMethod = 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH';
 
-interface RequestOptions {
+interface RequestOptions<T> {
   method?: RequestMethod;
   headers?: Record<string, string>;
-  body?: any;
+  body?: T;
   cache?: RequestCache;
   next?: NextFetchRequestConfig;
   credentials?: RequestCredentials;
@@ -19,15 +19,14 @@ interface NextFetchRequestConfig {
 class HttpClient {
   private baseUrl: string;
 
-  constructor(baseUrl: string = process.env.NEXT_PUBLIC_API_URL || BASE_URL) {
-    // this.baseUrl = baseUrl;
-    this.baseUrl = 'https://jsonplaceholder.typicode.com/';
+  constructor(baseUrl: string = 'https://jsonplaceholder.typicode.com/') {
+    this.baseUrl = baseUrl;
   }
 
   /**
    * 모든 API 요청을 처리하는 기본 메소드
    */
-  private async request<T>(endpoint: string, options: RequestOptions = {}): Promise<T> {
+  private async request<T, U>(endpoint: string, options: RequestOptions<T> = {}): Promise<U> {
     const url = this.baseUrl + endpoint;
     const { method = 'GET', headers = {}, body, ...rest } = options;
 
@@ -58,8 +57,6 @@ class HttpClient {
       
       // 401 에러 처리 (토큰 만료 등)
       if (response.status === 401) {
-        // 여기에 토큰 리프레시 로직을 추가할 수 있습니다
-        // 또는 로그인 페이지로 리다이렉트
         console.error('Authentication error: Token might be expired');
       }
 
@@ -69,7 +66,7 @@ class HttpClient {
 
       // 응답이 비어있는 경우 처리
       if (response.status === 204) {
-        return {} as T;
+        return {} as U;
       }
 
       return await response.json();
@@ -80,24 +77,24 @@ class HttpClient {
   }
 
   // HTTP 메소드별 편의 함수
-  async get<T>(endpoint: string, options: Omit<RequestOptions, 'method' | 'body'> = {}): Promise<T> {
-    return this.request<T>(endpoint, { ...options, method: 'GET' });
+  async get<T>(endpoint: string, options: Omit<RequestOptions<T>, 'method' | 'body'> = {}): Promise<T> {
+    return this.request<T, T>(endpoint, { ...options, method: 'GET' });
   }
 
-  async post<T>(endpoint: string, data?: any, options: Omit<RequestOptions, 'method'> = {}): Promise<T> {
-    return this.request<T>(endpoint, { ...options, method: 'POST', body: data });
+  async post<T, U>(endpoint: string, data?: T, options: Omit<RequestOptions<T>, 'method'> = {}): Promise<U> {
+    return this.request<T, U>(endpoint, { ...options, method: 'POST', body: data });
   }
 
-  async put<T>(endpoint: string, data?: any, options: Omit<RequestOptions, 'method'> = {}): Promise<T> {
-    return this.request<T>(endpoint, { ...options, method: 'PUT', body: data });
+  async put<T, U>(endpoint: string, data?: T, options: Omit<RequestOptions<T>, 'method'> = {}): Promise<U> {
+    return this.request<T, U>(endpoint, { ...options, method: 'PUT', body: data });
   }
 
-  async patch<T>(endpoint: string, data?: any, options: Omit<RequestOptions, 'method'> = {}): Promise<T> {
-    return this.request<T>(endpoint, { ...options, method: 'PATCH', body: data });
+  async patch<T, U>(endpoint: string, data?: T, options: Omit<RequestOptions<T>, 'method'> = {}): Promise<U> {
+    return this.request<T, U>(endpoint, { ...options, method: 'PATCH', body: data });
   }
 
-  async delete<T>(endpoint: string, options: Omit<RequestOptions, 'method'> = {}): Promise<T> {
-    return this.request<T>(endpoint, { ...options, method: 'DELETE' });
+  async delete<T, U>(endpoint: string, options: Omit<RequestOptions<T>, 'method'> = {}): Promise<U> {
+    return this.request<T, U>(endpoint, { ...options, method: 'DELETE' });
   }
 }
 
