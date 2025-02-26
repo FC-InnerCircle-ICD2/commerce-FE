@@ -1,14 +1,14 @@
-import { IProduct } from '@/api/product';
 import CartListItemInfo from './CartListItemInfo';
 import CartListOptions from './CartListOptions';
 import CartListPrice from './CartListPrice';
 import CartListSell from './CartListSell';
 import Checkbox from '@/components/common/Checkbox';
+import { ICartItem } from '@/api/cart';
 
 type Props = {
-  product: IProduct;
-  checkList: IProduct[];
-  handleChangeCheckList: (product: IProduct) => void;
+  product: ICartItem;
+  checkList: ICartItem[];
+  handleChangeCheckList: (product: ICartItem) => void;
 };
 
 export default function CartList({ product, checkList, handleChangeCheckList }: Props) {

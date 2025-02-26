@@ -1,7 +1,7 @@
-import { IProduct } from '@/api/product';
+import { ICartItem } from '@/api/cart';
 
 type Props = {
-  checkList: IProduct[];
+  checkList: ICartItem[];
 };
 
 export default function CartFooter({ checkList }: Props) {

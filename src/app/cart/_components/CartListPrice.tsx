@@ -1,7 +1,7 @@
-import { IProduct } from '@/api/product';
+import { ICartItem } from '@/api/cart';
 
 type Props = {
-  product: IProduct;
+  product: ICartItem;
 };
 
 export default function CartListPrice({ product }: Props) {
