@@ -46,7 +46,9 @@ export default function Card({ productId, imgUrl, title, price, discount, review
     <div className="w-full cursor-pointer" onClick={handleCardClick}>
       <img src={imgUrl ?? PREPARING.src} className="w-full h-auto aspect-square max-w-full block rounded-2xl" />
       <div className="p-2">
-        <p className="text-sm sm:text-base font-medium mb-[25px]">{title}</p>
+        <p className="text-sm sm:text-base font-medium mb-[25px] whitespace-normal truncate break-keep line-clamp-3">
+          {title}
+        </p>
         {discount && (
           <p className="text-xs sm:text-sm text-[#989898] font-light line-through mt-2">{price?.toLocaleString()}원</p>
         )}

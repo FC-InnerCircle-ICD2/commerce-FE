@@ -12,6 +12,8 @@ import { ArrowPathIcon, AdjustmentsHorizontalIcon } from '@heroicons/react/24/ou
 
 const Filter: React.FC<FilterProps> = ({ products }) => {
   const searchParams = useSearchParams();
+  const categoryId = searchParams?.get('categoryId');
+
   const priceRangeValues = useMemo(() => {
     const price = products.map((p) => p.price).filter((price): price is number => price !== undefined && !isNaN(price));
 
@@ -23,7 +25,7 @@ const Filter: React.FC<FilterProps> = ({ products }) => {
       min: Math.min(...price),
       max: Math.max(...price),
     };
-  }, [products]);
+  }, [categoryId]);
 
   const [priceRange, setPriceRange] = useState<PriceRange>(() => {
     const minParam = searchParams?.get('priceMin');
@@ -79,19 +81,11 @@ const Filter: React.FC<FilterProps> = ({ products }) => {
 
   const handlePriceSearch = () => {
     const params = new URLSearchParams(searchParams?.toString() || '');
-
-    if (priceRange.min !== priceRangeValues.min) {
-      params.set('priceMin', priceRange.min.toString());
-    } else {
-      params.delete('priceMin');
-    }
-
-    if (priceRange.max !== priceRangeValues.max) {
-      params.set('priceMax', priceRange.max.toString());
-    } else {
-      params.delete('priceMax');
-    }
-
+    
+    params.set('priceMin', priceRange.min.toString());
+    params.set('priceMax', priceRange.max.toString());
+    params.set('pageNumber', '0');
+    
     router.push(`/products?${params.toString()}`);
     setSelectedPriceRange(priceRange);
   };
