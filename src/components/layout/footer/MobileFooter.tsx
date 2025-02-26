@@ -15,10 +15,10 @@ export default function MobileFooter() {
         <p>카테고리</p>
       </Link>
       <MobileFooterSearch />
-      <div className="flex flex-col items-center">
+      <Link href="/cart" className="flex flex-col items-center">
         <ShoppingCartIcon className="w-[35px] h-[35px] text-[#075985]" />
         <p>장바구니</p>
-      </div>
+      </Link>
       <div className="flex flex-col items-center">
         <Image src="/assets/user.svg" alt="user" width={30} height={30} />
         <p>마이</p>
