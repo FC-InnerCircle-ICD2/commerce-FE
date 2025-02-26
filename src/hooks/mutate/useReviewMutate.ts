@@ -1,6 +1,6 @@
 import { postReviews } from '@/api/review';
 import { useMutation } from '@tanstack/react-query';
-import { useRouter, use } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 
 export function useReviewAddMutate() {
   const router = useRouter();

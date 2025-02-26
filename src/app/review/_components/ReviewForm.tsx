@@ -1,19 +1,24 @@
 'use client';
 import { IProductDetail } from '@/api/product';
 import { useReviewAddMutate } from '@/hooks/mutate/useReviewMutate';
-import React, { useRef, useState } from 'react';
+import { useAuthStore } from '@/store/authStore';
+import { useRouter } from 'next/navigation';
+import React, { useEffect, useRef, useState } from 'react';
 
 type Props = {
+  orderId: string;
   product: IProductDetail;
 };
 
-export default function ReviewForm({ product }: Props) {
+export default function ReviewForm({ orderId, product }: Props) {
   const [file, setFile] = useState<File | null>(null);
   const [preview, setPreview] = useState<string | null>(null);
   const [content, setContent] = useState<string>('');
   const [rating, setRating] = useState<string>('0');
   const fileInputRef = useRef<HTMLInputElement | null>(null);
+  const { getAccessToken } = useAuthStore();
   const { reviewMutate } = useReviewAddMutate();
+  const router = useRouter();
 
   const triggerFileInput = () => {
     fileInputRef.current?.click();
@@ -45,18 +50,26 @@ export default function ReviewForm({ product }: Props) {
     }
 
     const formData = new FormData();
+
+    formData.append('orderId', orderId);
     formData.append('productName', product.name);
     // TODO: 해당 부분들 배열형식으로 수정되야할듯.
     formData.append('productOptionId', String(product.options[0].id));
     formData.append('productOptionName', product.options[0].name);
-    formData.append('reviewImages', file);
-    formData.append('content', content);
     formData.append('rating', rating);
+    formData.append('content', content);
+    formData.append('reviewImages', file);
     reviewMutate({
       productId: product.id,
       formData,
     });
   };
+
+  useEffect(() => {
+    if (!getAccessToken()) {
+      router.replace('/');
+    }
+  }, [getAccessToken, router]);
 
   return (
     <div className="w-full flex flex-col items-center">

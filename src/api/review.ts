@@ -1,4 +1,4 @@
-import httpClient from '@/lib/http-client';
+import { fetchWithAuth } from '@/store/fetchWithAuth';
 
 export interface IReviewContent {
   reviewImages: [
@@ -40,10 +40,10 @@ export type ReviewProps = {
 };
 
 export const postReviews = async (props: ReviewProps) => {
-  const response = await httpClient.post<FormData, Response>(
-    `${PRODUCT_BASE_URL}/api/v1/products/${props.productId}/review`,
-    props.formData,
-  );
+  const response = await fetchWithAuth(`${PRODUCT_BASE_URL}/api/v1/products/${props.productId}/review`, {
+    method: 'POST',
+    body: props.formData,
+  });
 
   const data = await response.json();
   return data;
