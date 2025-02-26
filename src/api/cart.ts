@@ -108,19 +108,19 @@ export const postChangeCartQuantity = async ({ datas }: ChangeCartProps) => {
   return data;
 };
 
-type Props = {
+export interface IDeleteItem {
+  productId: number;
+  optionId: number;
+  optionDetailId: number;
+}
+
+type DeleteProps = {
   datas: {
-    items: [
-      {
-        productId: number;
-        optionId: number;
-        optionDetailId: number;
-      },
-    ];
+    items: Array<IDeleteItem>;
   };
 };
 
-export const deleteCartItem = async ({ datas }: Props) => {
+export const deleteCartItem = async ({ datas }: DeleteProps) => {
   const response = await fetchWithAuth(`${BASE_URL}/items`, {
     method: 'DELETE',
     headers: {

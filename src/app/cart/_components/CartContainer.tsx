@@ -4,12 +4,14 @@ import { useState } from 'react';
 import CartCheckComponent from './CartCheckComponent';
 import CartList from './CartList';
 import CartFooter from './CartFooter';
-import { ICartItem } from '@/api/cart';
+import { ICartItem, IDeleteItem } from '@/api/cart';
 import { useCart } from '@/hooks/queries/useCart';
+import { useCartDeleteItemMutate } from '@/hooks/mutate/useCartMutate';
 
 export default function CartContainer() {
   const { carts } = useCart();
   const [checkList, setCheckList] = useState<ICartItem[]>([]);
+  const { deleteCartItemMutate } = useCartDeleteItemMutate();
 
   function handleChangeCheckList(product: ICartItem) {
     const find = checkList.find((item) => item.productId === product.productId);
@@ -25,7 +27,14 @@ export default function CartContainer() {
   }
 
   function handleDeleteCheckList() {
-    setCheckList([]);
+    const deleteItems: IDeleteItem[] = checkList.map((item) => {
+      return { productId: item.productId, optionId: item.option.id, optionDetailId: item.option.optionDetail.id };
+    });
+    deleteCartItemMutate({
+      datas: {
+        items: [...deleteItems],
+      },
+    });
   }
 
   return (
