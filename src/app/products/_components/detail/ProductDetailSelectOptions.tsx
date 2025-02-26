@@ -27,19 +27,19 @@ export default function ProductDetailSelectOptions({
   function handleAddCartsButton() {
     addCartMutate({
       datas: {
-        productId: product.id,
+        productId: Number(product.id),
         productName: product.name,
-        price: product.price,
+        price: Number(product.price),
         subTotalPrice: (product.price + getAdditionalPrice()) * seletedOptionDetail.count,
-        optionId: seletedOptionDetail.options[0].id,
+        optionId: Number(seletedOptionDetail.options[0].id),
         optionName: seletedOptionDetail.options[0].optionName,
-        optionDetailId: seletedOptionDetail.options[0].detailId,
+        optionDetailId: Number(seletedOptionDetail.options[0].detailId),
         optionDetailValue: seletedOptionDetail.options[0].value,
-        optionDetailQuantity: seletedOptionDetail.options[0].quantity,
-        optionDetailAdditionalPrice: seletedOptionDetail.options[0].additionalPrice,
-        imageId: product.images[0].id,
+        optionDetailQuantity: Number(seletedOptionDetail.options[0].quantity),
+        optionDetailAdditionalPrice: Number(seletedOptionDetail.options[0].additionalPrice),
+        imageId: Number(product.images[0].id),
         imageUrl: product.images[0].url,
-        providerId: product.provider.id,
+        providerId: Number(product.provider.id),
         providerName: product.provider.name,
       },
     });
