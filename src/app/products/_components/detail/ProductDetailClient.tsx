@@ -6,6 +6,8 @@ import ProductDegtailCards from './ProductDetailCards';
 import ProductDetailSelectOptions from './ProductDetailSelectOptions';
 import { useRouter } from 'next/navigation';
 import ProdudctDetailClientOptions, { SelectItem } from './ProductDetailClientOptions';
+import ProductDetailClientReview from './ProductDetailClientReivew';
+import ProductDetailClientDescription from './ProductDetailClientDescription';
 
 export interface ISelectOptionDetail {
   count: number;
@@ -14,7 +16,7 @@ export interface ISelectOptionDetail {
 
 const ProductDetailClient: React.FC<{ product: IProductDetail }> = ({ product }) => {
   const router = useRouter();
-  const [selectedTab, setSelectedTab] = useState('상세정보');
+  const [selectedTab, setSelectedTab] = useState<string>('상세정보');
   const [selectOptions, setSelectOptions] = useState<ISelectOptionDetail[]>([]);
 
   function handleAddOption(newOptions: SelectItem[]) {
@@ -96,8 +98,10 @@ const ProductDetailClient: React.FC<{ product: IProductDetail }> = ({ product })
             <div className="text-gray-600 text-sm flex items-center gap-2 mt-2">
               <span className="text-yellow-500">★ {product.reviewStatistic.averageRating ?? 0}</span>
               <span>|</span>
-              <span>490개의 리뷰</span>
-              <span>{`>`}</span>
+              <span className="cursor-pointer" onClick={() => setSelectedTab('리뷰')}>
+                <span>{product.reviewStatistic.reviewCount}개의 리뷰</span>
+                <span>{`>`}</span>
+              </span>
             </div>
             <p className="text-2xl font-bold mt-4">{product.price.toLocaleString()}원</p>
             <div className="border-t my-[30px] border-[#646464]" />
@@ -136,13 +140,16 @@ const ProductDetailClient: React.FC<{ product: IProductDetail }> = ({ product })
             </div>
           </div>
 
-          {/* 구매 버튼 */}
-          <button
-            className="mt-6 px-6 py-3 bg-[#CBD5E1] text-[#082F49] font-bold rounded-lg w-full"
-            onClick={handlePurchase}
-          >
-            구매하기
-          </button>
+          <div className="flex gap-2 mt-6 w-full">
+            <button className="w-1/3 text-#082F49 border border-[#CBD5E1] font-bold rounded-lg">장바구니 추가</button>
+            {/* 구매 버튼 */}
+            <button
+              className="px-6 py-3 bg-[#CBD5E1] text-[#082F49] font-bold rounded-lg grow"
+              onClick={handlePurchase}
+            >
+              구매하기
+            </button>
+          </div>
         </div>
       </div>
 
@@ -150,7 +157,7 @@ const ProductDetailClient: React.FC<{ product: IProductDetail }> = ({ product })
 
       {/* 상세정보, 리뷰, QnA */}
       <div className="flex justify-center text-lg font-semibold w-full border border-[#D9D9D9] rounded-lg overflow-hidden">
-        {['상세정보', '리뷰', 'QnA'].map((tab) => (
+        {['상세정보', '리뷰'].map((tab) => (
           <button
             key={tab}
             className={`
@@ -161,7 +168,8 @@ const ProductDetailClient: React.FC<{ product: IProductDetail }> = ({ product })
           </button>
         ))}
       </div>
-
+      {selectedTab === '상세정보' && <ProductDetailClientDescription product={product} />}
+      {selectedTab === '리뷰' && <ProductDetailClientReview productId={product.id} />}
       <div className="border-t border-[#D9D9D9] mt-8 mb-8" />
       <ProductDegtailCards />
     </div>
