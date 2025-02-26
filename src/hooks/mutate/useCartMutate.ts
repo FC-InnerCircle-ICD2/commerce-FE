@@ -1,4 +1,4 @@
-import { postAddCarts, postChangeCartQuantity } from '@/api/cart';
+import { deleteCartItem, postAddCarts, postChangeCartQuantity, removeCart } from '@/api/cart';
 import { CartQueryKeys } from '@/constants/queryKeys';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
@@ -34,4 +34,42 @@ export function useCartChangeQuantityMutate() {
   });
 
   return { changeCartQuantityMutate };
+}
+
+export function useCartDeleteItemMutate() {
+  const queryClient = useQueryClient();
+
+  const { mutate: deleteCartItemMutate } = useMutation({
+    mutationKey: ['deleteCartItem'],
+    mutationFn: deleteCartItem,
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: [CartQueryKeys.carts],
+      });
+    },
+    onError: (e) => {
+      console.error(e);
+    },
+  });
+
+  return { deleteCartItemMutate };
+}
+
+export function useRemoveCartMutate() {
+  const queryClient = useQueryClient();
+
+  const { mutate: removeCartMutate } = useMutation({
+    mutationKey: ['removeCart'],
+    mutationFn: removeCart,
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: [CartQueryKeys.carts],
+      });
+    },
+    onError: (e) => {
+      console.error(e);
+    },
+  });
+
+  return { removeCartMutate };
 }

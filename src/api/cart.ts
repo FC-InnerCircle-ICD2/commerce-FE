@@ -107,3 +107,48 @@ export const postChangeCartQuantity = async ({ datas }: ChangeCartProps) => {
   const data = await response.json();
   return data;
 };
+
+type Props = {
+  datas: {
+    items: [
+      {
+        productId: number;
+        optionId: number;
+        optionDetailId: number;
+      },
+    ];
+  };
+};
+
+export const deleteCartItem = async ({ datas }: Props) => {
+  const response = await fetchWithAuth(`${BASE_URL}/items`, {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(datas),
+  });
+
+  if (!response.ok) {
+    throw new Error(`HTTP error! Status: ${response.status}`);
+  }
+
+  const data = await response.json();
+  return data;
+};
+
+export const removeCart = async () => {
+  const response = await fetchWithAuth(BASE_URL, {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
+
+  if (!response.ok) {
+    throw new Error(`HTTP error! Status: ${response.status}`);
+  }
+
+  const data = await response.json();
+  return data;
+};
