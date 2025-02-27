@@ -3,7 +3,6 @@
 import { useState } from 'react';
 import CartCheckComponent from './CartCheckComponent';
 import CartList from './CartList';
-import CartFooter from './CartFooter';
 import { ICartItem, IDeleteItem } from '@/api/cart';
 import { useCart } from '@/hooks/queries/useCart';
 import { useCartDeleteItemMutate } from '@/hooks/mutate/useCartMutate';
@@ -56,7 +55,7 @@ export default function CartContainer() {
           );
         })}
       </div>
-      <CartFooter checkList={checkList} />
+      {/* <CartFooter checkList={checkList} /> */}
     </article>
   );
 }
