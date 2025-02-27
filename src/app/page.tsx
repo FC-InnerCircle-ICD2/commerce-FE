@@ -12,14 +12,17 @@ export default async function Home() {
     const banners = await getBanners();
     const headerList = await headers();
     const cookieHeader = headerList.get('cookie') || '';
-    
+
     // 쿠키에서 accessToken 추출
-    const accessToken = cookieHeader.split('; ').find(row => row.startsWith('Access-Token='))?.split('=')[1] || null;
-  
+    const accessToken =
+      cookieHeader
+        .split('; ')
+        .find((row) => row.startsWith('Access-Token='))
+        ?.split('=')[1] || null;
     return (
       <div className="flex flex-col h-screen overflow-x-hidden">
         <Header />
-        <TokenHandler accessToken={accessToken} /> {/* 새로운 컴포넌트 추가 */}
+        <TokenHandler accessToken={accessToken} />
         <div className="grow flex flex-col gap-5">
           <Carousel banners={banners} />
           <Suspense fallback={<ProductSkeleton />}>
