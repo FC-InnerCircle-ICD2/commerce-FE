@@ -1,6 +1,6 @@
 import { buildUrl } from '@/utils/buildUrl';
-import { BASE_URL } from '@/constants/constant';
 import { ICategory } from './category';
+import { BASE_URL } from '@/constants/constant';
 
 export interface IProductImages {
   id: number;
@@ -95,6 +95,11 @@ export type ProductsProps = {
   pageSize?: number;
 };
 
+export interface IProductDetail extends IProduct {
+  id: number;
+  reviewStatistic: { averageRating: number; reviewCount: number };
+}
+
 export const getProducts = async (props: ProductsProps): Promise<IProductAPI> => {
   const url = buildUrl(`${BASE_URL}${PRODUCT_URL}`, props);
 
@@ -103,8 +108,3 @@ export const getProducts = async (props: ProductsProps): Promise<IProductAPI> =>
   const data: IProductAPI = await response.json();
   return data;
 };
-
-export interface IProductDetail extends IProduct {
-  id: number;
-  reviewStatistic: { averageRating: number; reviewCount: number };
-}
