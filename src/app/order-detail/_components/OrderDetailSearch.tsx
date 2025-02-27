@@ -1,6 +1,6 @@
 'use client';
 
-export default async function OrderDetailSearch() {
+export default function OrderDetailSearch() {
   const handleSearch = () => {};
 
   return (

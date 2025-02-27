@@ -1,6 +1,7 @@
 import { numberFormatting } from '@/utils/numberFormatting';
 import { ChevronRightIcon } from '@heroicons/react/24/outline';
 import dayjs from 'dayjs';
+import React from 'react';
 
 interface OrderProduct {
   productId: string;
@@ -22,7 +23,7 @@ interface Props {
   };
 }
 
-export default async function OrderItem(props: Props) {
+export default function OrderItem(props: Props) {
   const { orderInfo } = props;
 
   const getFormattedDate = (date: string) => {
@@ -33,8 +34,8 @@ export default async function OrderItem(props: Props) {
     <div className="border border-slate-300 bg-slate-50 w-full h-auto p-6 lg:p-8 flex flex-col mt-2">
       <p className="font-semibold">{orderInfo.orderStatus}</p>
       {orderInfo.orderProductList.map((product, index) => (
-        <>
-          <div className="flex items-center my-4" key={product.productId}>
+        <React.Fragment key={product.productId}>
+          <div className="flex items-center my-4">
             <div className="bg-neutral-300 w-[80px] h-[80px] md:w-[100px] md:h-[100px] rounded-[10px]"></div>
             <div className="flex flex-col ml-4 gap-0.5 max-w-[calc(100%-100px)]">
               <p className="text-neutral-500 text-sm">{`${getFormattedDate(orderInfo.orderAt)} 주문`}</p>
@@ -61,7 +62,7 @@ export default async function OrderItem(props: Props) {
           {index !== orderInfo.orderProductList.length - 1 && (
             <div className="border-b border-slate-300 border-dashed mt-4"></div>
           )}
-        </>
+        </React.Fragment>
       ))}
     </div>
   );
