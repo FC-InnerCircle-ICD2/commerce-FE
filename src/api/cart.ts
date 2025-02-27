@@ -1,6 +1,6 @@
 import { fetchWithAuth } from '@/store/fetchWithAuth';
 
-const BASE_URL = 'https://product-api.emmotional-cart.click/v1/carts';
+const BASE_URL = 'https://product-api.emmotional-cart.click/api/v1/carts';
 // const BASE_URL = 'http://3.38.23.68:8080/v1/carts';
 
 export interface ICartItem {
