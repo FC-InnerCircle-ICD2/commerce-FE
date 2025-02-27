@@ -1,6 +1,7 @@
 import { IProductDetail } from '@/api/product';
 import type { ISelectOptionDetail } from './ProductDetailClient';
 import { useCartAddMutate } from '@/hooks/mutate/useCartMutate';
+import { ShoppingCartIcon } from '@heroicons/react/24/outline';
 
 type Props = {
   product: IProductDetail;
@@ -49,10 +50,14 @@ export default function ProductDetailSelectOptions({
     <div className="border rounded-lg p-4 bg-[#FFFFFF]">
       <div className="flex justify-between items-center mb-2">
         <span className="text-md font-semibold">{formatSelectOptions()}</span>
-        <button onClick={() => handleAddCartsButton()}>장바구니</button>
-        <button className="text-gray-500" onClick={() => handleRemoveOption(seletedOptionDetail)}>
-          ✕
-        </button>
+        <div className="flex gap-4 items-center">
+          <button onClick={() => handleAddCartsButton()}>
+            <ShoppingCartIcon className="w-6 h-6 text-[#000000]" />
+          </button>
+          <button className="text-gray-500" onClick={() => handleRemoveOption(seletedOptionDetail)}>
+            ✕
+          </button>
+        </div>
       </div>
       <div className="flex justify-between items-center">
         <div className="flex items-center rounded-lg overflow-hidden">
