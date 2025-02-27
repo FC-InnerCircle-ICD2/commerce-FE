@@ -47,6 +47,11 @@ export default function ProductDetailClientReview({ productId }: Props) {
   const { reviews } = useReview(productId);
   return (
     <ul>
+      {(!reviews || reviews.content.length === 0) && (
+        <div className="w-full h-[160px] flex items-center justify-center text-xl font-bold">
+          등록된 리뷰가 없습니다
+        </div>
+      )}
       {reviews?.content.map((content) => {
         return <ReviewList key={content.id} review={content} />;
       })}
