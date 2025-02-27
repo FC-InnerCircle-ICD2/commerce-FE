@@ -5,11 +5,10 @@ import { useState } from 'react';
 import kakaoSymbol from '../../assets/kakao.png';
 import naverSymbol from '../../assets/naver.png';
 
-const NAVER_LOGIN_URL =
-  'https://auth-api.emmotional-cart.click/oauth2/authorization/naver?redirect_uri=http://localhost:3000';
+const BASE_URL = process.env.NEXT_PUBLIC_REDIRECT_URL;
 
-const KAKAO_LOGIN_URL =
-  'https://auth-api.emmotional-cart.click/oauth2/authorization/kakao?redirect_uri=http://localhost:3000';
+const NAVER_LOGIN_URL = `https://auth-api.emmotional-cart.click/oauth2/authorization/naver?redirect_uri=${BASE_URL}`;
+const KAKAO_LOGIN_URL = `https://auth-api.emmotional-cart.click/oauth2/authorization/kakao?redirect_uri=${BASE_URL}`;
 
 const LoginPopup: React.FC<{ closePopup: () => void }> = ({ closePopup }) => {
   const [isLoading, setIsLoading] = useState(false);
