@@ -15,9 +15,9 @@ async function getProduct(productId: string): Promise<IProductDetail> {
 export default async function Review({
   searchParams,
 }: {
-  searchParams: Promise<{ orderId: string; productId: string }>;
+  searchParams: Promise<{ orderId: string; productId: string; productOptionId: string; productOptionName: string }>;
 }) {
-  const { orderId, productId } = await searchParams;
+  const { orderId, productId, productOptionId, productOptionName } = await searchParams;
   const product = await getProduct(productId);
 
   return (
@@ -25,7 +25,12 @@ export default async function Review({
       <Header />
       <div className="max-w-custom mx-auto w-full flex flex-col px-3 pt-8 tablet:px-[150px]">
         <h1 className="font-bold text-2xl border-b border-slate-300 pb-3">리뷰 등록하기</h1>
-        <ReviewForm orderId={orderId} product={product} />
+        <ReviewForm
+          orderId={orderId}
+          product={product}
+          productOptionId={productOptionId}
+          productOptionName={productOptionName}
+        />
       </div>
     </>
   );

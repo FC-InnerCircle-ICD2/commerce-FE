@@ -8,9 +8,11 @@ import React, { useEffect, useRef, useState } from 'react';
 type Props = {
   orderId: string;
   product: IProductDetail;
+  productOptionId: string;
+  productOptionName: string;
 };
 
-export default function ReviewForm({ orderId, product }: Props) {
+export default function ReviewForm({ orderId, product, productOptionId, productOptionName }: Props) {
   const [file, setFile] = useState<File | null>(null);
   const [preview, setPreview] = useState<string | null>(null);
   const [content, setContent] = useState<string>('');
@@ -54,8 +56,8 @@ export default function ReviewForm({ orderId, product }: Props) {
     formData.append('orderId', orderId);
     formData.append('productName', product.name);
     // TODO: 해당 부분들 배열형식으로 수정되야할듯.
-    formData.append('productOptionId', String(product.options[0].id));
-    formData.append('productOptionName', product.options[0].name);
+    formData.append('productOptionId', productOptionId);
+    formData.append('productOptionName', productOptionName);
     formData.append('rating', rating);
     formData.append('content', content);
     formData.append('reviewImages', file);
