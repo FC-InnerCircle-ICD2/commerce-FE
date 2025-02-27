@@ -25,6 +25,7 @@ const Filter: React.FC<FilterProps> = ({ products }) => {
       min: Math.min(...price),
       max: Math.max(...price),
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [categoryId]);
 
   const [priceRange, setPriceRange] = useState<PriceRange>(() => {
@@ -81,11 +82,11 @@ const Filter: React.FC<FilterProps> = ({ products }) => {
 
   const handlePriceSearch = () => {
     const params = new URLSearchParams(searchParams?.toString() || '');
-    
+
     params.set('priceMin', priceRange.min.toString());
     params.set('priceMax', priceRange.max.toString());
     params.set('pageNumber', '0');
-    
+
     router.push(`/products?${params.toString()}`);
     setSelectedPriceRange(priceRange);
   };

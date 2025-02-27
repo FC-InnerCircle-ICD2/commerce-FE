@@ -16,7 +16,7 @@ export default function OrderDetailSearch() {
           type="button"
           className="absolute right-2 top-1/2 transform -translate-y-1/2 px-2 lg:px-3 lg:py-1"
           onClick={() => {
-            handleSearch;
+            handleSearch();
           }}
         >
           🔍
