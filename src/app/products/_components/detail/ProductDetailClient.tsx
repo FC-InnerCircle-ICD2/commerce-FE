@@ -153,8 +153,6 @@ const ProductDetailClient: React.FC<{ product: IProductDetail }> = ({ product })
           </div>
 
           <div className="flex gap-2 mt-6 w-full">
-            <button className="w-1/3 text-#082F49 border border-[#CBD5E1] font-bold rounded-lg">장바구니 추가</button>
-            {/* 구매 버튼 */}
             <button
               className="px-6 py-3 bg-[#CBD5E1] text-[#082F49] font-bold rounded-lg grow"
               onClick={handlePurchase}
