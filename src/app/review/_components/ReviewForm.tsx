@@ -1,4 +1,5 @@
 'use client';
+
 import { IProductDetail } from '@/api/product';
 import { useReviewAddMutate } from '@/hooks/mutate/useReviewMutate';
 import { useAuthStore } from '@/store/authStore';
@@ -8,7 +9,7 @@ import React, { useEffect, useRef, useState } from 'react';
 type Props = {
   orderId: string;
   product: IProductDetail;
-  productOptionId: string;
+  productOptionId: number;
   productOptionName: string;
 };
 
@@ -54,9 +55,9 @@ export default function ReviewForm({ orderId, product, productOptionId, productO
     const formData = new FormData();
 
     formData.append('orderId', orderId);
-    formData.append('productName', product.name);
+    formData.append('productName', product?.name ?? '');
     // TODO: 해당 부분들 배열형식으로 수정되야할듯.
-    formData.append('productOptionId', productOptionId);
+    formData.append('productOptionId', String(productOptionId));
     formData.append('productOptionName', productOptionName);
     formData.append('rating', rating);
     formData.append('content', content);
@@ -77,12 +78,12 @@ export default function ReviewForm({ orderId, product, productOptionId, productO
     <div className="w-full flex flex-col items-center">
       <article className="w-full flex gap-4 py-[30px] px-[16px] items-center border-b border-slate-300">
         <img
-          src={product.images?.[0]?.url || '/assets/preparing.png'}
+          src={product?.images?.[0]?.url || '/assets/preparing.png'}
           className="w-[150px] h-[150px] bg-pink-50"
-          alt={product.name}
+          alt={product?.name}
         />
         <div className="flex flex-col gap-2">
-          <h3 className="font-bold text-sm">{product.name}</h3>
+          <h3 className="font-bold text-sm">{product?.name}</h3>
           <div className="flex flex-col gap-2">
             <label>별점을 입력해주세요.</label>
             <input

@@ -1,7 +1,15 @@
 import { numberFormatting } from '@/utils/numberFormatting';
 import { ChevronRightIcon } from '@heroicons/react/24/outline';
 import dayjs from 'dayjs';
+import { useRouter } from 'next/navigation';
 import React from 'react';
+
+export interface IOrderProductOptions {
+  productOptionId: number;
+  productOptionName: string;
+  productOptionDetailId: number;
+  productOptionDetailName: string;
+}
 
 interface OrderProduct {
   productId: string;
@@ -10,6 +18,7 @@ interface OrderProduct {
   productName: string;
   productImage: null | string;
   productPrice: number;
+  productOptions: Array<IOrderProductOptions>;
   quantity: number;
 }
 
@@ -25,13 +34,26 @@ interface Props {
 
 export default function OrderItem(props: Props) {
   const { orderInfo } = props;
+  const router = useRouter();
 
   const getFormattedDate = (date: string) => {
     return dayjs(date).format('YYYY-MM-DD');
   };
 
-  const handleAddReviewButton = (product: OrderProduct) => {
-    console.log(product);
+  const handleGoToReview = () => {
+    const { orderId, orderProductList } = orderInfo;
+
+    const reviewData = orderProductList.map((product) => ({
+      productOptions: product.productOptions.map((option) => ({
+        productOptionId: option.productOptionId,
+        productOptionName: option.productOptionName,
+        productOptionDetailId: option.productOptionDetailId,
+        productOptionDetailName: option.productOptionDetailName,
+      })),
+    }));
+
+    const queryString = encodeURIComponent(JSON.stringify(reviewData));
+    router.push(`/review?orderId=${orderId}&productId=${orderProductList[0].productId}&reviewData=${queryString}`);
   };
 
   return (
@@ -58,7 +80,7 @@ export default function OrderItem(props: Props) {
           <div className="flex items-center justify-between gap-1">
             <button
               className="border border-slate-400 px-3.5 py-2.5 bg-white rounded-lg text-sm w-full"
-              onClick={() => handleAddReviewButton(product)}
+              onClick={() => handleGoToReview()}
             >
               리뷰쓰기
             </button>

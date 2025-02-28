@@ -1,15 +1,6 @@
-import { BASE_URL } from '@/constants/constant';
 import { Header } from '@/components/layout';
-import { IProductDetail } from '@/api/product';
 import ProductDetailClient from '../_components/detail/ProductDetailClient';
-
-async function getProduct(productId: string): Promise<IProductDetail> {
-  const response = await fetch(`${BASE_URL}api/v1/products/${productId}`);
-  if (!response.ok) {
-    throw new Error('상품 정보를 불러오는데 실패했습니다.');
-  }
-  return response.json();
-}
+import { getProduct } from '@/api/product';
 
 export default async function ProductDetail({ params }: { params: Promise<{ productId: string }> }) {
   const { productId } = await params;

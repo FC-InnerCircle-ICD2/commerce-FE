@@ -108,3 +108,11 @@ export const getProducts = async (props: ProductsProps): Promise<IProductAPI> =>
   const data: IProductAPI = await response.json();
   return data;
 };
+
+export async function getProduct(productId: string): Promise<IProductDetail> {
+  const response = await fetch(`${BASE_URL}api/v1/products/${productId}`);
+  if (!response.ok) {
+    throw new Error('상품 정보를 불러오는데 실패했습니다.');
+  }
+  return response.json();
+}
