@@ -1,6 +1,7 @@
 'use client';
 
 import { IProductDetail } from '@/api/product';
+import FullScreenSpinner from '@/components/common/FullScreenSpinner';
 import { useReviewAddMutate } from '@/hooks/mutate/useReviewMutate';
 import { useAuthStore } from '@/store/authStore';
 import { useRouter } from 'next/navigation';
@@ -20,7 +21,7 @@ export default function ReviewForm({ orderId, product, productOptionId, productO
   const [rating, setRating] = useState<string>('0');
   const fileInputRef = useRef<HTMLInputElement | null>(null);
   const { getAccessToken } = useAuthStore();
-  const { reviewMutate } = useReviewAddMutate();
+  const { reviewMutate, reviewPending } = useReviewAddMutate();
   const router = useRouter();
 
   const triggerFileInput = () => {
@@ -116,6 +117,7 @@ export default function ReviewForm({ orderId, product, productOptionId, productO
       <button onClick={handleUpload} className="my-8 w-[200px] py-3 bg-blue-500 text-white rounded">
         리뷰 등록
       </button>
+      {reviewPending && <FullScreenSpinner />}
     </div>
   );
 }
