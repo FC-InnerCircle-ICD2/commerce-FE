@@ -60,7 +60,7 @@ export default function ProdudctDetailClientOptions({ options, handleAddOptionDe
       {options.map((option) => (
         <div key={option.id} className="mb-4">
           <h3 className="text-md font-semibold">{option.name}</h3>
-          <div className="flex items-start space-x-2 mt-2">
+          <div className="flex flex-wrap items-start gap-2">
             {option.optionDetails.map((detail) => (
               <button
                 key={detail.value}
