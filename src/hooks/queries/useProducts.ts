@@ -1,4 +1,4 @@
-import { getProducts, type ProductsProps } from '@/api/product';
+import { getProduct, getProducts, type ProductsProps } from '@/api/product';
 import { ProductsQueryKeys } from '@/constants/queryKeys';
 import { useQuery } from '@tanstack/react-query';
 
@@ -19,4 +19,13 @@ export function useProducts(props: ProductsProps) {
   });
 
   return { products };
+}
+
+export function useProductSingle(id: string) {
+  const { data: product } = useQuery({
+    queryKey: [ProductsQueryKeys.product, id],
+    queryFn: () => getProduct(id),
+  });
+
+  return { product };
 }
