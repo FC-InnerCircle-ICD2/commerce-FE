@@ -2,6 +2,7 @@ import { IProductDetail } from '@/api/product';
 import type { ISelectOptionDetail } from './ProductDetailClient';
 import { useCartAddMutate } from '@/hooks/mutate/useCartMutate';
 import { ShoppingCartIcon } from '@heroicons/react/24/outline';
+import { useAuthStore } from '@/store/authStore';
 
 type Props = {
   product: IProductDetail;
@@ -16,6 +17,7 @@ export default function ProductDetailSelectOptions({
   handleOptionCount,
   handleRemoveOption,
 }: Props) {
+  const { isLoggedIn } = useAuthStore();
   const { addCartMutate } = useCartAddMutate();
   function formatSelectOptions(): string {
     return seletedOptionDetail.options.map((option) => option.value).join(' / ');
@@ -51,9 +53,11 @@ export default function ProductDetailSelectOptions({
       <div className="flex justify-between items-center mb-2">
         <span className="text-md font-semibold">{formatSelectOptions()}</span>
         <div className="flex gap-4 items-center">
-          <button onClick={() => handleAddCartsButton()}>
-            <ShoppingCartIcon className="w-6 h-6 text-[#000000]" />
-          </button>
+          {isLoggedIn && (
+            <button onClick={() => handleAddCartsButton()}>
+              <ShoppingCartIcon className="w-6 h-6 text-[#000000]" />
+            </button>
+          )}
           <button className="text-gray-500" onClick={() => handleRemoveOption(seletedOptionDetail)}>
             ✕
           </button>
