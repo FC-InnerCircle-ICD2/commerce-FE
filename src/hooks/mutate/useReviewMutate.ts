@@ -4,7 +4,7 @@ import { useRouter } from 'next/navigation';
 
 export function useReviewAddMutate() {
   const router = useRouter();
-  const { mutate: reviewMutate } = useMutation({
+  const { mutate: reviewMutate, isPending: reviewPending } = useMutation({
     mutationKey: ['addReview'],
     mutationFn: postReviews,
     onSuccess: () => {
@@ -13,8 +13,9 @@ export function useReviewAddMutate() {
     },
     onError: (e) => {
       console.error(e);
+      alert('리뷰 등록에 실패하였습니다!');
     },
   });
 
-  return { reviewMutate };
+  return { reviewMutate, reviewPending };
 }

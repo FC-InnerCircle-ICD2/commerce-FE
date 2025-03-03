@@ -1,5 +1,7 @@
 'use client';
+
 import { IProductDetail } from '@/api/product';
+import FullScreenSpinner from '@/components/common/FullScreenSpinner';
 import { useReviewAddMutate } from '@/hooks/mutate/useReviewMutate';
 import { useAuthStore } from '@/store/authStore';
 import { useRouter } from 'next/navigation';
@@ -8,16 +10,18 @@ import React, { useEffect, useRef, useState } from 'react';
 type Props = {
   orderId: string;
   product: IProductDetail;
+  productOptionId: number;
+  productOptionName: string;
 };
 
-export default function ReviewForm({ orderId, product }: Props) {
-  const [file, setFile] = useState<File | null>(null);
-  const [preview, setPreview] = useState<string | null>(null);
+export default function ReviewForm({ orderId, product, productOptionId, productOptionName }: Props) {
+  const [files, setFiles] = useState<File[]>([]);
+  const [previews, setPreviews] = useState<string[]>([]);
   const [content, setContent] = useState<string>('');
   const [rating, setRating] = useState<string>('0');
   const fileInputRef = useRef<HTMLInputElement | null>(null);
   const { getAccessToken } = useAuthStore();
-  const { reviewMutate } = useReviewAddMutate();
+  const { reviewMutate, reviewPending } = useReviewAddMutate();
   const router = useRouter();
 
   const triggerFileInput = () => {
@@ -26,10 +30,14 @@ export default function ReviewForm({ orderId, product }: Props) {
 
   // 파일 선택 핸들러
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const selectedFile = event.target.files?.[0];
-    if (selectedFile) {
-      setFile(selectedFile);
-      setPreview(URL.createObjectURL(selectedFile)); // 이미지 미리보기 설정
+    const selectedFiles = event.target.files;
+    if (selectedFiles) {
+      const fileArray = Array.from(selectedFiles); // FileList -> 배열 변환
+      setFiles((prevFiles) => [...prevFiles, ...fileArray]);
+
+      // 이미지 미리보기 생성
+      const previewArray = fileArray.map((file) => URL.createObjectURL(file));
+      setPreviews((prevPreviews) => [...prevPreviews, ...previewArray]);
     }
   };
 
@@ -44,7 +52,7 @@ export default function ReviewForm({ orderId, product }: Props) {
   };
 
   const handleUpload = async () => {
-    if (!file || !content || !rating) {
+    if (!files || !content || !rating) {
       alert('빈값이 존재하면 안됩니다');
       return;
     }
@@ -52,13 +60,16 @@ export default function ReviewForm({ orderId, product }: Props) {
     const formData = new FormData();
 
     formData.append('orderId', orderId);
-    formData.append('productName', product.name);
-    // TODO: 해당 부분들 배열형식으로 수정되야할듯.
-    formData.append('productOptionId', String(product.options[0].id));
-    formData.append('productOptionName', product.options[0].name);
+    formData.append('productName', product?.name ?? '');
+    // TODO: 해당 부분 삭제 논의
+    formData.append('productOptionId', String(productOptionId));
+    formData.append('productOptionName', productOptionName);
+    // ------------------
     formData.append('rating', rating);
     formData.append('content', content);
-    formData.append('reviewImages', file);
+    files.forEach((file) => {
+      formData.append(`reviewImages`, file);
+    });
     reviewMutate({
       productId: product.id,
       formData,
@@ -75,12 +86,12 @@ export default function ReviewForm({ orderId, product }: Props) {
     <div className="w-full flex flex-col items-center">
       <article className="w-full flex gap-4 py-[30px] px-[16px] items-center border-b border-slate-300">
         <img
-          src={product.images?.[0]?.url || '/assets/preparing.png'}
+          src={product?.images?.[0]?.url || '/assets/preparing.png'}
           className="w-[150px] h-[150px] bg-pink-50"
-          alt={product.name}
+          alt={product?.name}
         />
         <div className="flex flex-col gap-2">
-          <h3 className="font-bold text-sm">{product.name}</h3>
+          <h3 className="font-bold text-sm">{product?.name}</h3>
           <div className="flex flex-col gap-2">
             <label>별점을 입력해주세요.</label>
             <input
@@ -98,8 +109,14 @@ export default function ReviewForm({ orderId, product }: Props) {
         <button onClick={triggerFileInput} className="text-black px-4 h-[40px] rounded cursor-pointer border">
           📤 파일 선택
         </button>
-        <input type="file" accept="image/*" hidden ref={fileInputRef} onChange={handleFileChange} />
-        {preview && <img src={preview} alt="Preview" className="w-40 h-40 object-cover" />}
+        <input type="file" multiple accept="image/*" hidden ref={fileInputRef} onChange={handleFileChange} />
+        {previews.length > 0 && (
+          <div className="flex gap-2 mt-2">
+            {previews.map((preview, index) => (
+              <img key={index} src={preview} alt={`Preview ${index}`} className="w-20 h-20 object-cover" />
+            ))}
+          </div>
+        )}
       </article>
       <article className="w-full flex gap-8 py-[15px]">
         <label className="text-sm font-bold">상세 리뷰</label>
@@ -113,6 +130,7 @@ export default function ReviewForm({ orderId, product }: Props) {
       <button onClick={handleUpload} className="my-8 w-[200px] py-3 bg-blue-500 text-white rounded">
         리뷰 등록
       </button>
+      {reviewPending && <FullScreenSpinner />}
     </div>
   );
 }

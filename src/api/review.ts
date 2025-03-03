@@ -45,6 +45,10 @@ export const postReviews = async (props: ReviewProps) => {
     body: props.formData,
   });
 
+  if (!response.ok) {
+    throw new Error('Failed to place order');
+  }
+
   const data = await response.json();
   return data;
 };
