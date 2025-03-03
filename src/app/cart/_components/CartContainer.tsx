@@ -47,6 +47,7 @@ export default function CartContainer() {
         handleDeleteCheckList={handleDeleteCheckList}
       />
       <div className="w-full grow bg-gray-100 flex flex-col gap-[10px] py-4 px-3 pb-[80px] tablet:py-[20px] tablet:px-[100px] tablet:pb-[100px]">
+        {cartsLoading && <CartSkeleton />}
         {carts?.items.length === 0 && (
           <div className="w-full h-full flex items-center justify-center text-2xl font-bold text-gray-500">
             장바구니가 비었습니다
