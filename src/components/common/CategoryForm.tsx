@@ -3,7 +3,6 @@
 import type { ICategory } from '@/api/category';
 import Image from 'next/image';
 import { useState } from 'react';
-import { MagnifyingGlassIcon } from '@heroicons/react/24/outline';
 import { useRouter } from 'next/navigation';
 
 type Props = {
@@ -44,7 +43,6 @@ export default function CategoryForm({ categories, handleClose }: Props) {
                 onMouseEnter={() => handleParentCategoryClick(category)}
                 onMouseDown={() => handleParentCategoryClick(category)}
               >
-                <MagnifyingGlassIcon className="w-4 h-4 text-[#075985]" />
                 <div>{category.name}</div>
                 <Image src="/assets/categoryMove.svg" alt="categoryMove" width={20} height={20} />
               </div>
