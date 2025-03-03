@@ -7,10 +7,11 @@ import { ICartItem, IDeleteItem } from '@/api/cart';
 import { useCart } from '@/hooks/queries/useCart';
 import { useCartDeleteItemMutate } from '@/hooks/mutate/useCartMutate';
 import { useRequireAuth } from '@/hooks/common/useRequireAuth';
+import CartSkeleton from '@/components/skeletons/CartSkeleton';
 
 export default function CartContainer() {
   useRequireAuth();
-  const { carts } = useCart();
+  const { carts, cartsLoading } = useCart();
   const [checkList, setCheckList] = useState<ICartItem[]>([]);
   const { deleteCartItemMutate } = useCartDeleteItemMutate();
 
@@ -46,6 +47,11 @@ export default function CartContainer() {
         handleDeleteCheckList={handleDeleteCheckList}
       />
       <div className="w-full grow bg-gray-100 flex flex-col gap-[10px] py-4 px-3 pb-[80px] tablet:py-[20px] tablet:px-[100px] tablet:pb-[100px]">
+        {carts?.items.length === 0 && (
+          <div className="w-full h-full flex items-center justify-center text-2xl font-bold text-gray-500">
+            장바구니가 비었습니다
+          </div>
+        )}
         {carts?.items.map((cartItem) => {
           return (
             <CartList
