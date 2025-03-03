@@ -19,10 +19,6 @@ export default function MobileFooter() {
         <ShoppingCartIcon className="w-[35px] h-[35px] text-[#075985]" />
         <p>장바구니</p>
       </Link>
-      <div className="flex flex-col items-center">
-        <Image src="/assets/user.svg" alt="user" width={30} height={30} />
-        <p>마이</p>
-      </div>
     </footer>
   );
 }
