@@ -1,5 +1,6 @@
 import { ICartItem } from '@/api/cart';
 import { ISelectOptionDetail } from '@/app/products/_components/detail/ProductDetailClient';
+import { SelectItem } from '@/app/products/_components/detail/ProductDetailClientOptions';
 import { useProductSingle } from '@/hooks/queries/useProducts';
 import { numberFormatting } from '@/utils/numberFormatting';
 import { useRouter } from 'next/navigation';
@@ -10,31 +11,32 @@ type Props = {
 
 export default function CartListPrice({ cartProduct }: Props) {
   const router = useRouter();
-  const { product } = useProductSingle(String(cartProduct.productId));
+  const { product } = useProductSingle(cartProduct.productId);
   function handlePurchase() {
-    // const selectOptions: ISelectOptionDetail[] = [
-    //   {
-    //     count: cartProduct.options.optionDetail.quantity,
-    //     options: [
-    //       {
-    //         id: cartProduct.options.id,
-    //         value: cartProduct.options.optionDetail.value,
-    //         detailId: cartProduct.options.optionDetail.id,
-    //         optionName: cartProduct.options.name,
-    //         quantity: cartProduct.options.optionDetail.quantity,
-    //         additionalPrice: cartProduct.options.optionDetail.additionalPrice,
-    //       },
-    //     ],
-    //   },
-    // ];
-    // if (selectOptions.length > 0) {
-    //   const paramData = {
-    //     product,
-    //     selectedOptions: selectOptions,
-    //   };
-    //   const encodedData = encodeURIComponent(JSON.stringify(paramData));
-    //   router.push(`/purchase?data=${encodedData}`);
-    // }
+    const options: SelectItem[] = cartProduct.options.map((item) => {
+      return {
+        id: item.id,
+        value: item.optionDetail.value,
+        detailId: item.optionDetail.id,
+        optionName: item.name,
+        quantity: item.optionDetail.quantity,
+        additionalPrice: item.optionDetail.additionalPrice,
+      };
+    });
+    const selectOptions: ISelectOptionDetail[] = [
+      {
+        count: cartProduct.options[0].optionDetail.quantity,
+        options: options,
+      },
+    ];
+    if (selectOptions.length > 0) {
+      const paramData = {
+        product,
+        selectedOptions: selectOptions,
+      };
+      const encodedData = encodeURIComponent(JSON.stringify(paramData));
+      router.push(`/purchase?data=${encodedData}`);
+    }
   }
 
   return (

@@ -16,7 +16,7 @@ export interface ICartOption {
 
 export interface ICartItem {
   itemId: string;
-  productId: number;
+  productId: string;
   productName: string;
   price: number;
   subTotalPrice: number;

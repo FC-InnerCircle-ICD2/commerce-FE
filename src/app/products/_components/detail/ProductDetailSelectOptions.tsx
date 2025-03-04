@@ -44,7 +44,7 @@ export default function ProductDetailSelectOptions({
 
     addCartMutate({
       datas: {
-        productId: Number(product.id),
+        productId: String(product.id),
         productName: product.name,
         price: Number(product.price),
         options: options,
