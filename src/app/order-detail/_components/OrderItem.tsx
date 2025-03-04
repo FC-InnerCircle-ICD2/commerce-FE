@@ -62,7 +62,11 @@ export default function OrderItem(props: Props) {
       {orderInfo.orderProductList.map((product, index) => (
         <React.Fragment key={product.productId}>
           <div className="flex items-center my-4">
-            <div className="bg-neutral-300 w-[80px] h-[80px] md:w-[100px] md:h-[100px] rounded-[10px]"></div>
+            <div className="bg-neutral-300 w-[80px] h-[80px] md:w-[100px] md:h-[100px] rounded-[10px]">
+              {product.productImage && (
+                <img src={product.productImage} alt="product" className="w-full h-full object-cover rounded-[10px]" />
+              )}
+            </div>
             <div className="flex flex-col ml-4 gap-0.5 max-w-[calc(100%-100px)]">
               <p className="text-neutral-500 text-sm">{`${getFormattedDate(orderInfo.orderAt)} 주문`}</p>
               <p className="font-semibold text-sm md:text-md truncate">{product.productName}</p>
