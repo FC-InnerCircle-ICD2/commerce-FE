@@ -72,7 +72,7 @@ export default function OrderDetail() {
 
       {!isLoading && (
         <Pagination
-          currentPage={orders?.page?.number || 1}
+          currentPage={orders?.page?.number || 0}
           totalPages={orders?.page?.totalPages || 1}
           onPageChange={setPage}
         />
