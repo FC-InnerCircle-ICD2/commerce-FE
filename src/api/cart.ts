@@ -60,7 +60,7 @@ export const getCarts = async () => {
 
 export type AddCartProps = {
   datas: {
-    productId: number;
+    productId: string;
     productName: string;
     price: number;
     options: Array<ICartOption>;
