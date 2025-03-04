@@ -1,4 +1,3 @@
-/* eslint-disable no-loss-of-precision */
 'use client';
 
 import { useState } from 'react';
