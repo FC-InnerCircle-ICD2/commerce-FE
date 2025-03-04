@@ -9,6 +9,7 @@ import ProdudctDetailClientOptions, { SelectItem } from './ProductDetailClientOp
 import ProductDetailClientCarousel from './ProductDetailClientCarousel';
 import ProductDetailClientReview from './ProductDetailClientReivew';
 import ProductDetailClientDescription from './ProductDetailClientDescription';
+import { useAuthStore } from '@/store/authStore';
 
 export interface ISelectOptionDetail {
   count: number;
@@ -17,6 +18,7 @@ export interface ISelectOptionDetail {
 
 const ProductDetailClient: React.FC<{ product: IProductDetail }> = ({ product }) => {
   const router = useRouter();
+  const { isLoggedIn } = useAuthStore();
   const [selectedTab, setSelectedTab] = useState<string>('상세정보');
   const [selectOptions, setSelectOptions] = useState<ISelectOptionDetail[]>([]);
 
@@ -54,6 +56,7 @@ const ProductDetailClient: React.FC<{ product: IProductDetail }> = ({ product })
   }
 
   const handlePurchase = () => {
+    if (!isLoggedIn) return alert('로그인을 먼저 진행해주세요!');
     if (selectOptions.length > 0) {
       const paramData = {
         product,
@@ -154,7 +157,7 @@ const ProductDetailClient: React.FC<{ product: IProductDetail }> = ({ product })
 
           <div className="flex gap-2 mt-6 w-full">
             <button
-              className="px-6 py-3 bg-[#CBD5E1] text-[#082F49] font-bold rounded-lg grow"
+              className={`px-6 py-3 bg-[#CBD5E1] text-[#082F49] font-bold rounded-lg grow ${!isLoggedIn && `bg-gray-100 text-gray-500`}`}
               onClick={handlePurchase}
             >
               구매하기

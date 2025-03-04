@@ -5,6 +5,7 @@ export const CategoryQueryKeys = {
 
 export const ProductsQueryKeys = {
   products: 'products',
+  product: 'product',
   productSingle: 'product',
 } as const;
 

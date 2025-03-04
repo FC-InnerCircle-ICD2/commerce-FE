@@ -3,10 +3,14 @@ import { CartQueryKeys } from '@/constants/queryKeys';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 export function useCartAddMutate() {
+  const queryClient = useQueryClient();
   const { mutate: addCartMutate } = useMutation({
     mutationKey: ['addCarts'],
     mutationFn: postAddCarts,
     onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: [CartQueryKeys.carts],
+      });
       alert('장바구니에 추가되었습니다');
     },
     onError: (e) => {

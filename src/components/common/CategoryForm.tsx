@@ -32,7 +32,7 @@ export default function CategoryForm({ categories, handleClose }: Props) {
 
   return (
     <article className="w-full h-full flex gap-[10px]">
-      <ul className="w-[160] flex flex-col gap-2 overflow-y-auto">
+      <ul className="w-[160px] flex flex-col gap-2 overflow-y-auto">
         {categories.map((category, i) => {
           return (
             <li

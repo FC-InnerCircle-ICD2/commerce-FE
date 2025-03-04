@@ -3,12 +3,24 @@ import { fetchWithAuth } from '@/store/fetchWithAuth';
 const BASE_URL = 'https://product-api.emmotional-cart.click/api/v1/carts';
 // const BASE_URL = 'http://3.38.23.68:8080/v1/carts';
 
+export interface ICartOption {
+  id: number;
+  name: string;
+  optionDetail: {
+    id: number;
+    value: string;
+    quantity: number;
+    additionalPrice: number;
+  };
+}
+
 export interface ICartItem {
-  productId: number;
+  itemId: string;
+  productId: string;
   productName: string;
   price: number;
   subTotalPrice: number;
-  option: {
+  options: Array<{
     id: number;
     name: string;
     optionDetail: {
@@ -17,7 +29,7 @@ export interface ICartItem {
       quantity: number;
       additionalPrice: number;
     };
-  };
+  }>;
   images: {
     id: number;
     url: string;
@@ -48,20 +60,18 @@ export const getCarts = async () => {
 
 export type AddCartProps = {
   datas: {
-    productId: number;
+    productId: string;
     productName: string;
     price: number;
-    subTotalPrice: number;
-    optionId: number;
-    optionName: string;
-    optionDetailId: number;
-    optionDetailValue: string;
-    optionDetailQuantity: number;
-    optionDetailAdditionalPrice: number;
-    imageId: number;
-    imageUrl: string;
-    providerId: number;
-    providerName: string;
+    options: Array<ICartOption>;
+    images: {
+      id: number;
+      url: string;
+    };
+    provider: {
+      id: number;
+      name: string;
+    };
   };
 };
 
@@ -83,21 +93,17 @@ export const postAddCarts = async ({ datas }: AddCartProps) => {
 };
 
 export type ChangeCartProps = {
-  datas: {
-    productId: number;
-    optionId: number;
-    optionDetailId: number;
-    optionDetailQuantity: number;
-  };
+  itemId: string;
+  optionDetailQuantity: number;
 };
 
-export const postChangeCartQuantity = async ({ datas }: ChangeCartProps) => {
+export const postChangeCartQuantity = async (props: ChangeCartProps) => {
   const response = await fetchWithAuth(BASE_URL, {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify(datas),
+    body: JSON.stringify(props),
   });
 
   if (!response.ok) {
@@ -108,25 +114,17 @@ export const postChangeCartQuantity = async ({ datas }: ChangeCartProps) => {
   return data;
 };
 
-export interface IDeleteItem {
-  productId: number;
-  optionId: number;
-  optionDetailId: number;
-}
-
 type DeleteProps = {
-  datas: {
-    items: Array<IDeleteItem>;
-  };
+  itemIds: Array<string>;
 };
 
-export const deleteCartItem = async ({ datas }: DeleteProps) => {
+export const deleteCartItem = async (props: DeleteProps) => {
   const response = await fetchWithAuth(`${BASE_URL}/items`, {
     method: 'DELETE',
     headers: {
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify(datas),
+    body: JSON.stringify(props),
   });
 
   if (!response.ok) {

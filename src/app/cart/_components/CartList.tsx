@@ -32,7 +32,7 @@ export default function CartList({ product, checkList, handleChangeCheckList }: 
         </div>
         <CartListItemInfo product={product} />
         <CartListOptions product={product} />
-        <CartListPrice product={product} />
+        <CartListPrice cartProduct={product} />
       </div>
       <CartListSell product={product} />
     </div>

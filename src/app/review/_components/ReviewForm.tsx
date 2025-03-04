@@ -14,7 +14,7 @@ type Props = {
   productOptionName: string;
 };
 
-export default function ReviewForm({ orderId, product, productOptionId, productOptionName }: Props) {
+export default function ReviewForm({ orderId, product }: Props) {
   const [files, setFiles] = useState<File[]>([]);
   const [previews, setPreviews] = useState<string[]>([]);
   const [content, setContent] = useState<string>('');
@@ -60,11 +60,6 @@ export default function ReviewForm({ orderId, product, productOptionId, productO
     const formData = new FormData();
 
     formData.append('orderId', orderId);
-    formData.append('productName', product?.name ?? '');
-    // TODO: 해당 부분 삭제 논의
-    formData.append('productOptionId', String(productOptionId));
-    formData.append('productOptionName', productOptionName);
-    // ------------------
     formData.append('rating', rating);
     formData.append('content', content);
     files.forEach((file) => {
