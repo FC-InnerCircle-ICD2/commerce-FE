@@ -1,7 +1,7 @@
 'use client';
 
 import { Footer, Header } from '@/components/layout';
-import OrderItem from './_components/OrderItem';
+import OrderItem, { IOrderProductOptions } from './_components/OrderItem';
 import { useState } from 'react';
 import { useMyOrderList } from '@/hooks/queries/useMyOrderList';
 import Pagination from './_components/Pagenation';
@@ -13,6 +13,7 @@ export interface OrderProduct {
   productName: string;
   productImage: null | string;
   productPrice: number;
+  productOptions: Array<IOrderProductOptions>;
   quantity: number;
 }
 export interface OrderContent {
