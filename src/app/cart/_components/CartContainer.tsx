@@ -29,7 +29,7 @@ export default function CartContainer() {
 
   function handleDeleteCheckList() {
     const deleteItems: IDeleteItem[] = checkList.map((item) => {
-      return { productId: item.productId, optionId: item.option.id, optionDetailId: item.option.optionDetail.id };
+      return { productId: item.productId, optionId: item.options.id, optionDetailId: item.options.optionDetail.id };
     });
     deleteCartItemMutate({
       datas: {

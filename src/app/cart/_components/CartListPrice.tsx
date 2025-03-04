@@ -12,30 +12,29 @@ export default function CartListPrice({ cartProduct }: Props) {
   const router = useRouter();
   const { product } = useProductSingle(String(cartProduct.productId));
   function handlePurchase() {
-    const selectOptions: ISelectOptionDetail[] = [
-      {
-        count: cartProduct.option.optionDetail.quantity,
-        options: [
-          {
-            id: cartProduct.option.id,
-            value: cartProduct.option.optionDetail.value,
-            detailId: cartProduct.option.optionDetail.id,
-            optionName: cartProduct.option.name,
-            quantity: cartProduct.option.optionDetail.quantity,
-            additionalPrice: cartProduct.option.optionDetail.additionalPrice,
-          },
-        ],
-      },
-    ];
-
-    if (selectOptions.length > 0) {
-      const paramData = {
-        product,
-        selectedOptions: selectOptions,
-      };
-      const encodedData = encodeURIComponent(JSON.stringify(paramData));
-      router.push(`/purchase?data=${encodedData}`);
-    }
+    // const selectOptions: ISelectOptionDetail[] = [
+    //   {
+    //     count: cartProduct.options.optionDetail.quantity,
+    //     options: [
+    //       {
+    //         id: cartProduct.options.id,
+    //         value: cartProduct.options.optionDetail.value,
+    //         detailId: cartProduct.options.optionDetail.id,
+    //         optionName: cartProduct.options.name,
+    //         quantity: cartProduct.options.optionDetail.quantity,
+    //         additionalPrice: cartProduct.options.optionDetail.additionalPrice,
+    //       },
+    //     ],
+    //   },
+    // ];
+    // if (selectOptions.length > 0) {
+    //   const paramData = {
+    //     product,
+    //     selectedOptions: selectOptions,
+    //   };
+    //   const encodedData = encodeURIComponent(JSON.stringify(paramData));
+    //   router.push(`/purchase?data=${encodedData}`);
+    // }
   }
 
   return (

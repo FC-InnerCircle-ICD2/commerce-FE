@@ -15,11 +15,12 @@ export interface ICartOption {
 }
 
 export interface ICartItem {
+  itemId: string;
   productId: number;
   productName: string;
   price: number;
   subTotalPrice: number;
-  option: {
+  options: Array<{
     id: number;
     name: string;
     optionDetail: {
@@ -28,7 +29,7 @@ export interface ICartItem {
       quantity: number;
       additionalPrice: number;
     };
-  };
+  }>;
   images: {
     id: number;
     url: string;
@@ -75,7 +76,6 @@ export type AddCartProps = {
 };
 
 export const postAddCarts = async ({ datas }: AddCartProps) => {
-  console.log(datas);
   const response = await fetchWithAuth(BASE_URL, {
     method: 'POST',
     headers: {
@@ -93,21 +93,17 @@ export const postAddCarts = async ({ datas }: AddCartProps) => {
 };
 
 export type ChangeCartProps = {
-  datas: {
-    productId: number;
-    optionId: number;
-    optionDetailId: number;
-    optionDetailQuantity: number;
-  };
+  itemId: string;
+  optionDetailQuantity: number;
 };
 
-export const postChangeCartQuantity = async ({ datas }: ChangeCartProps) => {
+export const postChangeCartQuantity = async (props: ChangeCartProps) => {
   const response = await fetchWithAuth(BASE_URL, {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify(datas),
+    body: JSON.stringify(props),
   });
 
   if (!response.ok) {

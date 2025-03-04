@@ -14,7 +14,7 @@ type Props = {
   productOptionName: string;
 };
 
-export default function ReviewForm({ orderId, product, productOptionId, productOptionName }: Props) {
+export default function ReviewForm({ orderId, product }: Props) {
   const [files, setFiles] = useState<File[]>([]);
   const [previews, setPreviews] = useState<string[]>([]);
   const [content, setContent] = useState<string>('');
