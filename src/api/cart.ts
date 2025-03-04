@@ -3,6 +3,17 @@ import { fetchWithAuth } from '@/store/fetchWithAuth';
 const BASE_URL = 'https://product-api.emmotional-cart.click/api/v1/carts';
 // const BASE_URL = 'http://3.38.23.68:8080/v1/carts';
 
+export interface ICartOption {
+  id: number;
+  name: string;
+  optionDetail: {
+    id: number;
+    value: string;
+    quantity: number;
+    additionalPrice: number;
+  };
+}
+
 export interface ICartItem {
   productId: number;
   productName: string;
@@ -51,21 +62,20 @@ export type AddCartProps = {
     productId: number;
     productName: string;
     price: number;
-    subTotalPrice: number;
-    optionId: number;
-    optionName: string;
-    optionDetailId: number;
-    optionDetailValue: string;
-    optionDetailQuantity: number;
-    optionDetailAdditionalPrice: number;
-    imageId: number;
-    imageUrl: string;
-    providerId: number;
-    providerName: string;
+    options: Array<ICartOption>;
+    images: {
+      id: number;
+      url: string;
+    };
+    provider: {
+      id: number;
+      name: string;
+    };
   };
 };
 
 export const postAddCarts = async ({ datas }: AddCartProps) => {
+  console.log(datas);
   const response = await fetchWithAuth(BASE_URL, {
     method: 'POST',
     headers: {

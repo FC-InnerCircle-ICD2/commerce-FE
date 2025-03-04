@@ -3,6 +3,7 @@ import type { ISelectOptionDetail } from './ProductDetailClient';
 import { useCartAddMutate } from '@/hooks/mutate/useCartMutate';
 import { ShoppingCartIcon } from '@heroicons/react/24/outline';
 import { useAuthStore } from '@/store/authStore';
+import { ICartOption } from '@/api/cart';
 
 type Props = {
   product: IProductDetail;
@@ -28,22 +29,33 @@ export default function ProductDetailSelectOptions({
   }
 
   function handleAddCartsButton() {
+    const options: ICartOption[] = seletedOptionDetail.options.map((item) => {
+      return {
+        id: item.id,
+        name: item.optionName,
+        optionDetail: {
+          id: item.detailId,
+          value: item.value,
+          quantity: item.quantity,
+          additionalPrice: item.additionalPrice,
+        },
+      };
+    });
+
     addCartMutate({
       datas: {
         productId: Number(product.id),
         productName: product.name,
         price: Number(product.price),
-        subTotalPrice: (product.price + getAdditionalPrice()) * seletedOptionDetail.count,
-        optionId: Number(seletedOptionDetail.options[0].id),
-        optionName: seletedOptionDetail.options[0].optionName,
-        optionDetailId: Number(seletedOptionDetail.options[0].detailId),
-        optionDetailValue: seletedOptionDetail.options[0].value,
-        optionDetailQuantity: Number(seletedOptionDetail.options[0].quantity),
-        optionDetailAdditionalPrice: Number(seletedOptionDetail.options[0].additionalPrice),
-        imageId: Number(product.images[0].id),
-        imageUrl: product.images[0].url,
-        providerId: Number(product.provider.id),
-        providerName: product.provider.name,
+        options: options,
+        images: {
+          id: Number(product.images[0].id),
+          url: product.images[0].url,
+        },
+        provider: {
+          id: Number(product.provider.id),
+          name: product.provider.name,
+        },
       },
     });
   }
