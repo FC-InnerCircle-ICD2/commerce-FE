@@ -28,14 +28,21 @@ const Filter: React.FC<FilterProps> = ({ products }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [categoryId]);
 
-  const [priceRange, setPriceRange] = useState<PriceRange>(priceRangeValues);
+  const [priceRange, setPriceRange] = useState<PriceRange>(() => {
+    const minParam = searchParams?.get('priceMin');
+    const maxParam = searchParams?.get('priceMax');
+    return {
+      min: minParam ? Number(minParam) : priceRangeValues.min,
+      max: maxParam ? Number(maxParam) : priceRangeValues.max,
+    };
+  });
   const [selectedPriceRange, setSelectedPriceRange] = useState<PriceRange | undefined>(() => {
     const minParam = searchParams?.get('priceMin');
     const maxParam = searchParams?.get('priceMax');
-    if (minParam && maxParam) {
+    if (minParam || maxParam) {
       return {
-        min: Number(minParam),
-        max: Number(maxParam),
+        min: minParam ? Number(minParam) : priceRangeValues.min,
+        max: maxParam ? Number(maxParam) : priceRangeValues.max,
       };
     }
     return undefined;
@@ -44,21 +51,29 @@ const Filter: React.FC<FilterProps> = ({ products }) => {
     const ratingParam = searchParams?.get('rating');
     return ratingParam ? Number(ratingParam) : null;
   });
+  const [sliderValue, setSliderValue] = useState(() => {
+    const minParam = searchParams?.get('priceMin');
+    const maxParam = searchParams?.get('priceMax');
+    return [minParam ? Number(minParam) : priceRangeValues.min, maxParam ? Number(maxParam) : priceRangeValues.max];
+  });
   const router = useRouter();
 
   useEffect(() => {
     const minParam = searchParams?.get('priceMin');
     const maxParam = searchParams?.get('priceMax');
 
-    if (minParam && maxParam) {
-      setSelectedPriceRange({
-        min: Number(minParam),
-        max: Number(maxParam),
-      });
+    const newMin = minParam ? Number(minParam) : priceRangeValues.min;
+    const newMax = maxParam ? Number(maxParam) : priceRangeValues.max;
+
+    setPriceRange({ min: newMin, max: newMax });
+    setSliderValue([newMin, newMax]);
+
+    if (minParam || maxParam) {
+      setSelectedPriceRange({ min: newMin, max: newMax });
     } else {
       setSelectedPriceRange(undefined);
     }
-  }, [searchParams]);
+  }, [searchParams, priceRangeValues]);
 
   useEffect(() => {
     const ratingParam = searchParams?.get('rating');
@@ -66,34 +81,23 @@ const Filter: React.FC<FilterProps> = ({ products }) => {
   }, [searchParams]);
 
   const handlePriceSearch = () => {
-    if (!selectedPriceRange) return;
-
     const params = new URLSearchParams(searchParams?.toString() || '');
 
-    params.set('priceMin', selectedPriceRange.min.toString());
-    params.set('priceMax', selectedPriceRange.max.toString());
+    params.set('priceMin', priceRange.min.toString());
+    params.set('priceMax', priceRange.max.toString());
     params.set('pageNumber', '0');
 
     router.push(`/products?${params.toString()}`);
+    setSelectedPriceRange(priceRange);
   };
-  const handlePriceRangeSelect = (min: number, max: number | null) => {
-    const newSelectedPriceRange: PriceRange = {
-      min: min,
-      max: max === null ? priceRangeValues.max : max,
-    };
-    setSelectedPriceRange(newSelectedPriceRange);
-
-    const params = new URLSearchParams(searchParams?.toString() || '');
-    params.set('priceMin', min.toString());
-    params.set('priceMax', newSelectedPriceRange.max.toString());
-    params.set('pageNumber', '0');
-
-    router.push(`/products?${params.toString()}`);
+  const handleSliderChange = (value: number[]) => {
+    setSliderValue(value);
+    setPriceRange({ min: value[0], max: value[1] });
   };
-
   const handleInputChange = (type: 'min' | 'max', value: number) => {
     const newPriceRange = { ...priceRange, [type]: value };
     setPriceRange(newPriceRange);
+    setSliderValue([newPriceRange.min, newPriceRange.max]);
   };
 
   const handleReset = () => {
@@ -149,11 +153,11 @@ const Filter: React.FC<FilterProps> = ({ products }) => {
           />
           <RatingFilter />
           <hr className="my-8" />
-
           <PriceFilter
             priceRange={priceRange}
-            selectedPriceRange={selectedPriceRange}
-            onPriceRangeSelect={handlePriceRangeSelect}
+            sliderValue={sliderValue}
+            priceRangeValues={priceRangeValues}
+            onSliderChange={handleSliderChange}
             onInputChange={handleInputChange}
             onSearch={handlePriceSearch}
           />
