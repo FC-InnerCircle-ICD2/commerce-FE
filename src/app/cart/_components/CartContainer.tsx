@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import CartCheckComponent from './CartCheckComponent';
 import CartList from './CartList';
-import { ICartItem, IDeleteItem } from '@/api/cart';
+import { ICartItem } from '@/api/cart';
 import { useCart } from '@/hooks/queries/useCart';
 import { useCartDeleteItemMutate } from '@/hooks/mutate/useCartMutate';
 import CartSkeleton from '@/components/skeletons/CartSkeleton';
@@ -28,13 +28,11 @@ export default function CartContainer() {
   }
 
   function handleDeleteCheckList() {
-    const deleteItems: IDeleteItem[] = checkList.map((item) => {
-      return { productId: item.productId, optionId: item.options.id, optionDetailId: item.options.optionDetail.id };
+    const deleteItems: string[] = checkList.map((item) => {
+      return item.itemId;
     });
     deleteCartItemMutate({
-      datas: {
-        items: [...deleteItems],
-      },
+      itemIds: deleteItems,
     });
   }
 
