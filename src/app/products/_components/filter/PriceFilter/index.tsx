@@ -16,7 +16,6 @@ export const PriceFilter: React.FC<PriceFilterProps> = ({
   onInputChange,
   onSearch,
   priceRange,
-  selectedPriceRange,
 }) => {
   const searchParams = useSearchParams();
   const [minInput, setMinInput] = useState<string>('');
