@@ -26,7 +26,13 @@ export interface OrderContent {
 
 export default function OrderDetail() {
   const [page, setPage] = useState(0);
-  const { data: orders, isLoading } = useMyOrderList({ page, size: 10 });
+  const [sort, setSort] = useState<string[]>(['orderAt']);
+  const { data: orders, isLoading } = useMyOrderList({ page, size: 10, sort: sort });
+
+  const handleFilterChange = (newFilter: 'orderAt' | 'desc') => {
+    setSort((prevSort) => (prevSort.includes(newFilter) ? prevSort : [...prevSort, newFilter]));
+    setPage(0); // 페이지를 0으로 초기화
+  };
 
   return (
     <div className="w-[100%] h-auto flex flex-col items-center justify-center">
@@ -39,7 +45,12 @@ export default function OrderDetail() {
             <h3 className="text-md lg:text-lg font-semibold p-4 lg:p-8">주문/배송내역</h3>
             {/* <OrderDetailSearch /> */}
             <div className="w-full h-[50px] lg:h-[60px] border-t border-slate-300 px-4 lg:px-8 flex items-center justify-between">
-              <button className="bg-slate-500 rounded-full w-14 h-8 lg:h-10 text-sm text-white">전체</button>
+              <button
+                onClick={() => handleFilterChange('orderAt')}
+                className="bg-slate-500 rounded-full w-14 h-8 lg:h-10 text-sm text-white"
+              >
+                전체
+              </button>
             </div>
           </div>
         </div>
