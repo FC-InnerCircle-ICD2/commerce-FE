@@ -4,12 +4,13 @@ import { useState } from 'react';
 import type { IProductDetail } from '@/api/product';
 import ProductDegtailCards from './ProductDetailCards';
 import ProductDetailSelectOptions from './ProductDetailSelectOptions';
-import { useRouter } from 'next/navigation';
+import { useRouter, usePathname } from 'next/navigation';
 import ProdudctDetailClientOptions, { SelectItem } from './ProductDetailClientOptions';
 import ProductDetailClientCarousel from './ProductDetailClientCarousel';
 import ProductDetailClientReview from './ProductDetailClientReivew';
 import ProductDetailClientDescription from './ProductDetailClientDescription';
 import { useAuthStore } from '@/store/authStore';
+import LoginPopup from '@/components/modals/LoginPopup';
 
 export interface ISelectOptionDetail {
   count: number;
@@ -18,9 +19,11 @@ export interface ISelectOptionDetail {
 
 const ProductDetailClient: React.FC<{ product: IProductDetail }> = ({ product }) => {
   const router = useRouter();
+  const pathname = usePathname();
   const { isLoggedIn } = useAuthStore();
   const [selectedTab, setSelectedTab] = useState<string>('상세정보');
   const [selectOptions, setSelectOptions] = useState<ISelectOptionDetail[]>([]);
+  const [isLoginPopupOpen, setIsLoginPopupOpen] = useState(false);
 
   function handleAddOption(newOptions: SelectItem[]) {
     setSelectOptions((prevOptions) => {
@@ -56,7 +59,12 @@ const ProductDetailClient: React.FC<{ product: IProductDetail }> = ({ product })
   }
 
   const handlePurchase = () => {
-    if (!isLoggedIn) return alert('로그인을 먼저 진행해주세요!');
+    if (!isLoggedIn) {
+      // 로그인 안 되어 있을 경우 팝업 열기
+      setIsLoginPopupOpen(true);
+      return; // 로그인 팝업을 띄우고 더 이상 진행되지 않게 함
+    }
+
     if (selectOptions.length > 0) {
       const paramData = {
         product,
@@ -77,6 +85,12 @@ const ProductDetailClient: React.FC<{ product: IProductDetail }> = ({ product })
       return total + additionalPriceSum * detail.count;
     }, 0);
   }
+
+  const closeLoginPopup = () => {
+    setIsLoginPopupOpen(false);
+    const currentPath = pathname || window.location.pathname; // 페이지 경로가 없을 경우 안전하게 처리
+    router.push(currentPath); // 로그인 후 원래 페이지로 돌아감
+  };
 
   return (
     <div className="max-w-custom mx-auto flex px-4 py-8 flex-col">
@@ -163,6 +177,8 @@ const ProductDetailClient: React.FC<{ product: IProductDetail }> = ({ product })
               구매하기
             </button>
           </div>
+
+          {isLoginPopupOpen && <LoginPopup closePopup={closeLoginPopup} baseUrl={pathname || window.location.pathname} />}
         </div>
       </div>
 
