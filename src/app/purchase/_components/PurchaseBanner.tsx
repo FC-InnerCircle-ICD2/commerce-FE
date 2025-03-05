@@ -14,14 +14,18 @@ interface Props {
 }
 
 export default function PurchaseBanner(props: Props) {
-  const { cardInfo, orderItems, delivery, totalPrice } = props;
+  const { paymentMethod, cardInfo, orderItems, delivery, totalPrice } = props;
   const router = useRouter();
 
   const postData: IOrder = {
+    paymentMethod: paymentMethod,
     cardInfo: cardInfo,
-    deliveryInfo: delivery,
+    delivery: delivery,
     totalAmount: totalPrice,
     orderItems: orderItems,
+    cardNumber: cardInfo.cardNumber,
+    expirationDate: cardInfo.expirationDate,
+    cvc: cardInfo.cvc,
   };
 
   async function handleOrderButton() {
