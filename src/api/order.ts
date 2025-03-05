@@ -32,10 +32,14 @@ export interface Delivery {
 }
 
 export interface IOrder {
+  paymentMethod: PaymentMethodType;
   cardInfo: CardInfo;
-  deliveryInfo: Delivery;
+  delivery: Delivery;
   totalAmount: number;
   orderItems: OrderOption[];
+  cardNumber: string;
+  expirationDate: string;
+  cvc: string;
 }
 
 export const ORDER_URL = 'api/v1/orders';
