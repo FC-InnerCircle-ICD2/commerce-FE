@@ -56,6 +56,10 @@ export default function OrderItem(props: Props) {
     router.push(`/review?orderId=${orderId}&productId=${orderProductList[0].productId}&reviewData=${queryString}`);
   };
 
+  const handleRepurchase = (product: OrderProduct) => {
+    router.push(`/products/${product.productId}`);
+  };
+
   return (
     <div className="border border-slate-300 bg-slate-50 w-full h-auto p-6 lg:p-8 flex flex-col mt-2">
       <p className="font-semibold">{orderInfo.orderStatus}</p>
@@ -88,7 +92,10 @@ export default function OrderItem(props: Props) {
             >
               리뷰쓰기
             </button>
-            <button className="border border-neutral-300 px-3.5 py-2.5 bg-white rounded-lg text-sm w-full">
+            <button
+              onClick={() => handleRepurchase(product)}
+              className="border border-neutral-300 px-3.5 py-2.5 bg-white rounded-lg text-sm w-full"
+            >
               재구매
             </button>
           </div>
