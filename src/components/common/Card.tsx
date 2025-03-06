@@ -1,6 +1,5 @@
 'use client';
 
-import Star from '@/assets/star.png';
 import { numberFormatting } from '@/utils/numberFormatting';
 import { useRouter } from 'next/navigation';
 import PREPARING from '@/assets/preparing.png';

@@ -30,7 +30,7 @@ export default function MyShoppingModal({ handleClose }: Props) {
       // 컴포넌트가 언마운트될 때 리스너 제거
       document.removeEventListener('mousedown', handleClickOutside);
     };
-  }, []);
+  });
 
   return (
     <div

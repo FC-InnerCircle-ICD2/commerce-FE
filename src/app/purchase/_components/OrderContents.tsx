@@ -114,14 +114,6 @@ export default function OrderContents(props: { orderData: ProductParamsData }) {
     return count * orderData.product.price + addPrice;
   };
 
-  const getCount = (selectedOptions: Array<SelectedOption>) => {
-    let count = 0;
-    selectedOptions.forEach((option) => {
-      count += option.count;
-    });
-    return count;
-  };
-
   const orderOptionItems = orderData?.selectedOptions?.map((option) => {
     const optionDetails = option.options.map((detail) => {
       return {
