@@ -1,4 +1,4 @@
-import { Header } from '@/components/layout';
+import { Footer, Header } from '@/components/layout';
 import ProductDetailClient from '../_components/detail/ProductDetailClient';
 import { getProduct } from '@/api/product';
 
@@ -12,6 +12,7 @@ export default async function ProductDetail({ params }: { params: Promise<{ prod
       <>
         <Header />
         <ProductDetailClient product={product} />
+        <Footer />
       </>
     );
   } catch {

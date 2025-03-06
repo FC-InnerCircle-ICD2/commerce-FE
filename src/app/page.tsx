@@ -2,7 +2,7 @@ import { getBanners } from '@/api/banner';
 import Carousel from '@/components/home/Carousel';
 import ProductList from '@/components/home/ProductList';
 import { ProductSkeleton } from '@/components/skeletons';
-import { Header } from '@/components/layout';
+import { Footer, Header } from '@/components/layout';
 import { Suspense } from 'react';
 
 export default async function Home() {
@@ -18,6 +18,7 @@ export default async function Home() {
             <ProductList />
           </Suspense>
         </div>
+        <Footer />
       </div>
     );
   } catch {

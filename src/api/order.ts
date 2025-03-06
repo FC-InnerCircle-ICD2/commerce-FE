@@ -25,7 +25,7 @@ export interface CardInfo {
 export interface Delivery {
   name: string;
   phoneNumber: string;
-  zonecode: string;
+  zoneCode: string;
   address: string;
   detailAddress: string;
   deliveryMemo: string;
@@ -35,7 +35,6 @@ export interface IOrder {
   paymentMethod: PaymentMethodType;
   cardInfo: CardInfo;
   delivery: Delivery;
-  totalAmount: number;
   orderItems: OrderOption[];
   cardNumber: string;
   expirationDate: string;
@@ -55,7 +54,7 @@ export const postOrder = async (orderData: IOrder) => {
   if (!response.ok) {
     throw new Error('Failed to place order');
   }
-  return response.status;
+  return { status: response.status, data: await response.json() };
 };
 
 export interface MyOrderProps {

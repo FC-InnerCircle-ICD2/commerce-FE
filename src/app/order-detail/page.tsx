@@ -1,10 +1,12 @@
 'use client';
 
 import { Footer, Header } from '@/components/layout';
-import OrderItem, { IOrderProductOptions } from './_components/OrderItem';
-import { useState } from 'react';
+import { IOrderProductOptions } from './_components/OrderItem';
+import { lazy, Suspense, useState } from 'react';
 import { useMyOrderList } from '@/hooks/queries/useMyOrderList';
 import Pagination from './_components/Pagenation';
+import OrderListSkeleton from '@/components/skeletons/OrderListSkeleton';
+const OrderItemList = lazy(() => import('./_components/OrderItemList'));
 
 export interface OrderProduct {
   productId: string;
@@ -31,7 +33,7 @@ export default function OrderDetail() {
 
   const handleFilterChange = (newFilter: 'orderAt' | 'desc') => {
     setSort((prevSort) => (prevSort.includes(newFilter) ? prevSort : [...prevSort, newFilter]));
-    setPage(0); // 페이지를 0으로 초기화
+    setPage(0);
   };
 
   return (
@@ -54,18 +56,9 @@ export default function OrderDetail() {
             </div>
           </div>
         </div>
-
-        <div className="w-[calc(100%-32px)] lg:w-[calc(100%-200px)] flex flex-col mx-auto">
-          {isLoading ? (
-            <div className="flex justify-center items-center h-40">
-              <span className="animate-spin rounded-full h-10 w-10 border-t-4 border-blue-500"></span>
-            </div>
-          ) : orders?.content?.length > 0 ? (
-            orders.content.map((orderInfo: OrderContent) => <OrderItem orderInfo={orderInfo} key={orderInfo.orderId} />)
-          ) : (
-            <div className="text-center py-10 text-gray-500">주문 내역이 없습니다.</div>
-          )}
-        </div>
+        <Suspense fallback={<OrderListSkeleton />}>
+          <OrderItemList orders={orders.content} />
+        </Suspense>
       </div>
 
       {!isLoading && (

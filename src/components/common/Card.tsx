@@ -1,9 +1,9 @@
 'use client';
 
-import Star from '@/assets/star.png';
 import { numberFormatting } from '@/utils/numberFormatting';
 import { useRouter } from 'next/navigation';
 import PREPARING from '@/assets/preparing.png';
+import { StarIcon as StarFilledIcon } from '@heroicons/react/24/solid';
 
 type Props = {
   /** 상품 ID */
@@ -44,11 +44,16 @@ export default function Card({ productId, imgUrl, title, price, discount, review
 
   return (
     <div className="w-full cursor-pointer" onClick={handleCardClick}>
-      <img src={imgUrl ?? PREPARING.src} className="w-full h-auto aspect-square max-w-full block rounded-2xl" />
+      <img
+        src={imgUrl ?? PREPARING.src}
+        className="w-full h-auto aspect-square max-w-full block rounded-lg border border-slate-300"
+      />
       <div className="p-2">
-        <p className="text-sm sm:text-base font-medium mb-[25px] whitespace-normal truncate break-keep line-clamp-3">
-          {title}
-        </p>
+        <div className="min-h-[60px]">
+          <p className="pt-1 text-sm sm:text-base font-medium mb-[25px] whitespace-normal truncate break-keep line-clamp-2">
+            {title}
+          </p>
+        </div>
         {discount && (
           <p className="text-xs sm:text-sm text-[#989898] font-light line-through mt-2">{price?.toLocaleString()}원</p>
         )}
@@ -57,9 +62,9 @@ export default function Card({ productId, imgUrl, title, price, discount, review
             {discount && <p className="font-bold text-[#FF5F5F] text-sm sm:text-lg">{discount}%</p>}
             <p className="font-bold sm:text-xl">{numberFormatting(discount ? price / discount : price)}원</p>
           </div>
-          <div className="flex items-center gap-[5px]">
-            <img src={Star.src} alt="star" className="w-[25px] h-[25px] sm:w-[18px] sm:h-[18px]" />
-            <p className="text-[#5A5A5A] text-sm sm:text-base ml-1">{review ? review.toLocaleString() : 0}</p>
+          <div className="flex items-center gap-0.5">
+            <StarFilledIcon className="w-5 h-5 text-amber-400" />
+            <p className="text-[#5A5A5A] text-xs sm:text-sm ml-1">{review ? review.toLocaleString() : 0}</p>
           </div>
         </div>
       </div>
