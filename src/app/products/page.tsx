@@ -118,12 +118,12 @@ export default async function ProductsPage({ searchParams }: { searchParams: Pro
           </div>
 
           <div className="lg:w-3/4">
-            <div className="lg:mb-8 mb-1">
+            <div className="lg:mb-5 mb-1">
               <Suspense>
                 <Breadcrumbs />
               </Suspense>
             </div>
-            <div className="lg:hidden block mb-8 px-3 py-2 bg-slate-50 border-slate-300 border">
+            <div className="lg:hidden block mb-5 px-3 py-2 bg-slate-50 border-slate-300 border">
               <Suspense>
                 <FilterSection searchParams={searchParams} isMobile={true} />
               </Suspense>
