@@ -30,8 +30,9 @@ export default function PurchaseBanner(props: Props) {
   async function handleOrderButton() {
     try {
       const result = await postOrder(postData);
-      if (result === 200) {
-        router.push('/complete');
+      if (result.status === 200) {
+        const encodedData = encodeURIComponent(JSON.stringify(result.data));
+        router.push(`/complete?data=${encodedData}`);
       }
     } catch {
       alert('주문에 실패했습니다');

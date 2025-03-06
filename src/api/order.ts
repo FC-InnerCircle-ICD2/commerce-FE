@@ -54,7 +54,7 @@ export const postOrder = async (orderData: IOrder) => {
   if (!response.ok) {
     throw new Error('Failed to place order');
   }
-  return response.status;
+  return { status: response.status, data: await response.json() };
 };
 
 export interface MyOrderProps {
