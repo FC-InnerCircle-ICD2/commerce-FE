@@ -25,7 +25,7 @@ export interface CardInfo {
 export interface Delivery {
   name: string;
   phoneNumber: string;
-  zonecode: string;
+  zoneCode: string;
   address: string;
   detailAddress: string;
   deliveryMemo: string;
@@ -35,7 +35,6 @@ export interface IOrder {
   paymentMethod: PaymentMethodType;
   cardInfo: CardInfo;
   delivery: Delivery;
-  totalAmount: number;
   orderItems: OrderOption[];
   cardNumber: string;
   expirationDate: string;

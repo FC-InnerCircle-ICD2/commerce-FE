@@ -21,7 +21,6 @@ export default function PurchaseBanner(props: Props) {
     paymentMethod: paymentMethod,
     cardInfo: cardInfo,
     delivery: delivery,
-    totalAmount: totalPrice,
     orderItems: orderItems,
     cardNumber: cardInfo.cardNumber,
     expirationDate: cardInfo.expirationDate,
