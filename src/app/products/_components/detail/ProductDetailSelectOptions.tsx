@@ -36,7 +36,7 @@ export default function ProductDetailSelectOptions({
         optionDetail: {
           id: item.detailId,
           value: item.value,
-          quantity: item.quantity,
+          quantity: seletedOptionDetail.count,
           additionalPrice: item.additionalPrice,
         },
       };
