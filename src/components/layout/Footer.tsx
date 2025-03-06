@@ -2,7 +2,7 @@ const Footer = () => {
   const menuItems = ['이용약관', '개인정보처리방침', '주의사항', '입점안내'];
 
   return (
-    <footer className="w-full bg-gradient-to-b from-[#E2EBF2] to-[#D9D9D9] py-9">
+    <footer className="w-full bg-gradient-to-b from-[#e9e9e9] to-[#E2EBF2] py-9">
       <div className="container mx-auto px-4">
         <div className="relative text-center">
           <img
