@@ -26,7 +26,11 @@ const PostcodePopup = ({ onComplete }: { onComplete: (data: Address) => void }) 
     }
   }, [onComplete]);
 
-  return <button onClick={openPopup}>우편번호 찾기</button>;
+  return (
+    <button className="border border-neutral-300 px-3.5 py-2.5 bg-white rounded-lg text-sm" onClick={openPopup}>
+      우편번호 찾기
+    </button>
+  );
 };
 
 export default PostcodePopup;
