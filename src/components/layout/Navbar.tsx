@@ -1,24 +1,16 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import Image from 'next/image';
 import { UserCircleIcon } from '@heroicons/react/24/outline';
 import LoginPopup from '../modals/LoginPopup';
 import { useAuthStore } from '@/store/authStore';
+import { useUser } from '@/hooks/queries/useUser';
 
 const Navbar = () => {
   const { isLoggedIn, accessToken, logout } = useAuthStore();
   const [isPopupOpen, setIsPopupOpen] = useState(false);
-  const [username, setUsername] = useState('');
-
-  useEffect(() => {
-    if (accessToken) {
-      // 액세스 토큰이 존재하면 사용자 정보를 가져오는 로직을 여기에 추가
-      setUsername('홍길동'); // 예시 이름
-    } else {
-      setUsername('');
-    }
-  }, [accessToken]);
+  const { user } = useUser(!!accessToken);
 
   const handleLogin = () => {
     setIsPopupOpen(true);
@@ -26,7 +18,6 @@ const Navbar = () => {
 
   const handleLogout = () => {
     logout(); // 주스탄드에서 logout 함수 호출
-    setUsername('');
   };
 
   const closePopup = () => {
@@ -53,7 +44,7 @@ const Navbar = () => {
                 <>
                   <span className="flex items-center gap-2">
                     <UserCircleIcon className="w-3 h-3 text-[#5F6368]" />
-                    <span>{username} 님</span>
+                    <span>{user?.name} 님</span>
                   </span>
                   <button
                     onClick={handleLogout}
@@ -75,9 +66,7 @@ const Navbar = () => {
         </div>
       </nav>
 
-      {isPopupOpen && (
-        <LoginPopup closePopup={closePopup} />
-      )}
+      {isPopupOpen && <LoginPopup closePopup={closePopup} />}
     </>
   );
 };

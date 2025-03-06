@@ -22,15 +22,15 @@ function ReviewList({ review }: { review: IReviewContent }) {
         <div className="w-[50px] h-[50px] bg-slate-100 rounded-full"></div>
         <div className="grow flex flex-col">
           <div className="flex items-center">
-            {Array.from({ length: 5 - review.rating }).map((_, i) => {
-              return <span key={i}>★</span>;
-            })}
             {Array.from({ length: review.rating }).map((_, i) => {
               return (
                 <span key={i} className="text-yellow-500">
                   ★
                 </span>
               );
+            })}
+            {Array.from({ length: 5 - review.rating }).map((_, i) => {
+              return <span key={i}>★</span>;
             })}
             <span className="ml-2 font-semibold text-sm">{review.rating}</span>
           </div>

@@ -78,6 +78,17 @@ const ProductDetailClient: React.FC<{ product: IProductDetail }> = ({ product })
     }, 0);
   }
 
+  if (product.options.length === 0) {
+    return (
+      <div className="max-w-custom mx-auto h-[500px] flex px-4 py-8 flex-col gap-4 items-center justify-center">
+        <h2 className="text-lg font-semibold">해당 상품은 현재 준비중입니다.</h2>
+        <button className="bg-slate-400 font-bold text-white w-20 py-2 rounded-lg" onClick={() => router.push('/')}>
+          홈으로
+        </button>
+      </div>
+    );
+  }
+
   return (
     <div className="max-w-custom mx-auto flex px-4 py-8 flex-col">
       <nav className="w-full bg-slate-50 border border-slate-300 mb-5 rounded-xl flex justify-end px-[30px] py-[10px]">
@@ -88,23 +99,6 @@ const ProductDetailClient: React.FC<{ product: IProductDetail }> = ({ product })
       <div className="max-w-custom flex flex-col lg:flex-row gap-8">
         {/* 상품 이미지 */}
         <ProductDetailClientCarousel product={product} />
-        {/* <div className="w-full lg:w-1/2 flex-shrink-0">
-          <img
-            src={product.images[0].url ?? '/placeholder-image.jpg'}
-            alt={product.name}
-            className="w-full h-auto lg:h-[500px] object-cover"
-          />
-          <img
-            src={product.images[1].url ?? '/placeholder-image.jpg'}
-            alt={product.name}
-            className="w-full h-auto lg:h-[500px] object-cover"
-          />
-          <img
-            src={product.images[2].url ?? '/placeholder-image.jpg'}
-            alt={product.name}
-            className="w-full h-auto lg:h-[500px] object-cover"
-          />
-        </div> */}
 
         <div className="w-full flex flex-col items-center lg:w-1/2 ">
           {/* 상품 정보 */}
@@ -147,10 +141,7 @@ const ProductDetailClient: React.FC<{ product: IProductDetail }> = ({ product })
                   총 수량 {selectOptions.reduce((sum, option) => sum + option.count, 0).toLocaleString()}개
                 </span>
                 <span>|</span>
-                <span className="text-xl font-bold">
-                  {calculateTotalAdditionalPrice().toLocaleString()}원
-                  {/* {(product.price * selectOptions.reduce((sum, option) => sum + option.count, 0)).toLocaleString()}원 */}
-                </span>
+                <span className="text-xl font-bold">{calculateTotalAdditionalPrice().toLocaleString()}원</span>
               </div>
             </div>
           </div>
