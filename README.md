@@ -73,8 +73,8 @@ src/
 
 ## 🍀 팀 멤버 및 역할
 
-|김지훈|주산들|이선민|최석호|
+|주산들|김지훈|이선민|최석호|
 |-----|------|------|------|
-|<img src='https://github.com/kigpand.png' width='150'>|<img src='https://github.com/sandeulju.png' width='150'>|<img src='https://user-images.githubusercontent.com/104314701/195014647-071dcecb-ee2c-4664-8b13-1b0d3e9edd7a.png' width='150'>|<img src='https://github.com/SeokHoChoi.png' width='150'>|
-|[@kigpand](https://github.com/kigpand)|[@sandeulju](https://github.com/sandeulju)|[@HelloHailie](https://github.com/HelloHailie)|[@SeokHoChoi](https://github.com/SeokHoChoi)|
-|메인페이지, 상품 상세|주문/결제|상품 리스트|로그인|
+|<img src='https://github.com/sandeulju.png' width='150'>|<img src='https://github.com/kigpand.png' width='150'>|<img src='https://user-images.githubusercontent.com/104314701/195014647-071dcecb-ee2c-4664-8b13-1b0d3e9edd7a.png' width='150'>|<img src='https://github.com/SeokHoChoi.png' width='150'>|
+|[@sandeulju](https://github.com/sandeulju)|[@kigpand](https://github.com/kigpand)|[@HelloHailie](https://github.com/HelloHailie)|[@SeokHoChoi](https://github.com/SeokHoChoi)|
+|주문/결제|메인페이지, 상품 상세|상품 리스트|로그인|
