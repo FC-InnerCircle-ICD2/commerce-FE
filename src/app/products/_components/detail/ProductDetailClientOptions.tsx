@@ -49,7 +49,7 @@ export default function ProdudctDetailClientOptions({ options, handleAddOptionDe
   };
 
   useEffect(() => {
-    if (selectOption.length === options.length) {
+    if (selectOption.length === options.length && options.length !== 0) {
       handleAddOptionDetail(selectOption);
       setSelectOption([]);
     }

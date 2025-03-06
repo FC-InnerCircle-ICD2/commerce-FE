@@ -78,6 +78,17 @@ const ProductDetailClient: React.FC<{ product: IProductDetail }> = ({ product })
     }, 0);
   }
 
+  if (product.options.length === 0) {
+    return (
+      <div className="max-w-custom mx-auto h-[500px] flex px-4 py-8 flex-col gap-4 items-center justify-center">
+        <h2 className="text-lg font-semibold">해당 상품은 현재 준비중입니다.</h2>
+        <button className="bg-slate-400 font-bold text-white w-20 py-2 rounded-lg" onClick={() => router.push('/')}>
+          홈으로
+        </button>
+      </div>
+    );
+  }
+
   return (
     <div className="max-w-custom mx-auto flex px-4 py-8 flex-col">
       <nav className="w-full bg-slate-50 border border-slate-300 mb-5 rounded-xl flex justify-end px-[30px] py-[10px]">

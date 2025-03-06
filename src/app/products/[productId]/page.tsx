@@ -7,7 +7,6 @@ export default async function ProductDetail({ params }: { params: Promise<{ prod
 
   try {
     const product = await getProduct(productId);
-
     return (
       <>
         <Header />
