@@ -88,23 +88,6 @@ const ProductDetailClient: React.FC<{ product: IProductDetail }> = ({ product })
       <div className="max-w-custom flex flex-col lg:flex-row gap-8">
         {/* 상품 이미지 */}
         <ProductDetailClientCarousel product={product} />
-        {/* <div className="w-full lg:w-1/2 flex-shrink-0">
-          <img
-            src={product.images[0].url ?? '/placeholder-image.jpg'}
-            alt={product.name}
-            className="w-full h-auto lg:h-[500px] object-cover"
-          />
-          <img
-            src={product.images[1].url ?? '/placeholder-image.jpg'}
-            alt={product.name}
-            className="w-full h-auto lg:h-[500px] object-cover"
-          />
-          <img
-            src={product.images[2].url ?? '/placeholder-image.jpg'}
-            alt={product.name}
-            className="w-full h-auto lg:h-[500px] object-cover"
-          />
-        </div> */}
 
         <div className="w-full flex flex-col items-center lg:w-1/2 ">
           {/* 상품 정보 */}
@@ -147,10 +130,7 @@ const ProductDetailClient: React.FC<{ product: IProductDetail }> = ({ product })
                   총 수량 {selectOptions.reduce((sum, option) => sum + option.count, 0).toLocaleString()}개
                 </span>
                 <span>|</span>
-                <span className="text-xl font-bold">
-                  {calculateTotalAdditionalPrice().toLocaleString()}원
-                  {/* {(product.price * selectOptions.reduce((sum, option) => sum + option.count, 0)).toLocaleString()}원 */}
-                </span>
+                <span className="text-xl font-bold">{calculateTotalAdditionalPrice().toLocaleString()}원</span>
               </div>
             </div>
           </div>
