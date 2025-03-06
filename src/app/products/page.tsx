@@ -5,7 +5,7 @@ import { CategorySkeleton, FilterSkeleton, ProductListSkeleton } from '@/compone
 import Filter from '@/app/products/_components/filter/Filter';
 import { Breadcrumbs } from '@/components/common';
 import { MobileFilter } from '@/app/products/_components/filter/MobileFilter';
-import { Header } from '@/components/layout';
+import { Footer, Header } from '@/components/layout';
 import CategoryHeader from '../category/_components/CategoryHeader';
 import Pagination from './_components/Pagination';
 import { getProducts, SORT_OPTIONS, IProduct } from '@/api/product';
@@ -134,6 +134,7 @@ export default async function ProductsPage({ searchParams }: { searchParams: Pro
           </div>
         </div>
       </div>
+      <Footer />
     </>
   );
 }
