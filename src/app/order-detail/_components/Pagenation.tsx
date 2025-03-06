@@ -8,7 +8,7 @@ interface PaginationProps {
 
 export default function Pagination({ currentPage, totalPages, onPageChange }: PaginationProps) {
   return (
-    <div className="flex items-center justify-center space-x-2 mt-4">
+    <div className="flex items-center justify-center space-x-2 mt-8">
       <button
         className="px-4 py-2 rounded-lg bg-[#A8C4D9] text-white hover:bg-[#8da6b8] disabled:bg-gray-200 disabled:text-gray-500 disabled:cursor-not-allowed"
         onClick={() => onPageChange(currentPage - 1)}
