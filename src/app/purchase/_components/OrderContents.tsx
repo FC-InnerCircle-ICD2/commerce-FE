@@ -7,9 +7,12 @@ import PaymentMethod from './PaymentMethod';
 import TitleBoxContainer from './TitleBoxContainer';
 import WideSelectBox from './WideSelectBox';
 import PurchaseBanner from './PurchaseBanner';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import type { CardInfo, Delivery, PaymentMethodType } from '@/api/order';
 import { numberFormatting } from '@/utils/numberFormatting';
+import { useUser } from '@/hooks/queries/useUser';
+import PostcodePopup from '@/components/common/PostCode';
+import { Address } from 'react-daum-postcode';
 
 interface DetailOption {
   id: number;
@@ -83,6 +86,7 @@ interface ProductParamsData {
 export default function OrderContents(props: { orderData: ProductParamsData }) {
   const { orderData } = props;
 
+  const { user } = useUser(true);
   const [paymentMethod, setPaymentMethod] = useState<PaymentMethodType>('BANK_TRANSFER');
   const [cardInfo, setCardInfo] = useState<CardInfo>({
     cardNumber: '',
@@ -91,13 +95,17 @@ export default function OrderContents(props: { orderData: ProductParamsData }) {
     cardOwnerName: '',
   });
   const [delivery, setDelivery] = useState<Delivery>({
-    name: '홍길동',
+    name: '',
     phoneNumber: '010-1234-5678',
     zoneCode: '12345',
     address: '경기도 광명시 광명동 주소',
-    detailAddress: '101동 1004호',
+    detailAddress: '',
     deliveryMemo: '',
   });
+
+  const handleAddressSelect = (data: Address) => {
+    setDelivery({ ...delivery, address: `${data.roadAddress} (${data.zonecode})` });
+  };
 
   const representativeImageUrl = orderData?.product.images.find((image) => image.type === 'MAIN');
   const getPrice = (selectedOptions: Array<SelectedOption>) => {
@@ -133,6 +141,11 @@ export default function OrderContents(props: { orderData: ProductParamsData }) {
     };
   });
 
+  useEffect(() => {
+    setDelivery({ ...delivery, name: user?.name ?? '' });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user]);
+
   return (
     <>
       <div className="w-[calc(100%-32px)] lg:w-[calc(100%-12.5rem)] flex flex-col lg:flex-row">
@@ -142,10 +155,21 @@ export default function OrderContents(props: { orderData: ProductParamsData }) {
           <TitleBoxContainer title="배송지" toggle={false}>
             <div className="flex justify-between items-center mb-1">
               <p className="font-medium text-base lg:text-lg">{delivery.name}</p>
-              <button className="border border-neutral-300 px-3.5 py-2.5 bg-white rounded-lg text-sm">변경</button>
+              <PostcodePopup onComplete={handleAddressSelect} />
             </div>
             <span className="font-medium text-sm lg:text-base text-neutral-500 mb-3">{delivery.phoneNumber}</span>
-            <span className="font-medium text-sm mb-3">{`${delivery.address} ${delivery.detailAddress}`}</span>
+            <span className="font-medium text-sm mb-3 flex items-center gap-3">
+              <div>{`${delivery.address}`}</div>
+              <div>
+                <input
+                  className="px-2 py-1 bg-white border border-gray-300 rounded-sm"
+                  type="text"
+                  value={delivery.detailAddress}
+                  placeholder="상세 주소를 입력해주세요"
+                  onChange={(e) => setDelivery({ ...delivery, detailAddress: e.target.value })}
+                />
+              </div>
+            </span>
             <WideSelectBox
               placeholder="배송메모를 선택해주세요"
               delivery={delivery}
