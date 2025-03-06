@@ -10,6 +10,7 @@ import PurchaseBanner from './PurchaseBanner';
 import { useState } from 'react';
 import type { CardInfo, Delivery, PaymentMethodType } from '@/api/order';
 import { numberFormatting } from '@/utils/numberFormatting';
+import { useUser } from '@/hooks/queries/useUser';
 
 interface DetailOption {
   id: number;
@@ -83,6 +84,7 @@ interface ProductParamsData {
 export default function OrderContents(props: { orderData: ProductParamsData }) {
   const { orderData } = props;
 
+  const { user } = useUser();
   const [paymentMethod, setPaymentMethod] = useState<PaymentMethodType>('BANK_TRANSFER');
   const [cardInfo, setCardInfo] = useState<CardInfo>({
     cardNumber: '',
@@ -91,7 +93,6 @@ export default function OrderContents(props: { orderData: ProductParamsData }) {
     cardOwnerName: '',
   });
   const [delivery, setDelivery] = useState<Delivery>({
-    name: '홍길동',
     phoneNumber: '010-1234-5678',
     zoneCode: '12345',
     address: '경기도 광명시 광명동 주소',
@@ -141,7 +142,7 @@ export default function OrderContents(props: { orderData: ProductParamsData }) {
           {/* 배송지 */}
           <TitleBoxContainer title="배송지" toggle={false}>
             <div className="flex justify-between items-center mb-1">
-              <p className="font-medium text-base lg:text-lg">{delivery.name}</p>
+              <p className="font-medium text-base lg:text-lg">{user?.name}</p>
               <button className="border border-neutral-300 px-3.5 py-2.5 bg-white rounded-lg text-sm">변경</button>
             </div>
             <span className="font-medium text-sm lg:text-base text-neutral-500 mb-3">{delivery.phoneNumber}</span>

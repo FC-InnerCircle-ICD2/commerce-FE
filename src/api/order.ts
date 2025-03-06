@@ -23,7 +23,6 @@ export interface CardInfo {
 }
 
 export interface Delivery {
-  name: string;
   phoneNumber: string;
   zoneCode: string;
   address: string;
