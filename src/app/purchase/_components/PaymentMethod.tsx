@@ -109,7 +109,7 @@ export default function PaymentMethod(props: Props) {
             cards={[
               {
                 cardNumber: '1234-5678-1234-5678',
-                expirationDate: '12/24',
+                expirationDate: '12/25',
                 cvc: '123',
                 cardOwnerName: '홍길동',
                 bankName: '신한',
@@ -117,7 +117,7 @@ export default function PaymentMethod(props: Props) {
               },
               {
                 cardNumber: '1234-2345-1234-5678',
-                expirationDate: '12/24',
+                expirationDate: '12/25',
                 cvc: '123',
                 cardOwnerName: '홍길동',
                 bankName: '국민',
@@ -125,7 +125,7 @@ export default function PaymentMethod(props: Props) {
               },
               {
                 cardNumber: '1234-5555-1234-5555',
-                expirationDate: '12/24',
+                expirationDate: '12/25',
                 cvc: '123',
                 cardOwnerName: '홍길동',
                 bankName: '하나',
@@ -133,7 +133,7 @@ export default function PaymentMethod(props: Props) {
               },
               {
                 cardNumber: '1234-9999-1234-9999',
-                expirationDate: '12/24',
+                expirationDate: '12/25',
                 cvc: '123',
                 cardOwnerName: '홍길동',
                 bankName: '농협',

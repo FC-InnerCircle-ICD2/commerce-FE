@@ -12,54 +12,39 @@ type Props = {
   handleCloseSearchView: () => void;
 };
 
-const SearchInput = forwardRef<HTMLFormElement, Props>(({ category, classname, onSearch, handleCloseSearchView }, ref) => {
+const SearchInput = forwardRef<HTMLFormElement, Props>(({ classname, onSearch, handleCloseSearchView }, ref) => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const [search, setSearch] = useLocalStorage<string[]>('search', []);
   const [inputValue, setInputValue] = useState<string>('');
 
   useEffect(() => {
-    const nameParam = searchParams?.get('name');
-    if (nameParam) {
-      setInputValue(nameParam);
-    } else {
-      setInputValue(''); // Clear input when name parameter is removed
+    const keywordParam = searchParams?.get('keyword');
+    if (keywordParam) {
+      setInputValue(keywordParam);
     }
-  }, [searchParams]); // Update when URL parameters change
+  }, [searchParams]);
 
-  useEffect(() => {
-    setInputValue('');
-  }, [category?.value]);
+  const saveSearchTerm = (term: string) => {
+    const updatedSearch = [term, ...search.filter((item) => item !== term)];
+    setSearch(updatedSearch.slice(0, 5));
+  };
 
   const handleSearch = () => {
     if (inputValue.trim() !== '') {
       const params = new URLSearchParams();
-      // if (category?.value) {
-      //   params.append('categoryId', category.value);
-      // }
       params.append('keyword', inputValue.trim());
 
       router.push(`/products?${params.toString()}`);
       handleCloseSearchView();
-      setSearch([inputValue, ...search]);
+      saveSearchTerm(inputValue.trim());
       onSearch?.();
     }
   };
 
   const handleSubmit = (event: React.FormEvent) => {
-    /**
-     * IME는 영어가 아닌 한글, 일본어, 중국어와 같은 언어를 다양한 브라우저에서 지원하도록 언어를 변환시켜주기 위한 OS 단계의 어플리케이션을 말한다.
-     * 그러나 IME 과정에서 keydown 이벤트가 발생하면, OS와 브라우저에서 해당 이벤트를 모두 처리하기 때문에 keydown 이벤트가 중복으로 발생하게 되는 것이다.
-     * => keydown에 한글 입력시 2번 호출되는 이슈 방지하기 위한 isComposing 추가
-     */
-    event.preventDefault(); // 기본 제출 동작 방지
-
-    if (inputValue.trim() !== '') {
-      if (search.length >= 5) {
-        search.pop();
-      }
-      handleSearch();
-    }
+    event.preventDefault();
+    handleSearch();
   };
 
   return (

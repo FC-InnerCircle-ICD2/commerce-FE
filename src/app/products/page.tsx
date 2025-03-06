@@ -5,7 +5,7 @@ import { CategorySkeleton, FilterSkeleton, ProductListSkeleton } from '@/compone
 import Filter from '@/app/products/_components/filter/Filter';
 import { Breadcrumbs } from '@/components/common';
 import { MobileFilter } from '@/app/products/_components/filter/MobileFilter';
-import { Header } from '@/components/layout';
+import { Footer, Header } from '@/components/layout';
 import CategoryHeader from '../category/_components/CategoryHeader';
 import Pagination from './_components/Pagination';
 import { getProducts, SORT_OPTIONS, IProduct } from '@/api/product';
@@ -118,12 +118,12 @@ export default async function ProductsPage({ searchParams }: { searchParams: Pro
           </div>
 
           <div className="lg:w-3/4">
-            <div className="lg:mb-8 mb-1">
+            <div className="lg:mb-5 mb-1">
               <Suspense>
                 <Breadcrumbs />
               </Suspense>
             </div>
-            <div className="lg:hidden block mb-8 px-3 py-2 bg-slate-50 border-slate-300 border">
+            <div className="lg:hidden block mb-5 px-3 py-2 bg-slate-50 border-slate-300 border">
               <Suspense>
                 <FilterSection searchParams={searchParams} isMobile={true} />
               </Suspense>
@@ -134,6 +134,7 @@ export default async function ProductsPage({ searchParams }: { searchParams: Pro
           </div>
         </div>
       </div>
+      <Footer />
     </>
   );
 }

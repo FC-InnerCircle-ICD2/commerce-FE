@@ -9,7 +9,7 @@ export default async function ProductList() {
 
   return (
     <div className="max-w-custom mx-auto w-full flex flex-col gap-10 px-3 py-5 tablet:py-10">
-      <div className="text-xl font-bold tablet:text-2xl tablet:text-center">🔥 당신의 일상을 빛낼 핫한 신상품</div>
+      <div className="text-lg font-bold tablet:text-xl tablet:text-center">🔥 당신의 일상을 빛낼 핫한 신상품</div>
       <div className="w-full grid grid-cols-2 grid-rows-2 tablet:grid-cols-4 gap-4">
         {products.content?.slice(0, 8).map((product) => {
           // const imgUrl = product.images?.[0]?.url || '/images/default-product.png';

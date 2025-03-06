@@ -82,7 +82,6 @@ interface ProductParamsData {
 
 export default function OrderContents(props: { orderData: ProductParamsData }) {
   const { orderData } = props;
-  console.log('orderData: ', orderData);
 
   const [paymentMethod, setPaymentMethod] = useState<PaymentMethodType>('BANK_TRANSFER');
   const [cardInfo, setCardInfo] = useState<CardInfo>({
@@ -94,7 +93,7 @@ export default function OrderContents(props: { orderData: ProductParamsData }) {
   const [delivery, setDelivery] = useState<Delivery>({
     name: '홍길동',
     phoneNumber: '010-1234-5678',
-    zonecode: '12345',
+    zoneCode: '12345',
     address: '경기도 광명시 광명동 주소',
     detailAddress: '101동 1004호',
     deliveryMemo: '',
@@ -115,14 +114,6 @@ export default function OrderContents(props: { orderData: ProductParamsData }) {
     return count * orderData.product.price + addPrice;
   };
 
-  const getCount = (selectedOptions: Array<SelectedOption>) => {
-    let count = 0;
-    selectedOptions.forEach((option) => {
-      count += option.count;
-    });
-    return count;
-  };
-
   const orderOptionItems = orderData?.selectedOptions?.map((option) => {
     const optionDetails = option.options.map((detail) => {
       return {
@@ -137,8 +128,8 @@ export default function OrderContents(props: { orderData: ProductParamsData }) {
       productOptionDetails: optionDetails,
       categoryId: orderData.product.category.id,
       productName: orderData.product.name,
-      price: getPrice(orderData.selectedOptions),
-      quantity: getCount(orderData.selectedOptions),
+      price: orderData.product.price,
+      quantity: option.count,
     };
   });
 

@@ -56,13 +56,21 @@ export default function OrderItem(props: Props) {
     router.push(`/review?orderId=${orderId}&productId=${orderProductList[0].productId}&reviewData=${queryString}`);
   };
 
+  const handleRepurchase = (product: OrderProduct) => {
+    router.push(`/products/${product.productId}`);
+  };
+
   return (
     <div className="border border-slate-300 bg-slate-50 w-full h-auto p-6 lg:p-8 flex flex-col mt-2">
       <p className="font-semibold">{orderInfo.orderStatus}</p>
       {orderInfo.orderProductList.map((product, index) => (
         <React.Fragment key={product.productId}>
           <div className="flex items-center my-4">
-            <div className="bg-neutral-300 w-[80px] h-[80px] md:w-[100px] md:h-[100px] rounded-[10px]"></div>
+            <div className="bg-neutral-300 w-[80px] h-[80px] md:w-[100px] md:h-[100px] rounded-[10px]">
+              {product.productImage && (
+                <img src={product.productImage} alt="product" className="w-full h-full object-cover rounded-[10px]" />
+              )}
+            </div>
             <div className="flex flex-col ml-4 gap-0.5 max-w-[calc(100%-100px)]">
               <p className="text-neutral-500 text-sm">{`${getFormattedDate(orderInfo.orderAt)} 주문`}</p>
               <p className="font-semibold text-sm md:text-md truncate">{product.productName}</p>
@@ -84,7 +92,10 @@ export default function OrderItem(props: Props) {
             >
               리뷰쓰기
             </button>
-            <button className="border border-neutral-300 px-3.5 py-2.5 bg-white rounded-lg text-sm w-full">
+            <button
+              onClick={() => handleRepurchase(product)}
+              className="border border-neutral-300 px-3.5 py-2.5 bg-white rounded-lg text-sm w-full"
+            >
               재구매
             </button>
           </div>

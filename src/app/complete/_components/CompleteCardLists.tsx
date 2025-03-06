@@ -79,8 +79,8 @@ export default function CompleteCardLists() {
   if (!products) return null;
 
   return (
-    <div className="mt-10 max-w-[875px] relative">
-      <h3 className="text-left ml-10 max-sm:ml-0 text-sm md:text-base font-medium mb-4">이런 상품 어떠신가요?</h3>
+    <div className="mt-14 max-w-[875px] relative">
+      <h3 className="text-left ml-10 max-sm:ml-0 text-sm md:text-base font-semibold mb-4">🛍 이런 상품 어떠신가요?</h3>
       {deviceType === 'mobile' ? (
         <div className="grid grid-cols-2 gap-4">
           {products.content.slice(0, 6).map((product) => (
