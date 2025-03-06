@@ -123,8 +123,6 @@ export const PriceFilter: React.FC<PriceFilterProps> = ({
         <button
           onClick={() => {
             onSearch();
-            setMinInput('');
-            setMaxInput('');
           }}
           className="bg-slate-500 rounded-lg w-9 h-9 flex items-center justify-center cursor-pointer"
         >
