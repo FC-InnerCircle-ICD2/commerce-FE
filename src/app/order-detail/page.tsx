@@ -4,7 +4,6 @@ import { Footer, Header } from '@/components/layout';
 import { IOrderProductOptions } from './_components/OrderItem';
 import { lazy, Suspense, useState } from 'react';
 import { useMyOrderList } from '@/hooks/queries/useMyOrderList';
-import Pagination from './_components/Pagenation';
 import OrderListSkeleton from '@/components/skeletons/OrderListSkeleton';
 const OrderItemList = lazy(() => import('./_components/OrderItemList'));
 
@@ -29,7 +28,8 @@ export interface OrderContent {
 export default function OrderDetail() {
   const [page, setPage] = useState(0);
   const [sort, setSort] = useState<string[]>(['orderAt']);
-  const { data: orders, isLoading } = useMyOrderList({ page, size: 10, sort: sort });
+  // TODO: 기존 size = 10이었는데 현재 10으로 설정시 오류가 발생합니다.
+  const { data: orders } = useMyOrderList({ page, size: 1, sort: sort });
 
   const handleFilterChange = (newFilter: 'orderAt' | 'desc') => {
     setSort((prevSort) => (prevSort.includes(newFilter) ? prevSort : [...prevSort, newFilter]));
@@ -61,13 +61,13 @@ export default function OrderDetail() {
         </Suspense>
       </div>
 
-      {!isLoading && (
+      {/* {!isLoading && (
         <Pagination
           currentPage={orders?.page?.number || 0}
           totalPages={orders?.page?.totalPages || 1}
           onPageChange={setPage}
         />
-      )}
+      )} */}
 
       <div className="mt-12 lg:mt-20 w-full flex flex-col">
         <Footer />
