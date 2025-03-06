@@ -11,7 +11,7 @@ export default function CartListOptions({ product }: Props) {
   const { changeCartQuantityMutate } = useCartChangeQuantityMutate();
 
   function handleMinusButton() {
-    if (product.options[0].optionDetail.quantity === 0) return;
+    if (product.options[0].optionDetail.quantity === 1) return;
     changeCartQuantityMutate({
       itemId: product.itemId,
       optionDetailQuantity: product.options[0].optionDetail.quantity - 1,
@@ -42,9 +42,13 @@ export default function CartListOptions({ product }: Props) {
       })}
       <h1 className="text-sm font-bold px-[4px] py-[10px]">개수 추가</h1>
       <div className="flex gap-2 items-center">
-        <span onClick={() => handleMinusButton()}>-</span>
+        <span className="cursor-pointer" onClick={() => handleMinusButton()}>
+          -
+        </span>
         <span>{product.options[0].optionDetail.quantity}</span>
-        <span onClick={() => handlePlusButton()}>+</span>
+        <span className="cursor-pointer" onClick={() => handlePlusButton()}>
+          +
+        </span>
       </div>
     </div>
   );
