@@ -32,11 +32,12 @@ export default async function Complete({ searchParams }: { searchParams: Promise
     <>
       <Header />
       <div className="flex items-center justify-center bg-white mt-10 mb-32">
-        <div className="w-full p-6 md:p-8 bg-slate-50 border border-1 border-slate-300 flex flex-col items-center max-w-[1240px] sm:p-0 rounded-2xl max-sm:rounded-none">
+        <div className="w-full p-6 md:p-10 bg-slate-50 border border-1 border-slate-300 flex flex-col items-center max-w-[1240px] rounded-2xl max-sm:rounded-none">
           <div className="w-full max-w-[704px] flex flex-col items-center">
-            <h2 className="text-center text-xl md:text-2xl font-semibold mb-6">
+            <h2 className="text-center text-xl md:text-2xl font-semibold pb-6 md:pb-10">
               주문완료 <span className="font-normal">되었습니다</span>
             </h2>
+
             <div className="border-t border-gray-200 max-sm:w-[312px] w-[704px]" />
             <div className="py-6">
               <div className="flex items-center gap-3 pb-6">
