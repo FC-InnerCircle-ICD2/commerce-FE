@@ -1,6 +1,7 @@
 import HeaderLogo from '@/assets/purchase/headerLogo.png';
 import ChevronRight from '@/assets/purchase/chevronRight.png';
 import OrderContents from './_components/OrderContents';
+import Link from 'next/link';
 
 export default async function Purchase({ searchParams }: { searchParams: Promise<{ data?: string }> }) {
   const { data } = await searchParams;
@@ -20,7 +21,9 @@ export default async function Purchase({ searchParams }: { searchParams: Promise
       {/* Header */}
       <div className="w-full h-[70px] shadow-[0px_15px_10px_rgba(233,233,233,0.25)] flex justify-between items-center">
         <div className="flex flex-1 items-center ml-[16px] lg:ml-[100px]">
-          <img src={HeaderLogo.src} alt="Header Logo" />
+          <Link href="/">
+            <img src={HeaderLogo.src} alt="Header Logo" />
+          </Link>
         </div>
         <div className="flex flex-1 justify-center items-center text-xl font-medium">주문/결제</div>
         <div className="flex-1 mr-[16px] lg:mr-[100px]"></div>
