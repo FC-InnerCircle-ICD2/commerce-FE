@@ -58,13 +58,13 @@ export default function ProdudctDetailClientOptions({ options, handleAddOptionDe
   return (
     <div>
       {options.map((option) => (
-        <div key={option.id} className="mb-4">
-          <h3 className="text-md font-semibold">{option.name}</h3>
+        <div key={option.id} className="mb-6">
+          <h3 className="text-md font-semibold mb-3">{option.name}</h3>
           <div className="flex flex-wrap items-start gap-2">
             {option.optionDetails.map((detail) => (
               <button
                 key={detail.value}
-                className={`p-[14px] min-w-[43px] min-h-[27px] border rounded-lg text-slate-500 font-medium border-gray-400 flex flex-col items-center text-sm ${selectOption.find((item) => item.value === detail.value) && 'bg-slate-500 text-white'} hover:bg-slate-500 hover:text-white`}
+                className={`p-[14px] min-w-[43px] min-h-[27px] border rounded-lg text-slate-500 font-medium border-gray-400 flex flex-col items-center text-sm bg-white ${selectOption.find((item) => item.value === detail.value) && '!bg-slate-500 text-white'} hover:bg-slate-400 hover:text-white`}
                 onClick={() => handleAddDetail(option, detail)}
               >
                 {detail.value}
