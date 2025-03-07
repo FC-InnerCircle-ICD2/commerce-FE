@@ -2,12 +2,14 @@
 
 import { useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
+import { useAuthStore } from '@/store/authStore';
 
 type Props = {
   handleClose: () => void;
 };
 
 export default function MyShoppingModal({ handleClose }: Props) {
+  const { getAccessToken } = useAuthStore();
   const router = useRouter();
   const modalRef = useRef<HTMLDivElement>(null);
 
@@ -19,7 +21,8 @@ export default function MyShoppingModal({ handleClose }: Props) {
   };
 
   const handleOrderDetailClick = () => {
-    // console.log('주문/배송내역 클릭');
+    const token = getAccessToken();
+    if (!token) return alert('로그인 먼저 진행해주세요!');
     router.push('/order-detail');
   };
 

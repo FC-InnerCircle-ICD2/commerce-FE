@@ -5,6 +5,7 @@ import { IOrderProductOptions } from './_components/OrderItem';
 import { lazy, Suspense, useState } from 'react';
 import { useMyOrderList } from '@/hooks/queries/useMyOrderList';
 import OrderListSkeleton from '@/components/skeletons/OrderListSkeleton';
+import { useRequireAuth } from '@/hooks/common/useRequireAuth';
 const OrderItemList = lazy(() => import('./_components/OrderItemList'));
 
 export interface OrderProduct {
@@ -26,6 +27,7 @@ export interface OrderContent {
 }
 
 export default function OrderDetail() {
+  useRequireAuth();
   const [page, setPage] = useState(0);
   const [sort, setSort] = useState<string[]>(['orderAt']);
   // TODO: 기존 size = 10이었는데 현재 10으로 설정시 오류가 발생합니다.

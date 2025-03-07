@@ -7,9 +7,10 @@ import { ICartItem } from '@/api/cart';
 import { useCart } from '@/hooks/queries/useCart';
 import { useCartDeleteItemMutate } from '@/hooks/mutate/useCartMutate';
 import CartSkeleton from '@/components/skeletons/CartSkeleton';
+import { useRequireAuth } from '@/hooks/common/useRequireAuth';
 
 export default function CartContainer() {
-  // useRequireAuth();
+  useRequireAuth();
   const { carts, cartsLoading } = useCart();
   const [checkList, setCheckList] = useState<ICartItem[]>([]);
   const { deleteCartItemMutate } = useCartDeleteItemMutate();
