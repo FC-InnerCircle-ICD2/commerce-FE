@@ -24,11 +24,8 @@ https://www.emmotional-cart.click/
 - **반응형**: 다양한 디바이스에서 최적화된 사용자 경험을 제공하는 반응형 디자인을 적용했습니다.
 
 ## 🐾 기술 스택
-- 프레임워크 및 라이브러리: Next.js
-- 프로그래밍 언어: TypeScript
-- 스타일링: Tailwind CSS, Shadcn
-- 상태 관리 및 데이터 처리: Tanstack Query
-- 폼 관리 및 유효성 검사: React Hook Form, Zod
+
+[![stackticon](https://firebasestorage.googleapis.com/v0/b/stackticon-81399.appspot.com/o/images%2F1741356867416?alt=media&token=2c718397-a870-4ea7-8661-9ef7d452d8a6)](https://github.com/msdio/stackticon)
 
 ## 🐾 설치 및 실행 방법
 ```bash
