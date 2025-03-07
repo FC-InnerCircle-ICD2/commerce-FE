@@ -26,9 +26,9 @@ const Navbar = () => {
 
   return (
     <>
-      <nav className="hidden mobile:block top-0 shadow-sm">
+      <nav className="top-0 shadow-sm">
         <div className="max-w-custom mx-auto px-4">
-          <div className="flex items-center justify-between h-12">
+          <div className="flex items-center justify-between h-10">
             <div className="flex items-center space-x-4">
               <span className="flex items-center gap-2">
                 <span className="text-xs text-neutral-400">INNER CIRCLE</span>

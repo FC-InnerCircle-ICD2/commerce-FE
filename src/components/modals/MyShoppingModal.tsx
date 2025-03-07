@@ -19,7 +19,7 @@ export default function MyShoppingModal({ handleClose }: Props) {
   };
 
   const handleOrderDetailClick = () => {
-    console.log('주문/배송내역 클릭');
+    // console.log('주문/배송내역 클릭');
     router.push('/order-detail');
   };
 
