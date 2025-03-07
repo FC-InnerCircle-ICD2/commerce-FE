@@ -12,16 +12,16 @@ export function TokenHandler({ accessToken }: TokenHandlerProps) {
 
   useEffect(() => {
     const isProduction = process.env.NODE_ENV === 'production';
-    
+
     if (isProduction) {
       if (accessToken) {
-        console.log('디버깅용: 프로덕션', accessToken);
+        // console.log('디버깅용: 프로덕션', accessToken);
         setAccessToken(accessToken);
       }
     } else {
       const localToken = process.env.NEXT_PUBLIC_TEMP_TOKEN;
       if (localToken) {
-        console.log('디버깅용: 로컬');
+        // console.log('디버깅용: 로컬');
         setAccessToken(localToken);
       }
     }

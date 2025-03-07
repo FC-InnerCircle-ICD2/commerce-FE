@@ -13,6 +13,14 @@ export default function ProductDetailClientDescription({ product }: Props) {
       </div>
       <h2 className="text-xl font-semibold text-gray-800">제조: {product.provider.name}</h2>
       <p className="text-sm text-gray-500 mt-1">{product.provider.description}</p>
+      <div className="flex flex-col mt-4">
+        {product.images
+          .filter((item) => item.type !== 'MAIN')
+          .sort((a, b) => a.fileOrder - b.fileOrder)
+          .map((img) => {
+            return <img key={img.id + img.fileOrder} src={img.url} alt={String(img.id)} className="w-full h-auto" />;
+          })}
+      </div>
     </div>
   );
 }

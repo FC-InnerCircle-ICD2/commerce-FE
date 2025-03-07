@@ -98,7 +98,10 @@ const ProductDetailClient: React.FC<{ product: IProductDetail }> = ({ product })
       </nav>
       <div className="max-w-custom flex flex-col lg:flex-row gap-8">
         {/* 상품 이미지 */}
-        <ProductDetailClientCarousel product={product} />
+        <ProductDetailClientCarousel
+          url={product.images.find((item) => item.type === 'MAIN')?.url ?? ''}
+          name={product.name}
+        />
 
         <div className="w-full flex flex-col items-center lg:w-1/2 ">
           {/* 상품 정보 */}

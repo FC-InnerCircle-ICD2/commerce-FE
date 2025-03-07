@@ -17,7 +17,7 @@ export default function PaymentMethod(props: Props) {
   };
 
   const handlePayment = (event: React.ChangeEvent<HTMLInputElement>) => {
-    console.log('event.target.value: ', event.target.value);
+    // console.log('event.target.value: ', event.target.value);
 
     if (isPaymentMethodType(event.target.value)) {
       setPaymentMethod(event.target.value);
