@@ -80,3 +80,8 @@ src/
 |-----|------|------|------|
 |<img src='https://github.com/sandeulju.png' width='150'>|<img src='https://github.com/kigpand.png' width='150'>|<img src='https://github.com/hellohailie.png' width='150'>|<img src='https://github.com/SeokHoChoi.png' width='150'>|
 |[@sandeulju](https://github.com/sandeulju)|[@kigpand](https://github.com/kigpand)|[@HelloHailie](https://github.com/HelloHailie)|[@SeokHoChoi](https://github.com/SeokHoChoi)|
+
+## 🔛 백오피스 (관리자용) 레포지토리 사이트
+[백오피스 GitHub 레포지토리 주소](https://github.com/FC-InnerCircle-ICD2/commerce-FE-office)
+## 🔛 백오피스 (관리자용) 배포 사이트
+[https://fc-innercircle-icd2.github.io/commerce-FE-office/product](https://fc-innercircle-icd2.github.io/commerce-FE-office/product)
