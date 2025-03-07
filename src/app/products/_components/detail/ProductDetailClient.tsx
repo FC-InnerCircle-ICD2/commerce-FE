@@ -96,7 +96,7 @@ const ProductDetailClient: React.FC<{ product: IProductDetail }> = ({ product })
           {product.category.name}
         </div>
       </nav>
-      <div className="max-w-custom flex flex-col lg:flex-row gap-8">
+      <div className="max-w-custom flex flex-col lg:flex-row gap-5">
         {/* 상품 이미지 */}
         <ProductDetailClientCarousel
           url={product.images.find((item) => item.type === 'MAIN')?.url ?? ''}
@@ -105,39 +105,39 @@ const ProductDetailClient: React.FC<{ product: IProductDetail }> = ({ product })
 
         <div className="w-full flex flex-col items-center lg:w-1/2 ">
           {/* 상품 정보 */}
-          <div className="w-full flex-grow bg-[#F8FAFC] border border-[#CBD5E1] rounded-lg py-[40px] px-[30px]">
-            <h1 className="text-2xl font-bold">{product.name}</h1>
-            <div className="text-gray-600 text-sm flex items-center gap-2 mt-2">
-              <span className="text-yellow-500">★ {product.reviewStatistic.averageRating ?? 0}</span>
-              <span>|</span>
-              <span className="cursor-pointer" onClick={() => setSelectedTab('리뷰')}>
-                <span>{product.reviewStatistic.reviewCount}개의 리뷰</span>
-                <span>{`>`}</span>
-              </span>
+          <div className="w-full flex flex-col justify-between flex-grow bg-[#F8FAFC] border border-[#CBD5E1] rounded-lg p-[30px]">
+            <div>
+              <h1 className="text-xl font-bold">{product.name}</h1>
+              <div className="text-gray-600 text-sm flex items-center gap-2 mt-2">
+                <span className="text-amber-500">★ {product.reviewStatistic.averageRating ?? 0}</span>
+                <span>|</span>
+                <span className="cursor-pointer" onClick={() => setSelectedTab('리뷰')}>
+                  <span>{product.reviewStatistic.reviewCount}개의 리뷰</span>
+                  <span>{` >`}</span>
+                </span>
+              </div>
+              <p className="text-xl font-bold mt-4">{product.price.toLocaleString()}원</p>
+              <div className="border-t my-[30px] border-[#646464]" />
+              <ProdudctDetailClientOptions options={product.options} handleAddOptionDetail={handleAddOption} />
+              <div className="border-t my-[30px] border-[#646464]" />
+              {/* 선택된 옵션 */}
+              <div className="flex flex-col gap-4">
+                {selectOptions.map((options, i) => {
+                  return (
+                    <ProductDetailSelectOptions
+                      key={i}
+                      product={product}
+                      seletedOptionDetail={options}
+                      handleOptionCount={handleOptionCount}
+                      handleRemoveOption={handleRemoveOption}
+                    />
+                  );
+                })}
+              </div>
             </div>
-            <p className="text-2xl font-bold mt-4">{product.price.toLocaleString()}원</p>
-            <div className="border-t my-[30px] border-[#646464]" />
-            <ProdudctDetailClientOptions options={product.options} handleAddOptionDetail={handleAddOption} />
-            <div className="border-t my-[30px] border-[#646464]" />
-            {/* 선택된 옵션 */}
-            <div className="flex flex-col gap-4">
-              {selectOptions.map((options, i) => {
-                return (
-                  <ProductDetailSelectOptions
-                    key={i}
-                    product={product}
-                    seletedOptionDetail={options}
-                    handleOptionCount={handleOptionCount}
-                    handleRemoveOption={handleRemoveOption}
-                  />
-                );
-              })}
-            </div>
-
-            <div className="border-t my-[30px] border-[#646464]" />
 
             {/* 총 가격 */}
-            <div className="flex justify-between">
+            <div className="flex justify-between mt-6">
               <span className="text-sm">총 상품 금액</span>
               <div className="flex gap-[15px] items-center">
                 <span className="text-xs text-neutral-600">
@@ -160,10 +160,10 @@ const ProductDetailClient: React.FC<{ product: IProductDetail }> = ({ product })
         </div>
       </div>
 
-      <div className="border-t border-[#D9D9D9] mt-[40px] mb-[50px]" />
+      <div className="border-t border-[#D9D9D9] mt-[40px] mb-[40px]" />
 
       {/* 상세정보, 리뷰, QnA */}
-      <div className="flex justify-center text-lg font-semibold w-full border border-[#D9D9D9] rounded-lg overflow-hidden">
+      <div className="flex justify-center text-md font-semibold w-full border border-[#D9D9D9] rounded-lg overflow-hidden">
         {['상세정보', '리뷰'].map((tab) => (
           <button
             key={tab}

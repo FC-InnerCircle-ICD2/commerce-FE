@@ -29,6 +29,11 @@ export default function PurchaseBanner(props: Props) {
 
   async function handleOrderButton() {
     try {
+      if (!postData.cardNumber) {
+        alert('결제할 카드를 선택해 주세요!');
+        return false;
+      }
+
       const result = await postOrder(postData);
       if (result.status === 200) {
         const encodedData = encodeURIComponent(JSON.stringify(result.data));

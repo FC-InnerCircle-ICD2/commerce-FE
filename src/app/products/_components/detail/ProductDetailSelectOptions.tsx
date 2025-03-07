@@ -67,10 +67,10 @@ export default function ProductDetailSelectOptions({
         <div className="flex gap-4 items-center">
           {isLoggedIn && (
             <button onClick={() => handleAddCartsButton()}>
-              <ShoppingCartIcon className="w-6 h-6 text-[#000000]" />
+              <ShoppingCartIcon className="w-5 h-5 text-[#000000]" />
             </button>
           )}
-          <button className="text-gray-500" onClick={() => handleRemoveOption(seletedOptionDetail)}>
+          <button className="text-gray-500 w-5 h-5" onClick={() => handleRemoveOption(seletedOptionDetail)}>
             ✕
           </button>
         </div>

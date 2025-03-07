@@ -6,6 +6,7 @@ import CarouselRight from '@/assets/purchase/carouselRight.png';
 import AccountBlock from './AccountBlock';
 import CardBlock from './CardBlock';
 import type { CardInfo } from '@/api/order';
+import { useEffect, useState } from 'react';
 
 interface Account {
   cardNumber: string;
@@ -34,47 +35,57 @@ interface Props {
 
 export default function PurchaseCarousel(props: Props) {
   const { accounts = [], cards = [], carouselType, setCardInfo } = props;
+  const [selectedCard, setSelectedCard] = useState<CardInfo | null>(null);
+  const [key, setKey] = useState(0);
+
+  useEffect(() => {
+    setKey(key + 1);
+  }, [selectedCard]);
 
   return (
-    <Carousel
-      width={200}
-      viewCount={3}
-      LeftArrow={
-        <button className="w-8 h-8 bg-white rounded-full border border-neutral-300 flex items-center justify-center">
-          <img className="w-5 h-5" src={CarouselLeft.src} alt="Carousel left arrow" />
-        </button>
-      }
-      RightArrow={
-        <button className="w-8 h-8 bg-white rounded-full border border-neutral-300 flex items-center justify-center">
-          <img className="w-5 h-5" src={CarouselRight.src} alt="Carousel left arrow" />
-        </button>
-      }
-    >
-      {carouselType === 'account'
-        ? accounts.map((account, index) => (
-            <AccountBlock
-              key={index}
-              cardNumber={account.cardNumber}
-              expirationDate={account.expirationDate}
-              cvc={account.cvc}
-              cardOwnerName={account.cardOwnerName}
-              accountImg={account.accountImg}
-              bankName={account.bankName}
-              setCardInfo={setCardInfo}
-            />
-          ))
-        : cards.map((card, index) => (
-            <CardBlock
-              key={index}
-              cardNumber={card.cardNumber}
-              expirationDate={card.expirationDate}
-              cvc={card.cvc}
-              cardOwnerName={card.cardOwnerName}
-              cardImg={card.cardImg}
-              bankName={card.bankName}
-              setCardInfo={setCardInfo}
-            />
-          ))}
-    </Carousel>
+    <div key={key}>
+      <Carousel
+        width={200}
+        viewCount={3}
+        LeftArrow={
+          <button className="w-8 h-8 bg-white rounded-full border border-neutral-300 flex items-center justify-center">
+            <img className="w-5 h-5" src={CarouselLeft.src} alt="Carousel left arrow" />
+          </button>
+        }
+        RightArrow={
+          <button className="w-8 h-8 bg-white rounded-full border border-neutral-300 flex items-center justify-center">
+            <img className="w-5 h-5" src={CarouselRight.src} alt="Carousel left arrow" />
+          </button>
+        }
+      >
+        {carouselType === 'account'
+          ? accounts.map((account, index) => (
+              <AccountBlock
+                key={index}
+                cardNumber={account.cardNumber}
+                expirationDate={account.expirationDate}
+                cvc={account.cvc}
+                cardOwnerName={account.cardOwnerName}
+                accountImg={account.accountImg}
+                bankName={account.bankName}
+                setCardInfo={setCardInfo}
+              />
+            ))
+          : cards.map((card, index) => (
+              <CardBlock
+                key={index}
+                cardNumber={card.cardNumber}
+                expirationDate={card.expirationDate}
+                cvc={card.cvc}
+                cardOwnerName={card.cardOwnerName}
+                cardImg={card.cardImg}
+                bankName={card.bankName}
+                setCardInfo={setCardInfo}
+                setSelectedCard={setSelectedCard}
+                selectedCard={selectedCard}
+              />
+            ))}
+      </Carousel>
+    </div>
   );
 }

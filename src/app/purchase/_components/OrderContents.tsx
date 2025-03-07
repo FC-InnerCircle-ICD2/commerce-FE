@@ -87,7 +87,7 @@ export default function OrderContents(props: { orderData: ProductParamsData }) {
   const { orderData } = props;
 
   const { user } = useUser(true);
-  const [paymentMethod, setPaymentMethod] = useState<PaymentMethodType>('BANK_TRANSFER');
+  const [paymentMethod, setPaymentMethod] = useState<PaymentMethodType>('CARD');
   const [cardInfo, setCardInfo] = useState<CardInfo>({
     cardNumber: '',
     expirationDate: '',

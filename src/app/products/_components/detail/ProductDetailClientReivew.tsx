@@ -48,7 +48,7 @@ export default function ProductDetailClientReview({ productId }: Props) {
   return (
     <ul>
       {(!reviews || reviews.content.length === 0) && (
-        <div className="w-full h-[160px] flex items-center justify-center text-xl font-bold">
+        <div className="w-full h-[160px] flex items-center justify-center text-lg font-semibold text-slate-700">
           등록된 리뷰가 없습니다
         </div>
       )}

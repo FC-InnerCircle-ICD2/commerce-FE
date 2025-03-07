@@ -31,12 +31,11 @@ const Navbar = () => {
           <div className="flex items-center justify-between h-10">
             <div className="flex items-center space-x-4">
               <span className="flex items-center gap-2">
+                <span className="text-xs text-neutral-400">INNER CIRCLE</span>
+              </span>
+              <span className="flex items-center gap-1">
                 <Image src="/assets/paw.svg" alt="서브 로고 이미지" width={10} height={10} />
                 <span className="text-xs text-[#A8C4D9]">감성개발자들</span>
-              </span>
-              <span className="flex items-center gap-2">
-                <Image src="/assets/cent.svg" alt="서브 로고 이미지2" width={10} height={10} />
-                <span className="text-xs text-neutral-400">Inner Circle</span>
               </span>
             </div>
             <div className="text-xs flex items-center gap-4">

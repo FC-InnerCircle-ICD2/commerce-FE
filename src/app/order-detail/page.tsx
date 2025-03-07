@@ -57,7 +57,7 @@ export default function OrderDetail() {
           </div>
         </div>
         <Suspense fallback={<OrderListSkeleton />}>
-          <OrderItemList orders={orders.content} />
+          <OrderItemList orders={orders?.content} />
         </Suspense>
       </div>
 
